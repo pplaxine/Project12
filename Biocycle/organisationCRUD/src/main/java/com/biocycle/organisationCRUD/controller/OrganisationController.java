@@ -31,7 +31,7 @@ public class OrganisationController {
 		Optional<Organisation> organisation = organisationDao.findById(id);
 		
 		if(!organisation.isPresent()) {
-			throw new OrganisationNotFoundException("Organisation with id: " + id + " does not exit.");
+			throw new OrganisationNotFoundException("Organisation with id: " + id + " does not exist.");
 		}
 		
 		return organisation;
