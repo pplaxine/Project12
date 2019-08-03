@@ -20,6 +20,7 @@ public class CollectionRun {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
 	private Date collectionRunDate;
 	private Integer collectorId;
 	private Date startTime;

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class GiveAway {
@@ -17,12 +19,15 @@ public class GiveAway {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
 	private int organisationId;
+	@NotNull
 	private Date availableToBeCollectedFrom;
 	private Date collectionDate; 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "GIVEAWAY_ID")
-	private List<Container> containerList;
+	@NotEmpty
+	private List<@NotNull Container> containerList;
 	
 	
 	//CONSTRUCTORS 

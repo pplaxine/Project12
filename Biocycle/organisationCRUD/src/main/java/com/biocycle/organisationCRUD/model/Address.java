@@ -5,13 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class Address {
 
+	@NotBlank
 	private String streetNumber;
+	@NotBlank
 	private String streetName;
+	@NotBlank
 	private String city;
+	@NotBlank
 	private String postCode;
 
 	

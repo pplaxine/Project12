@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,12 +24,16 @@ public class Organisation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		//to start sequence at existing values 
 	private int id;
+	@NotBlank
 	private String organisationName;
+	@NotBlank
+	@Email
 	private String emailAddress;
 	@JsonIgnore
 	private String password;
 	
 	@Embedded
+	@NotNull
 	private Address organisationAddress;
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -36,6 +43,7 @@ public class Organisation {
 	)
 	@MapKey(name = "spotName")	//see is String can be added 
 	private Map<String,CollectionSpotAddress> collectionAddressList;
+	@NotBlank
 	private String phoneNumber;	
 	private Boolean isDonor;
 	private Boolean isValidated;

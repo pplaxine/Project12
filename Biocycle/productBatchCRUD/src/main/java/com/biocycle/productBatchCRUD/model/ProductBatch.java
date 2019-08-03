@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class ProductBatch {
@@ -17,14 +18,20 @@ public class ProductBatch {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
 	private String name;
 	private String description;
-	private int donorId; 
+	@NotNull
+	private int donorId;
+	@NotNull
 	private Date dateOfCollection;
+	@NotNull
 	private Date toBeUsedBy;
 	
+	@NotNull
 	@Column(precision = 10, scale = 3)
 	private BigDecimal quantity;
+	@NotNull
 	@Enumerated(value = EnumType.STRING)
 	private UnitOfMeasure unitOfMeasure;
 	private Boolean isAvailable; 
