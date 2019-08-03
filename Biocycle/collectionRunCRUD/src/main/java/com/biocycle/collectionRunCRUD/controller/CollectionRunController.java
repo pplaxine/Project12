@@ -22,7 +22,7 @@ import com.biocycle.collectionRunCRUD.model.CollectionRun;
 public class CollectionRunController {
 	
 	@Autowired
-	CollectionRunDao collectionRunDao;
+	private CollectionRunDao collectionRunDao;
 	
 	@GetMapping(value = "/collectionruns/{id}")
 	public Optional<CollectionRun> findCollectionRunById(@PathVariable int id){

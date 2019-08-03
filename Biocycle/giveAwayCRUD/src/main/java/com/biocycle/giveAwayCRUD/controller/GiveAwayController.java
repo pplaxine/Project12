@@ -22,7 +22,7 @@ import com.biocycle.giveAwayCRUD.model.GiveAway;
 public class GiveAwayController {
 	
 	@Autowired
-	GiveAwayDao giveAwayDao;
+	private GiveAwayDao giveAwayDao;
 	
 	
 	@GetMapping(value = "/giveaways/{id}")
