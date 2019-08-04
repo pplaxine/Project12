@@ -1,4 +1,6 @@
-package com.biocycle.productBatchCRUD.model;
+package com.biocycle.productRequestCRUD.model;
+
+import javax.persistence.Embeddable;
 
 public enum UnitOfMeasure {
 
