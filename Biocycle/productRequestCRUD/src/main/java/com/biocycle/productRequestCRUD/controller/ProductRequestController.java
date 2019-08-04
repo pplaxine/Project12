@@ -44,7 +44,7 @@ public class ProductRequestController {
 	public ResponseEntity<Void> addProductRequest(@RequestBody ProductRequest productRequest){
 		ProductRequest pr = productRequestDao.save(productRequest);
 		if(pr == null) {
-			ResponseEntity.noContent().build();
+			return ResponseEntity.noContent().build();
 		}
 		
 		URI location = ServletUriComponentsBuilder

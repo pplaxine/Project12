@@ -46,7 +46,7 @@ public class ProductBatchController  {
 		
 		ProductBatch pb = productBatchDao.save(productBatch);
 		if(pb == null) {
-			ResponseEntity.noContent().build();
+			return ResponseEntity.noContent().build();
 		}
 		
 		URI location = ServletUriComponentsBuilder

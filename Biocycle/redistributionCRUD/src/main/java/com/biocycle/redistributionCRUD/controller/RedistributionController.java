@@ -47,7 +47,7 @@ public class RedistributionController {
 		Redistribution red = redistributionDao.save(redistribution);
 		
 		if(red == null) {
-			ResponseEntity.noContent().build();
+			return ResponseEntity.noContent().build();
 		}
 		
 		URI location = ServletUriComponentsBuilder

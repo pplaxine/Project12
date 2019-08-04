@@ -47,7 +47,7 @@ public class CollectionRunController {
 		CollectionRun cr = collectionRunDao.save(collectionRun);
 		
 		if(cr == null) {
-			ResponseEntity.noContent().build();
+			return ResponseEntity.noContent().build();
 		}
 		
 		URI location = ServletUriComponentsBuilder

@@ -46,7 +46,7 @@ public class StorageContainerController {
 		StorageContainer sc = storageContainerDao.save(storageContainer);
 		
 		if(sc == null) {
-			ResponseEntity.noContent().build();
+			return ResponseEntity.noContent().build();
 		}
 		
 		URI location = ServletUriComponentsBuilder
