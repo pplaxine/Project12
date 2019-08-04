@@ -42,7 +42,7 @@ public class ProductBatch {
 	
 	@ElementCollection
 	@CollectionTable(name = "productBatch_storageContainer_mapping", 
-		joinColumns = {@JoinColumn(name="ProductBatch_id", referencedColumnName = "id")} 
+		joinColumns = {@JoinColumn(name="productBatch_id", referencedColumnName = "id")} 
 		)
 	@Column(name = "storageContainer_id",unique = true)
 	@NotEmpty
