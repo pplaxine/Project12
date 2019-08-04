@@ -2,14 +2,19 @@ package com.biocycle.productBatchCRUD.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -34,12 +39,22 @@ public class ProductBatch {
 	@NotNull
 	@Enumerated(value = EnumType.STRING)
 	private UnitOfMeasure unitOfMeasure;
+	
+	@ElementCollection
+	@CollectionTable(name = "productBatch_storageContainer_mapping", 
+		joinColumns = {@JoinColumn(name="ProductBatch_id", referencedColumnName = "id")} 
+		)
+	@Column(name = "storageContainer_id",unique = true)
+	@NotEmpty
+	private List<@NotNull Integer> storageContainerId; 
 	private Boolean isAvailable; 
 	
 	
 	//CONSTRUCTORS 
-	public ProductBatch(int id, String name, String description, int donorId, Date dateOfCollection, Date toBeUsedBy,
-			BigDecimal quantity, UnitOfMeasure unitOfMeasure, Boolean isAvailable) {
+	public ProductBatch(int id, @NotNull String name, String description, @NotNull int donorId,
+			@NotNull Date dateOfCollection, @NotNull Date toBeUsedBy, @NotNull BigDecimal quantity,
+			@NotNull UnitOfMeasure unitOfMeasure, @NotEmpty List<@NotNull Integer> storageContainerId,
+			Boolean isAvailable) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,12 +64,13 @@ public class ProductBatch {
 		this.toBeUsedBy = toBeUsedBy;
 		this.quantity = quantity;
 		this.unitOfMeasure = unitOfMeasure;
+		this.storageContainerId = storageContainerId;
 		this.isAvailable = isAvailable;
 	}
 
 	public ProductBatch() {
-		
 	}
+
 
 	//G&S
 	public int getId() {
@@ -105,6 +121,12 @@ public class ProductBatch {
 	public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
 		this.unitOfMeasure = unitOfMeasure;
 	}
+	public List<Integer> getStorageContainerId() {
+		return storageContainerId;
+	}
+	public void setStorageContainerId(List<Integer> storageContainerId) {
+		this.storageContainerId = storageContainerId;
+	}
 	public Boolean getIsAvailable() {
 		return isAvailable;
 	}
@@ -118,8 +140,12 @@ public class ProductBatch {
 	public String toString() {
 		return "ProductBatch [id=" + id + ", name=" + name + ", description=" + description + ", donorId=" + donorId
 				+ ", dateOfCollection=" + dateOfCollection + ", toBeUsedBy=" + toBeUsedBy + ", quantity=" + quantity
-				+ ", unitOfMeasure=" + unitOfMeasure + ", isAvailable=" + isAvailable + "]";
+				+ ", unitOfMeasure=" + unitOfMeasure + ", storageContainerId=" + storageContainerId + ", isAvailable="
+				+ isAvailable + "]";
 	}
+
+
+	
 
 	
 
