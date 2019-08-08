@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biocycle.InventoryService.bean.ProductBatchBean;
-import com.biocycle.InventoryService.proxy.ProductBatchMSProxy;
+import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.service.ProductBatchManager;
 
 	

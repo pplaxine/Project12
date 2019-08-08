@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.biocycle.InventoryService.bean.ProductBatchBean;
-import com.biocycle.InventoryService.proxy.ProductBatchMSProxy;
+import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.proxy.ProductStorageMSProxy;
 
 @Service
 public class ProductBatchManager {
 	
 	@Autowired
-	private ProductBatchMSProxy productBatchMsProxy;
+	private ProductBatchCRUDMSProxy productBatchMsProxy;
 	@Autowired
 	private ProductStorageMSProxy productStorageMsProxy;
 	

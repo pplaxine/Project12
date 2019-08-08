@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.biocycle.InventoryService.bean.ProductBatchBean;
 
 @FeignClient(name = "productBatchCRUD", url = "localhost:9004")
-public interface ProductBatchMSProxy {
+public interface ProductBatchCRUDMSProxy {
 	
 	@GetMapping(value = "/productbatches/{id}")
 	Optional<ProductBatchBean> findProductBatchById(@PathVariable("id") int id);

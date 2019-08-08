@@ -1,6 +1,7 @@
 package com.biocycle.storageContainerCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.boot.registry.selector.spi.StrategySelectionException;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.storageContainerCRUD.dao.StorageContainerDao;
+import com.biocycle.storageContainerCRUD.exception.StorageContainerNotFoundException;
 import com.biocycle.storageContainerCRUD.model.StorageContainer;
 
 @RestController
@@ -24,12 +26,24 @@ public class StorageContainerController {
 	@Autowired
 	private StorageContainerDao storageContainerDao; 
 	
+	@GetMapping(value = "/storagecontainers/empty")
+	public Optional<List<StorageContainer>> findAllEmptyStorageContainer(){
+		Optional<List<StorageContainer>> emptyStorageContainerList = storageContainerDao.findAllEmptyStorageContainer();
+		
+		if(!emptyStorageContainerList.isPresent()) {
+			throw new StorageContainerNotFoundException("No Storage container available in the Warehouse.");
+		}
+		
+		return emptyStorageContainerList;
+	}
+	
+	
 	@GetMapping(value = "/storagecontainers/{id}" )
 	public Optional<StorageContainer> findStorageContainerById(@PathVariable int id){
 		Optional<StorageContainer> storageContainer = storageContainerDao.findById(id);
 		
 		if(!storageContainer.isPresent()) {
-			throw new StrategySelectionException("storageContainer with" + id + " does not exist.");
+			throw new StorageContainerNotFoundException("storageContainer with" + id + " does not exist.");
 		}
 		
 		return storageContainer;

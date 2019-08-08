@@ -2,7 +2,7 @@ package com.biocycle.productStorageService.bean;
 
 import javax.validation.constraints.NotNull;
 
-public class StorageContainerBean {
+public class StorageContainerBean implements Comparable<StorageContainerBean> {
 	
 	private int id;
 	private int rowRef;
@@ -43,6 +43,13 @@ public class StorageContainerBean {
 	public void setIsAvailable(Boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
+
+	@Override
+	public int compareTo(StorageContainerBean o) {
+		return shelfRef.compareTo(o.shelfRef)< 0 ? 1 : 0;
+	}
+
+	
 	
 	
 }
