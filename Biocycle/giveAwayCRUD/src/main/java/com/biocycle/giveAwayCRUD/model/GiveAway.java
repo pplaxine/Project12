@@ -13,7 +13,18 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
 public class GiveAway {
 	
 	@Id
@@ -28,64 +39,5 @@ public class GiveAway {
 	@JoinColumn(name = "GIVEAWAY_ID")
 	@NotEmpty
 	private List<@NotNull Container> containerList;
-	
-	
-	//CONSTRUCTORS 
-	public GiveAway(int id, int organisationId, Date availableToBeCollectedFrom, Date collectionDate,
-			List<Container> containerList) {
-		super();
-		this.id = id;
-		this.organisationId = organisationId;
-		this.availableToBeCollectedFrom = availableToBeCollectedFrom;
-		this.collectionDate = collectionDate;
-		this.containerList = containerList;
-	}
-	
-	public GiveAway() {
-	}
-
-	
-	//G&S
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getOrganisationId() {
-		return organisationId;
-	}
-	public void setOrganisationId(int organisationId) {
-		this.organisationId = organisationId;
-	}
-	public Date getAvailableToBeCollectedFrom() {
-		return availableToBeCollectedFrom;
-	}
-	public void setAvailableToBeCollectedFrom(Date availableToBeCollectedFrom) {
-		this.availableToBeCollectedFrom = availableToBeCollectedFrom;
-	}
-	public Date getCollectionDate() {
-		return collectionDate;
-	}
-	public void setCollectionDate(Date collectionDate) {
-		this.collectionDate = collectionDate;
-	}
-	public List<Container> getContainerList() {
-		return containerList;
-	}
-	public void setContainerList(List<Container> containerList) {
-		this.containerList = containerList;
-	}
-
-	
-	//toString
-	@Override
-	public String toString() {
-		return "GiveAway [id=" + id + ", organisationId=" + organisationId + ", availableToBeCollectedFrom="
-				+ availableToBeCollectedFrom + ", collectionDate=" + collectionDate + ", containerList=" + containerList
-				+ "]";
-	}
-	
-	
 	
 }

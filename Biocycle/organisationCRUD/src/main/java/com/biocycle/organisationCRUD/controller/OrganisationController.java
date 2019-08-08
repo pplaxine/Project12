@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.organisationCRUD.dao.OrganisationDao;
+import com.biocycle.organisationCRUD.dto.OrganisationDto;
+import com.biocycle.organisationCRUD.dto.mapper.OrganisationDtoMapper;
 import com.biocycle.organisationCRUD.exception.OrganisationNotFoundException;
-import com.biocycle.organisationCRUD.model.Organisation;
 import com.biocycle.organisationCRUD.model.Organisation;
 
 @RestController
@@ -25,8 +26,11 @@ public class OrganisationController {
 	@Autowired
 	private OrganisationDao organisationDao;
 	
+	@Autowired
+	private OrganisationDtoMapper organisationDtoMapper;
+	
 	@GetMapping(value="/organisations/{id}")
-	public Optional<Organisation> findOrganisationById(@PathVariable int id){
+	public OrganisationDto findOrganisationById(@PathVariable int id){
 		
 		Optional<Organisation> organisation = organisationDao.findById(id);
 		
@@ -34,7 +38,7 @@ public class OrganisationController {
 			throw new OrganisationNotFoundException("Organisation with id: " + id + " does not exist.");
 		}
 		
-		return organisation;
+		return organisationDtoMapper.organisationToOrganisationDto(organisation.get());
 	}
 	
 	@DeleteMapping(value = "/organisations/{id}")
@@ -43,17 +47,17 @@ public class OrganisationController {
 	}
 	
 	@PostMapping(value = "/organisations")
-	public ResponseEntity<Void> addOrganisation(@RequestBody Organisation organisation){
-	 	
-		Organisation orga = organisationDao.save(organisation);		//if created send back created object
-	 	if(orga == null) {
+	public ResponseEntity<Void> addOrganisation(@RequestBody OrganisationDto organisationDto){
+
+		Organisation organi = organisationDao.save(organisationDtoMapper.organisationDtoToOrganisation(organisationDto));		//if created send back created object
+	 	if(organi == null) {
 	 		return ResponseEntity.noContent().build();
 	 	}
 	 	
 	 	URI location = ServletUriComponentsBuilder
 	 					.fromCurrentRequest()
 	 					.path("/{id}")
-	 					.buildAndExpand(orga.getId())
+	 					.buildAndExpand(organi.getId())
 	 					.toUri();
 	 	
 	 	return ResponseEntity.created(location).build();

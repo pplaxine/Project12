@@ -8,7 +8,18 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(of = {"streetNumber","streetName","city","postCode"})
 public class Address {
 
 	@NotBlank
@@ -20,58 +31,4 @@ public class Address {
 	@NotBlank
 	private String postCode;
 
-	
-	//CONSTRUTORS 
-	public Address(String streetNumber, String streetName, String city, String postCode) {
-		super();
-		this.streetNumber = streetNumber;
-		this.streetName = streetName;
-		this.city = city;
-		this.postCode = postCode;
-	}
-
-	public Address() {
-	}
-
-
-	//G&S
-	public String getStreetNumber() {
-		return streetNumber;
-	}
-	public void setStreetNumber(String streetNumber) {
-		this.streetNumber = streetNumber;
-	}
-	public String getStreetName() {
-		return streetName;
-	}
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getPostCode() {
-		return postCode;
-	}
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
-	//TO STRING 
-	@Override
-	public String toString() {
-		return "Address [streetNumber=" + streetNumber + ", streetName="
-				+ streetName + ", city=" + city + ", postCode=" + postCode + "]";
-	}
-
-	
-		
-	
-	
-		
-	
-	
 }

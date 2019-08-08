@@ -13,7 +13,18 @@ import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(of = {"id","organisationId","productRequestId","offerId","isCompleted"})
 public class Redistribution {
 		
 	@Id
@@ -32,65 +43,5 @@ public class Redistribution {
 	@Column(unique = true)
 	private Integer offerId;
 	private Boolean isCompleted;
-	
-	
-	//CONSTRUCTORS 
-	public Redistribution(int id, @NotNull int organisationId, @NotEmpty List<Integer> productRequestId,
-			Integer offerId, Boolean isCompleted) {
-		super();
-		this.id = id;
-		this.organisationId = organisationId;
-		this.productRequestId = productRequestId;
-		this.offerId = offerId;
-		this.isCompleted = isCompleted;
-	}
-	
-	public Redistribution() {
-	}
-	
-	
-	//G&S
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getOrganisationId() {
-		return organisationId;
-	}
-	public void setOrganisationId(int organisationId) {
-		this.organisationId = organisationId;
-	}
-	public List<Integer> getProductRequestId() {
-		return productRequestId;
-	}
-	public void setProductRequestId(List<Integer> productRequestId) {
-		this.productRequestId = productRequestId;
-	}
-	public Integer getOfferId() {
-		return offerId;
-	}
-	public void setOfferId(Integer offerId) {
-		this.offerId = offerId;
-	}
-	public Boolean getIsCompleted() {
-		return isCompleted;
-	}
-	public void setIsCompleted(Boolean isCompleted) {
-		this.isCompleted = isCompleted;
-	}
 
-	
-	//toString
-	@Override
-	public String toString() {
-		return "Redistribution [id=" + id + ", organisationId=" + organisationId + ", productRequestId="
-				+ productRequestId + ", offerId=" + offerId + ", isCompleted=" + isCompleted + "]";
-	}
-	
-	
-	
-	
-	
 }

@@ -14,7 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter 
+@Setter
+@ToString(includeFieldNames = true, of = {"id","collectionRunDate","collectorId","startTime","endTime","containerIdList"})
 public class CollectionRun {
 	
 	@Id
@@ -32,76 +43,4 @@ public class CollectionRun {
 	@Column(name = "container_id",unique = true)
 	@NotEmpty
 	private List<@NotNull Integer> containerIdList;
-	
-	
-	//CONSTRUCTORS 
-	public CollectionRun(int id, Date collectionRunDate, Integer collectorId, Date startTime, Date endTime,
-			List<Integer> containerIdList) {
-		super();
-		this.id = id;
-		this.collectionRunDate = collectionRunDate;
-		this.collectorId = collectorId;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.containerIdList = containerIdList;
-	}
-	
-	public CollectionRun() {
-		
-	}
-	
-	
-	//G&S
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Date getCollectionRunDate() {
-		return collectionRunDate;
-	}
-	public void setCollectionRunDate(Date collectionRunDate) {
-		this.collectionRunDate = collectionRunDate;
-	}
-	public Integer getCollectorId() {
-		return collectorId;
-	}
-	public void setCollectorId(Integer collectorId) {
-		this.collectorId = collectorId;
-	}
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-	public List<Integer> getContainerIdList() {
-		return containerIdList;
-	}
-	public void setContainerIdList(List<Integer> containerIdList) {
-		this.containerIdList = containerIdList;
-	}
-
-	
-	//toString
-	@Override
-	public String toString() {
-		return "CollectionRun [id=" + id + ", collectionRunDate=" + collectionRunDate + ", collectorId=" + collectorId
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", containerIdList=" + containerIdList
-				+ "]";
-	}
-	
-	
-	
-	
-	
-	
-	
 }

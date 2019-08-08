@@ -18,22 +18,36 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(of = {"id","organisationName","emailAddress","password","organisationAddress","collectionAddressList","phoneNumber","isDonor","isValidated"})
 public class Organisation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)		//to start sequence at existing values 
 	private int id;
 	@NotBlank
+	@Getter @Setter
 	private String organisationName;
 	@NotBlank
 	@Email
+	@Getter @Setter
 	private String emailAddress;
 	@JsonIgnore
+	@Getter @Setter
 	private String password;
 	
 	@Embedded
 	@NotNull
+	@Getter @Setter
 	private Address organisationAddress;
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -42,95 +56,24 @@ public class Organisation {
 		inverseJoinColumns =  {@JoinColumn(name = "address_id", referencedColumnName = "id")}
 	)
 	@MapKey(name = "spotName")	//see is String can be added 
+	@Getter @Setter
 	private Map<String,CollectionSpotAddress> collectionAddressList;
 	@NotBlank
+	@Getter @Setter
 	private String phoneNumber;	
+	@Getter @Setter
 	private Boolean isDonor;
+	@Getter @Setter
 	private Boolean isValidated;
 	
-	
-	//CONSTRUCTORS 
-	public Organisation(int id, String organisationName, String emailAddress, String password,
-			Address organisationAddress, Map<String, CollectionSpotAddress> collectionAddressList, String phoneNumber,
-			Boolean isDonor, Boolean isValidated) {
-		super();
-		this.id = id;
-		this.organisationName = organisationName;
-		this.emailAddress = emailAddress;
-		this.password = password;
-		this.organisationAddress = organisationAddress;
-		this.collectionAddressList = collectionAddressList;
-		this.phoneNumber = phoneNumber;
-		this.isDonor = isDonor;
-		this.isValidated = isValidated;
-	}
-	
-	public Organisation() {
-	}
-
-	//G&S
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getOrganisationName() {
-		return organisationName;
-	}
-	public void setOrganisationName(String organisationName) {
-		this.organisationName = organisationName;
-	}
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Address getOrganisationAddress() {
-		return organisationAddress;
-	}
-	public void setOrganisationAddress(Address organisationAddress) {
-		this.organisationAddress = organisationAddress;
-	}
-	public Map<String, CollectionSpotAddress> getCollectionAddressList() {
-		return collectionAddressList;
-	}
-	public void setCollectionAddressList(Map<String, CollectionSpotAddress> collectionAddressList) {
-		this.collectionAddressList = collectionAddressList;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public Boolean getIsDonor() {
-		return isDonor;
-	}
-	public void setIsDonor(Boolean isDonor) {
-		this.isDonor = isDonor;
-	}
-	public Boolean getIsValidated() {
-		return isValidated;
-	}
-	public void setIsValidated(Boolean isValidated) {
-		this.isValidated = isValidated;
-	}
 
 	
-	//To String
-	@Override
-	public String toString() {
-		return "Organisation [id=" + id + ", organisationName=" + organisationName + ", emailAddress=" + emailAddress
-				+ ", password=" + password + ", organisationAddress=" + organisationAddress + ", collectionAddressList="
-				+ collectionAddressList + ", phoneNumber=" + phoneNumber + ", isDonor=" + isDonor + ", isValidated="
-				+ isValidated + "]";
-	}
+
+	
 }

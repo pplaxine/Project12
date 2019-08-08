@@ -42,63 +42,13 @@ public class ProductStorageManager {
 			lastRow = rowRef > lastRow ? rowRef : lastRow;
 			lastLev  = levRef > lastLev ? levRef : lastLev;
 		}
-
-		
-		//create set of List<storageContainerBean> organize by row and level  
-//		Map<Integer, Map<Integer, List<StorageContainerBean>>> rowMap = new HashMap<>();
-//		
-//		for (int i = 0; i < lastRow; i++) {
-//			Map<Integer, List<StorageContainerBean>> levMap = new HashMap<>();
-//			for (int j = 0; j < lastLev; j++) {
-//				List<StorageContainerBean> shelfList = new ArrayList<>();
-//				levMap.put(j+1, shelfList);
-//			}
-//			rowMap.put(i+1, levMap);
-//		}
-		
-//		//Dispatch empty StorageContainerBean amonsgt those lists
-//		for (StorageContainerBean  scb : emptyStorageContainerList.get()) {
-//			rowMap.get(scb.getRowRef()).get(scb.getLevelRef()).add(scb);
-//		}
-//		
-		
-//		//find the first suit of n empty StorageContainerBean
-//		setOfFilledList.forEach((k,v)-> {
-//			v.forEach((r,m) -> {
-//				Collections.sort(m);	//sort list alphabeticaly (shelfRef) 
-//				List<StorageContainerBean> finalList = new ArrayList<>();
-//				int i = 0;
-//				while(finalList.size() < numberOfContainer || i < m.size()) {
-//					m.forEach( s -> { 		// s represent each element of list<StoreContainerBean>
-//						
-//						if(!finalList.isEmpty()) {
-//							StorageContainerBean previousStorageContainerBean = finalList.get(finalList.size() -1);			
-//							int AsciiValueOfShelfRefPreviousBean = (int)previousStorageContainerBean.getShelfRef().charAt(0);	
-//							int asciiValueOfShelfRefActualBean = (int)s.getShelfRef().charAt(0);								
-//							
-//							if(AsciiValueOfShelfRefPreviousBean != asciiValueOfShelfRefActualBean-1) {
-//								finalList.clear();
-//							}
-//							finalList.add(s);
-//							
-//						}else {
-//							finalList.add(s);
-//						}
-//					});
-//					i++;
-//				}
-//			});
-//		});
-		
 		
 		Map<Integer, Map<Integer, List<StorageContainerBean>>> setOfOrganizedEmptyList = createSetOfStoreContainerBeanList(lastRow, lastLev);
 		Map<Integer, Map<Integer, List<StorageContainerBean>>> setOfFilledList = StoreContainerBeanDispatcher(emptyStorageContainerList, setOfOrganizedEmptyList);
 		List<StorageContainerBean> optimalSpace = (findOptimalContainerSuit(setOfFilledList, numberOfContainer));
 		optimalSpace = optimalSpace != null ? findOptimalContainerSuit(setOfFilledList, numberOfContainer) 
 											: findRandomContainerSuit(emptyStorageContainerList, numberOfContainer);
-		
-		
-		
+
 		return Optional.of(toIdList(optimalSpace));		
 	}
 	
