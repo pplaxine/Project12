@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.boot.registry.selector.spi.StrategySelectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.storageContainerCRUD.dao.StorageContainerDao;
+import com.biocycle.storageContainerCRUD.dto.StorageContainerDto;
+import com.biocycle.storageContainerCRUD.dto.mapper.StorageContainerDtoMapper;
 import com.biocycle.storageContainerCRUD.exception.StorageContainerNotFoundException;
+import com.biocycle.storageContainerCRUD.helper.StorageContainerHelper;
 import com.biocycle.storageContainerCRUD.model.StorageContainer;
 
 @RestController
@@ -25,28 +27,32 @@ public class StorageContainerController {
 	
 	@Autowired
 	private StorageContainerDao storageContainerDao; 
+	@Autowired
+	private StorageContainerDtoMapper storageContainerDtoMapper; 
 	
 	@GetMapping(value = "/storagecontainers/empty")
-	public Optional<List<StorageContainer>> findAllEmptyStorageContainer(){
+	public List<StorageContainerDto> findAllEmptyStorageContainer(){
 		Optional<List<StorageContainer>> emptyStorageContainerList = storageContainerDao.findAllEmptyStorageContainer();
 		
 		if(!emptyStorageContainerList.isPresent()) {
 			throw new StorageContainerNotFoundException("No Storage container available in the Warehouse.");
 		}
 		
-		return emptyStorageContainerList;
+		List<StorageContainerDto> emptyStorageContainerDtoList = StorageContainerHelper.entityListToDtoList(emptyStorageContainerList.get(), storageContainerDtoMapper);
+		
+		return emptyStorageContainerDtoList;
 	}
 	
 	
 	@GetMapping(value = "/storagecontainers/{id}" )
-	public Optional<StorageContainer> findStorageContainerById(@PathVariable int id){
+	public StorageContainerDto findStorageContainerById(@PathVariable int id){
 		Optional<StorageContainer> storageContainer = storageContainerDao.findById(id);
 		
 		if(!storageContainer.isPresent()) {
 			throw new StorageContainerNotFoundException("storageContainer with" + id + " does not exist.");
 		}
 		
-		return storageContainer;
+		return storageContainerDtoMapper.storageContainerToStorageContainerDto(storageContainer.get());
 	}
 	
 	@DeleteMapping(value = "/storagecontainers/{id}")
@@ -55,7 +61,9 @@ public class StorageContainerController {
 	}
 	
 	@PostMapping(value = "/storagecontainers")
-	public ResponseEntity<Void> addStorageContainer(@RequestBody StorageContainer storageContainer){
+	public ResponseEntity<Void> addStorageContainer(@RequestBody StorageContainerDto storageContainerDto){
+		
+		StorageContainer storageContainer = storageContainerDtoMapper.storageContainerDtoToStorageContainer(storageContainerDto);
 		
 		StorageContainer sc = storageContainerDao.save(storageContainer);
 		
@@ -73,7 +81,8 @@ public class StorageContainerController {
 	}
 	
 	@PutMapping(value = "/storagecontainers")
-	public void updateStorageContainer(@RequestBody StorageContainer storageContainer) {
+	public void updateStorageContainer(@RequestBody StorageContainerDto storageContainerDto) {
+		StorageContainer storageContainer = storageContainerDtoMapper.storageContainerDtoToStorageContainer(storageContainerDto);
 		storageContainerDao.save(storageContainer);
 	}
 	
