@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.productBatchCRUD.dao.ProductBatchDao;
+import com.biocycle.productBatchCRUD.dto.ProductBatchDto;
+import com.biocycle.productBatchCRUD.dto.mapper.ProductBatchDtoMapper;
 import com.biocycle.productBatchCRUD.exception.ProductBatchNotFoundException;
 import com.biocycle.productBatchCRUD.model.ProductBatch;
 
@@ -24,8 +26,11 @@ public class ProductBatchController  {
 	@Autowired
 	private ProductBatchDao productBatchDao; 
 	
+	@Autowired
+	private ProductBatchDtoMapper productBatchDtoMapper;
+	
 	@GetMapping(value = "/productbatches/{id}")
-	public Optional<ProductBatch> findProductBatchById(@PathVariable int id){
+	public ProductBatchDto findProductBatchById(@PathVariable int id){
 		
 		Optional<ProductBatch> productBatch = productBatchDao.findById(id);
 		
@@ -33,7 +38,7 @@ public class ProductBatchController  {
 			throw new ProductBatchNotFoundException("ProductBatch with id: " + id + " does not exist.");
 		}
 		
-		return productBatch;
+		return productBatchDtoMapper.productBatchToProductBatchDto(productBatch.get());
 	}
 	
 	@DeleteMapping(value = "/productbatches/{id}")
@@ -42,7 +47,9 @@ public class ProductBatchController  {
 	}
 	
 	@PostMapping(value = "/productbatches")
-	public ResponseEntity<Void> addProductBatch(@RequestBody ProductBatch productBatch){
+	public ResponseEntity<Void> addProductBatch(@RequestBody ProductBatchDto productBatchDto){
+		
+		ProductBatch productBatch = productBatchDtoMapper.productBatchDtoToProductBatch(productBatchDto);
 		
 		ProductBatch pb = productBatchDao.save(productBatch);
 		if(pb == null) {
@@ -59,7 +66,8 @@ public class ProductBatchController  {
 	}
 	
 	@PutMapping(value = "/productbatches")
-	public void updateProductBatch(@RequestBody ProductBatch productBatch) {
+	public void updateProductBatch(@RequestBody ProductBatchDto productBatchDto) {
+		ProductBatch productBatch = productBatchDtoMapper.productBatchDtoToProductBatch(productBatchDto);
 		productBatchDao.save(productBatch);
 	}
 }
