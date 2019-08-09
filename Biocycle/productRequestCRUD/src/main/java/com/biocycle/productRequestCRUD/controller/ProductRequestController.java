@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.productRequestCRUD.dao.ProductRequestDao;
+import com.biocycle.productRequestCRUD.dto.ProductRequestDto;
+import com.biocycle.productRequestCRUD.dto.mapper.ProductRequestDtoMapper;
 import com.biocycle.productRequestCRUD.exception.ProductRequestNotFoundException;
 import com.biocycle.productRequestCRUD.model.ProductRequest;
 
@@ -24,15 +26,18 @@ public class ProductRequestController {
 	@Autowired
 	ProductRequestDao productRequestDao;
 	
+	@Autowired
+	ProductRequestDtoMapper productRequestDtoMapper;
+	
 	@GetMapping(value = "/productrequests/{id}")
-	public Optional<ProductRequest> findProductRequestById(@PathVariable int id){
+	public ProductRequestDto findProductRequestById(@PathVariable int id){
 		Optional<ProductRequest> productRequest = productRequestDao.findById(id);
 		
 		if(!productRequest.isPresent()) {
 			throw new ProductRequestNotFoundException("productRequest with id: " + id + " does not exist.");
 		}
 		
-		return productRequest;
+		return productRequestDtoMapper.productRequestToProductRequestDto(productRequest.get());
 	}
 	
 	@DeleteMapping(value = "/productrequests/{id}")
@@ -41,7 +46,10 @@ public class ProductRequestController {
 	}
 	
 	@PostMapping(value = "/productrequests")
-	public ResponseEntity<Void> addProductRequest(@RequestBody ProductRequest productRequest){
+	public ResponseEntity<Void> addProductRequest(@RequestBody ProductRequestDto productRequestDto){
+		
+		ProductRequest productRequest = productRequestDtoMapper.productRequestDtoToProductRequest(productRequestDto);
+		
 		ProductRequest pr = productRequestDao.save(productRequest);
 		if(pr == null) {
 			return ResponseEntity.noContent().build();
@@ -57,7 +65,8 @@ public class ProductRequestController {
 	}
 	
 	@PutMapping(value = "/productrequests")
-	public void updateProductRequest(@RequestBody ProductRequest productRequest) {
+	public void updateProductRequest(@RequestBody ProductRequestDto productRequestDto) {
+		ProductRequest productRequest = productRequestDtoMapper.productRequestDtoToProductRequest(productRequestDto);
 		productRequestDao.save(productRequest);
 	}
 }
