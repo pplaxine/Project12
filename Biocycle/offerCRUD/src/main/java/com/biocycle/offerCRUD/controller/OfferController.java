@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.offerCRUD.dao.OfferDao;
+import com.biocycle.offerCRUD.dto.OfferDto;
+import com.biocycle.offerCRUD.dto.mapper.OfferDtoMapper;
 import com.biocycle.offerCRUD.exception.OfferNotFoundException;
 import com.biocycle.offerCRUD.model.Offer;
 
@@ -24,15 +26,18 @@ public class OfferController {
 	@Autowired
 	private OfferDao offerDao;
 	
+	@Autowired
+	private OfferDtoMapper offerDtoMapper;
+	
 	@GetMapping(value = "/offers/{id}")
-	public Optional<Offer> findOfferById(@PathVariable int id){
+	public OfferDto findOfferById(@PathVariable int id){
 		Optional<Offer> offer = offerDao.findById(id);
 		
 		if(!offer.isPresent()) {
 			throw new OfferNotFoundException("offer with id: " + id + " does not exist.");
 		}
 		
-		return offer;
+		return offerDtoMapper.offerToOfferDto(offer.get());
 	}
 	
 	@DeleteMapping(value = "/offers/{id}")
@@ -41,7 +46,10 @@ public class OfferController {
 	}
 	
 	@PostMapping(value = "/offers")
-	public ResponseEntity<Void> addOffer(@RequestBody Offer offer){
+	public ResponseEntity<Void> addOffer(@RequestBody OfferDto offerDto){
+		
+		Offer offer = offerDtoMapper.offerDtoToOffer(offerDto);
+		
 		Offer off = offerDao.save(offer);
 		
 		if(off == null) {
@@ -58,7 +66,8 @@ public class OfferController {
 	}
 	
 	@PutMapping(value = "/offers")
-	public void updateOffer(@RequestBody Offer offer) {
+	public void updateOffer(@RequestBody OfferDto offerDto) {
+		Offer offer = offerDtoMapper.offerDtoToOffer(offerDto);
 		offerDao.save(offer);
 	}
 }
