@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.staffCRUD.dao.StaffDao;
+import com.biocycle.staffCRUD.dto.StaffDto;
+import com.biocycle.staffCRUD.dto.mapper.StaffDtoMapper;
 import com.biocycle.staffCRUD.exception.StaffNotFoundException;
 import com.biocycle.staffCRUD.model.Staff;
 
@@ -24,8 +26,11 @@ public class StaffController {
 	@Autowired
 	private StaffDao staffDao;
 	
+	@Autowired
+	private StaffDtoMapper staffDtoMapper;
+	
 	@GetMapping(value = "/staff/{id}")
-	public Optional<Staff> findStaffById(@PathVariable int id){
+	public StaffDto findStaffById(@PathVariable int id){
 		
 		Optional<Staff> staff = staffDao.findById(id);
 		
@@ -33,7 +38,7 @@ public class StaffController {
 			throw new StaffNotFoundException("staff with id: " + id + " does not exist.");
 		}
 		
-		return staff;
+		return staffDtoMapper.staffToStaffDto(staff.get());
 	}
 	
 	@DeleteMapping(value = "/staff/{id}")
@@ -42,7 +47,10 @@ public class StaffController {
 	}
 	
 	@PostMapping(value = "/staff")
-	public ResponseEntity<Void> addStaff(@RequestBody Staff staff){
+	public ResponseEntity<Void> addStaff(@RequestBody StaffDto staffDto){
+		
+		Staff staff = staffDtoMapper.staffDtoToStaff(staffDto);
+		
 		Staff sta = staffDao.save(staff);
 		
 		if(sta == null) {
@@ -59,7 +67,8 @@ public class StaffController {
 	}
 	
 	@PutMapping(value = "/staff")
-	public void updateStaff(@RequestBody Staff staff) {
+	public void updateStaff(@RequestBody StaffDto staffDto) {
+		Staff staff = staffDtoMapper.staffDtoToStaff(staffDto);
 		staffDao.save(staff);
 	}
 	
