@@ -48,8 +48,10 @@ public class OrganisationController {
 	
 	@PostMapping(value = "/organisations")
 	public ResponseEntity<Void> addOrganisation(@RequestBody OrganisationDto organisationDto){
-
-		Organisation organi = organisationDao.save(organisationDtoMapper.organisationDtoToOrganisation(organisationDto));		//if created send back created object
+		
+		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
+		
+		Organisation organi = organisationDao.save(organisation);		
 	 	if(organi == null) {
 	 		return ResponseEntity.noContent().build();
 	 	}
@@ -64,7 +66,8 @@ public class OrganisationController {
 	}
 	
 	@PutMapping(value = "/organisations")
-	public void updateOrganisation(@RequestBody Organisation organisation) {
+	public void updateOrganisation(@RequestBody OrganisationDto organisationDto) {
+		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
 		organisationDao.save(organisation);
 	}
 }
