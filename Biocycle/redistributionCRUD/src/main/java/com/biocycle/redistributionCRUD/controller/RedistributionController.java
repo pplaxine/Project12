@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.redistributionCRUD.dao.RedistributionDao;
+import com.biocycle.redistributionCRUD.dto.RedistributionDto;
+import com.biocycle.redistributionCRUD.dto.mapper.RedistributionDtoMapper;
 import com.biocycle.redistributionCRUD.exception.RedistributionNotFoundException;
 import com.biocycle.redistributionCRUD.model.Redistribution;
 
@@ -24,8 +26,11 @@ public class RedistributionController {
 	@Autowired
 	private RedistributionDao redistributionDao; 
 	
+	@Autowired
+	private RedistributionDtoMapper redistributionDtoMapper;
+	
 	@GetMapping(value = "/redistributions/{id}")
-	public Optional<Redistribution> redistribution (@PathVariable int id){
+	public RedistributionDto redistribution (@PathVariable int id){
 		
 		Optional<Redistribution> redistribution = redistributionDao.findById(id);
 		
@@ -33,7 +38,7 @@ public class RedistributionController {
 			throw new RedistributionNotFoundException("redistribution with id: " + id + " does not exist.");
 		}
 		
-		return redistribution;
+		return redistributionDtoMapper.RedistribtionToRedistributionDto(redistribution.get());
 	}
 	
 	@DeleteMapping(value = "/redistributions/{id}")
@@ -42,7 +47,9 @@ public class RedistributionController {
 	}
 	
 	@PostMapping(value = "/redistributions")
-	public ResponseEntity<Void> addRedistribution(@RequestBody Redistribution redistribution){
+	public ResponseEntity<Void> addRedistribution(@RequestBody RedistributionDto redistributionDto){
+		
+		Redistribution redistribution = redistributionDtoMapper.redistributionDtoToRedistribution(redistributionDto);
 		
 		Redistribution red = redistributionDao.save(redistribution);
 		
@@ -60,7 +67,8 @@ public class RedistributionController {
 	}
 	
 	@PutMapping(value = "/redistributions")
-	public void updateRedistribution(@RequestBody Redistribution redistribution) {
+	public void updateRedistribution(@RequestBody RedistributionDto redistributionDto) {
+		Redistribution redistribution = redistributionDtoMapper.redistributionDtoToRedistribution(redistributionDto);
 		redistributionDao.save(redistribution);
 	}
 	
