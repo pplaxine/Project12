@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.collectionRunCRUD.dao.CollectionRunDao;
+import com.biocycle.collectionRunCRUD.dto.CollectionRunDto;
+import com.biocycle.collectionRunCRUD.dto.mapper.CollectionRunDtoMapper;
 import com.biocycle.collectionRunCRUD.exception.CollectionRunNotFoundException;
 import com.biocycle.collectionRunCRUD.model.CollectionRun;
 
@@ -23,9 +25,11 @@ public class CollectionRunController {
 	
 	@Autowired
 	private CollectionRunDao collectionRunDao;
+	@Autowired
+	private CollectionRunDtoMapper collectionRunDtoMapper;
 	
 	@GetMapping(value = "/collectionruns/{id}")
-	public Optional<CollectionRun> findCollectionRunById(@PathVariable int id){
+	public CollectionRunDto findCollectionRunById(@PathVariable int id){
 		
 		Optional<CollectionRun> collectionRun = collectionRunDao.findById(id);
 		
@@ -33,7 +37,7 @@ public class CollectionRunController {
 			throw new CollectionRunNotFoundException("collectionRun with id: " + id + " does not exist.");
 		}
 		
-		return collectionRun; 
+		return collectionRunDtoMapper.collectionRunToCollectionRunDto(collectionRun.get()); 
 	}
 	
 	@DeleteMapping(value = "/collectionruns/{id}")
@@ -42,7 +46,9 @@ public class CollectionRunController {
 	}
 	
 	@PostMapping(value = "/collectionruns")
-	public ResponseEntity<Void> addCollectionRun(@RequestBody CollectionRun collectionRun){
+	public ResponseEntity<Void> addCollectionRun(@RequestBody CollectionRunDto collectionRunDto){
+		
+		CollectionRun collectionRun = collectionRunDtoMapper.collectionRunDtoToCollectionRun(collectionRunDto);
 		
 		CollectionRun cr = collectionRunDao.save(collectionRun);
 		
@@ -60,7 +66,8 @@ public class CollectionRunController {
 	}
 	
 	@PutMapping(value = "/collectionruns")
-	public void updateCollectionRun(@RequestBody CollectionRun collectionRun) {
+	public void updateCollectionRun(@RequestBody CollectionRunDto collectionRunDto) {
+		CollectionRun collectionRun = collectionRunDtoMapper.collectionRunDtoToCollectionRun(collectionRunDto);
 		collectionRunDao.save(collectionRun);
 	}
 	
