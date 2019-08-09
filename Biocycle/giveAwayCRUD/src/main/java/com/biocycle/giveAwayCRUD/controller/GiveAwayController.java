@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.biocycle.giveAwayCRUD.dao.GiveAwayDao;
+import com.biocycle.giveAwayCRUD.dto.GiveAwayDto;
+import com.biocycle.giveAwayCRUD.dto.mapper.GiveAwayDtoMapper;
 import com.biocycle.giveAwayCRUD.exception.GiveAwayNotFoundException;
 import com.biocycle.giveAwayCRUD.model.GiveAway;
 
@@ -24,15 +26,17 @@ public class GiveAwayController {
 	@Autowired
 	private GiveAwayDao giveAwayDao;
 	
+	@Autowired
+	private GiveAwayDtoMapper giveAwayDtoMapper;
 	
 	@GetMapping(value = "/giveaways/{id}")
-	public Optional<GiveAway> findGiveAway(@PathVariable int id){
+	public GiveAwayDto findGiveAway(@PathVariable int id){
 		Optional<GiveAway> giveAway = giveAwayDao.findById(id);
 		
 		if(!giveAway.isPresent()) {
 			throw new GiveAwayNotFoundException("GiveAway with id: " + id + " doesn't exist.");
 		}
-		return giveAway;
+		return giveAwayDtoMapper.giveAwayToGiveAwayDto(giveAway.get());
 	}
 	
 	@DeleteMapping(value = "/giveaways/{id}")
@@ -41,7 +45,9 @@ public class GiveAwayController {
 	}
 	
 	@PostMapping(value = "/giveaways")
-	public ResponseEntity<Void> addGiveAway(@RequestBody GiveAway giveAway){
+	public ResponseEntity<Void> addGiveAway(@RequestBody GiveAwayDto giveAwayDto){
+		
+		GiveAway giveAway = giveAwayDtoMapper.giveAwayDtoToGiveAway(giveAwayDto);
 		
 		GiveAway ga = giveAwayDao.save(giveAway);
 		
@@ -59,7 +65,8 @@ public class GiveAwayController {
 	}
 	
 	@PutMapping(value = "/giveaways")
-	public void updateGiveAway(@RequestBody GiveAway giveAway) {
+	public void updateGiveAway(@RequestBody GiveAwayDto giveAwayDto) {
+		GiveAway giveAway = giveAwayDtoMapper.giveAwayDtoToGiveAway(giveAwayDto);
 		giveAwayDao.save(giveAway);
 	}
 
