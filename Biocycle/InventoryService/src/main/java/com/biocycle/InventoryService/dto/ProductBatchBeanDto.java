@@ -1,13 +1,11 @@
-package com.biocycle.InventoryService.bean;
+package com.biocycle.InventoryService.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.biocycle.InventoryService.bean.UnitOfMeasure;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductBatchBean {
-	
+public class ProductBatchBeanDto {
+
 	private int id;
 	private String name;
 	private String description;
@@ -27,5 +25,4 @@ public class ProductBatchBean {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable;
-	
 }

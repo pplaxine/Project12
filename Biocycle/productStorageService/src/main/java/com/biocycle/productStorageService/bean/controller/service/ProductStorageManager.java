@@ -1,9 +1,7 @@
 package com.biocycle.productStorageService.bean.controller.service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +9,11 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.biocycle.productStorageService.bean.StorageContainerBean;
+import com.biocycle.productStorageService.bean.controller.exception.OutOfStorageContainerException;
 import com.biocycle.productStorageService.bean.controller.proxy.StorageContainerCRUDMSProxy;
 
 @Service
@@ -22,7 +22,7 @@ public class ProductStorageManager {
 	@Autowired
 	StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
 	
-	public Optional<List<Integer>> getOptimizedStorageContainerSpace(int numberOfContainer){
+	public ResponseEntity<List<Integer>> getOptimizedStorageContainerSpace(int numberOfContainer){
 		Optional<List<StorageContainerBean>> emptyStorageContainerList =  storageContainerCRUDMSProxy.findEmptyStorageContainer();
 		if(!emptyStorageContainerList.isPresent()) {
 			//exception ...
@@ -49,7 +49,7 @@ public class ProductStorageManager {
 		optimalSpace = optimalSpace != null ? findOptimalContainerSuit(setOfFilledList, numberOfContainer) 
 											: findRandomContainerSuit(emptyStorageContainerList, numberOfContainer);
 
-		return Optional.of(toIdList(optimalSpace));		
+		return ResponseEntity.of(Optional.of(toIdList(optimalSpace)));		
 	}
 	
 	//UTILITY METHHOD
@@ -118,6 +118,10 @@ public class ProductStorageManager {
 	
 	//return a random set of container space 
 	private List<StorageContainerBean> findRandomContainerSuit(Optional<List<StorageContainerBean>> emptyContainerList, int numberOfContainer ){
+		
+		if(numberOfContainer > emptyContainerList.get().size()) {
+			throw new OutOfStorageContainerException("There is not enough free storage container space available for " + numberOfContainer + " more containers.");
+		}
 		
 		List<StorageContainerBean> randomSpace = new ArrayList<>();
 		for (int i = 0; i < numberOfContainer; i++) {

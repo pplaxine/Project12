@@ -21,4 +21,16 @@ public class StorageContainerHelper {
 		return storageContainerDtoList;
 	}
 	
+	public static List<StorageContainer> dtoListToEntityList(List<StorageContainerDto> storageContainerDtoList, StorageContainerDtoMapper storageContainerDtoMapper){
+		
+		List<StorageContainer> storageContainerList = new ArrayList<>();
+		
+		for (StorageContainerDto scd : storageContainerDtoList) {
+			StorageContainer sc = storageContainerDtoMapper.storageContainerDtoToStorageContainer(scd);
+			storageContainerList.add(sc);
+		}
+		
+		return storageContainerList;
+	}
+	
 }

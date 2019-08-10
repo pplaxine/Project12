@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biocycle.InventoryService.bean.ProductBatchBean;
+import com.biocycle.InventoryService.dto.ProductBatchDto;
 import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.service.ProductBatchManager;
 
@@ -22,8 +23,8 @@ public class InventoryServiceController {
 	private ProductBatchManager productbatchManager;
 	
 	@PostMapping(value = "/inventory/{numberOfContainer}")
-	public ResponseEntity<Void> createEntry(@RequestBody @Valid ProductBatchBean productBatch, @PathVariable int numberOfContainer){
-		return productbatchManager.createProductBatch(productBatch, numberOfContainer);
+	public ResponseEntity<Void> createEntry(@RequestBody @Valid ProductBatchDto productBatchDto, @PathVariable int numberOfContainer){
+		return productbatchManager.createProductBatch(productBatchDto, numberOfContainer);
 	}
 	
 }

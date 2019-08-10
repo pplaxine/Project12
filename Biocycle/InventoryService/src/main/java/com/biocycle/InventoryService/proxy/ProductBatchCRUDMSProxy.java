@@ -1,7 +1,5 @@
 package com.biocycle.InventoryService.proxy;
 
-import java.util.Optional;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,18 +8,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.biocycle.InventoryService.bean.ProductBatchBean;
+import com.biocycle.InventoryService.dto.ProductBatchBeanDto;
 
 @FeignClient(name = "productBatchCRUD", url = "localhost:9004")
 public interface ProductBatchCRUDMSProxy {
 	
 	@GetMapping(value = "/productbatches/{id}")
-	Optional<ProductBatchBean> findProductBatchById(@PathVariable("id") int id);
+	ProductBatchBeanDto findProductBatchById(@PathVariable("id") int id);
 	
 	@PostMapping(value = "/productbatches")
-	ResponseEntity<Void> addProductBatch(@RequestBody ProductBatchBean productBatch);
+	ResponseEntity<Void> addProductBatch(@RequestBody ProductBatchBeanDto productBatchBeanDto);
 	
 	@PutMapping(value = "/productbatches")
-	void updateProductBatch(@RequestBody ProductBatchBean productBatch);
+	void updateProductBatch(@RequestBody ProductBatchBeanDto productBatchBeanDto);
 	
 }
