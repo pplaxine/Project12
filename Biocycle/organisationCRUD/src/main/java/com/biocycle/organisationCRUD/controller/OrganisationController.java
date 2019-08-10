@@ -1,6 +1,7 @@
 package com.biocycle.organisationCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.biocycle.organisationCRUD.dao.OrganisationDao;
 import com.biocycle.organisationCRUD.dto.OrganisationDto;
 import com.biocycle.organisationCRUD.dto.mapper.OrganisationDtoMapper;
 import com.biocycle.organisationCRUD.exception.OrganisationNotFoundException;
+import com.biocycle.organisationCRUD.helper.OrganisationHelper;
 import com.biocycle.organisationCRUD.model.Organisation;
 
 @RestController
@@ -28,6 +30,19 @@ public class OrganisationController {
 	
 	@Autowired
 	private OrganisationDtoMapper organisationDtoMapper;
+	
+	//---- GET 
+	@GetMapping(value = "/organisations")
+	public ResponseEntity<List<OrganisationDto>> findAllOrganisation(){
+		List<Organisation> organisationList = organisationDao.findAll();
+		if(!organisationList.isEmpty()) {
+			throw new OrganisationNotFoundException("No organisation could be found.");
+		}
+		
+		List<OrganisationDto> organisationDtoList = OrganisationHelper.EntityListToDtoList(organisationList, organisationDtoMapper);
+		
+		return ResponseEntity.ok(organisationDtoList);
+	}
 	
 	@GetMapping(value="/organisations/{id}")
 	public OrganisationDto findOrganisationById(@PathVariable int id){
@@ -41,10 +56,14 @@ public class OrganisationController {
 		return organisationDtoMapper.organisationToOrganisationDto(organisation.get());
 	}
 	
+	//---- DELETE 
+	
 	@DeleteMapping(value = "/organisations/{id}")
 	public void deleteOrganisation(@PathVariable int id) {
 		organisationDao.deleteById(id);
 	}
+	
+	//---- POST
 	
 	@PostMapping(value = "/organisations")
 	public ResponseEntity<Void> addOrganisation(@RequestBody OrganisationDto organisationDto){
@@ -64,6 +83,8 @@ public class OrganisationController {
 	 	
 	 	return ResponseEntity.created(location).build();
 	}
+	
+	//---- PUT
 	
 	@PutMapping(value = "/organisations")
 	public void updateOrganisation(@RequestBody OrganisationDto organisationDto) {
