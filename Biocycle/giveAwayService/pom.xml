@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.biocycle</groupId>
-	<artifactId>customerManagmentService</artifactId>
+	<artifactId>giveAwayService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>customerManagmentService</name>
-	<description>Functonalities related organisations</description>
+	<name>giveAwayService</name>
+	<description>Functonalities related organisations give away</description>
 
 	<properties>
 		<java.version>1.8</java.version>
