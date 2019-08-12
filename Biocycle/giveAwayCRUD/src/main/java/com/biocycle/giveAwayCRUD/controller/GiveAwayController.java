@@ -1,6 +1,7 @@
 package com.biocycle.giveAwayCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.biocycle.giveAwayCRUD.dto.GiveAwayDto;
 import com.biocycle.giveAwayCRUD.dto.mapper.GiveAwayDtoMapper;
 import com.biocycle.giveAwayCRUD.exception.GiveAwayNotFoundException;
 import com.biocycle.giveAwayCRUD.model.GiveAway;
+import com.biocycle.giveAwayCRUD.model.helper.GiveAwayHelper;
 
 @RestController
 public class GiveAwayController {
@@ -28,6 +30,20 @@ public class GiveAwayController {
 	
 	@Autowired
 	private GiveAwayDtoMapper giveAwayDtoMapper;
+	
+	//---- GET 
+	@GetMapping(value = "/giveaways/active")
+	public ResponseEntity<List<GiveAwayDto>> findActiveGiveAway(){
+		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findAllActiveGiveAway();
+		
+		if(!activeGiveAwayList.isPresent()) {
+			throw new GiveAwayNotFoundException("No active giveAway could be found");
+		}
+		
+		List<GiveAwayDto> activeGiveAwayDtoList = GiveAwayHelper.EntityListToDtoList(activeGiveAwayList.get(), giveAwayDtoMapper);
+		
+		return ResponseEntity.ok(activeGiveAwayDtoList);
+	}
 	
 	@GetMapping(value = "/giveaways/{id}")
 	public GiveAwayDto findGiveAway(@PathVariable int id){
@@ -39,11 +55,13 @@ public class GiveAwayController {
 		return giveAwayDtoMapper.giveAwayToGiveAwayDto(giveAway.get());
 	}
 	
+	//---- DELETE
 	@DeleteMapping(value = "/giveaways/{id}")
 	public void deleteGiveAway(@PathVariable int id) {
 		giveAwayDao.deleteById(id);
 	}
 	
+	//---- POST 
 	@PostMapping(value = "/giveaways")
 	public ResponseEntity<Void> addGiveAway(@RequestBody GiveAwayDto giveAwayDto){
 		
@@ -64,6 +82,7 @@ public class GiveAwayController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	//---- PUT
 	@PutMapping(value = "/giveaways")
 	public void updateGiveAway(@RequestBody GiveAwayDto giveAwayDto) {
 		GiveAway giveAway = giveAwayDtoMapper.giveAwayDtoToGiveAway(giveAwayDto);
