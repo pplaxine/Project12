@@ -1,10 +1,12 @@
 package com.biocycle.giveAwayCRUD.controller;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,19 @@ public class GiveAwayController {
 	private GiveAwayDtoMapper giveAwayDtoMapper;
 	
 	//---- GET 
+	@GetMapping(value = "/giveaways/date/{date}")
+	public ResponseEntity<List<GiveAwayDto>> findActiveGiveAwayByDate(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
+		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findActiveGiveAwayByDate(date);
+		
+		if(!activeGiveAwayList.isPresent()) {
+			throw new GiveAwayNotFoundException("No active giveAway could be found");
+		}
+		
+		List<GiveAwayDto> activeGiveAwayDtoList = GiveAwayHelper.EntityListToDtoList(activeGiveAwayList.get(), giveAwayDtoMapper);
+		
+		return ResponseEntity.ok(activeGiveAwayDtoList);
+	}
+	
 	@GetMapping(value = "/giveaways/active")
 	public ResponseEntity<List<GiveAwayDto>> findActiveGiveAway(){
 		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findAllActiveGiveAway();

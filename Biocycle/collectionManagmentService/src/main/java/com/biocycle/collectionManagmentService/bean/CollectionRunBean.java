@@ -1,4 +1,4 @@
-package com.biocycle.collectionRunCRUD.dto;
+package com.biocycle.collectionManagmentService.bean;
 
 import java.time.LocalTime;
 import java.util.Date;
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter 
 @Setter
 @ToString(includeFieldNames = true, of = {"id","collectionRunDate","collectorId","globalEstimatedTime","startTime","endTime","containerIdList"})
-public class CollectionRunDto {
+public class CollectionRunBean {
 	
 	private int id;
 	private Date collectionRunDate;

@@ -1,5 +1,6 @@
 package com.biocycle.collectionRunCRUD.model;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter 
 @Setter
-@ToString(includeFieldNames = true, of = {"id","collectionRunDate","collectorId","startTime","endTime","containerIdList"})
+@ToString(includeFieldNames = true, of = {"id","collectionRunDate","collectorId","globalEstimatedTime","startTime","endTime","containerIdList"})
 public class CollectionRun {
 	
 	@Id
@@ -34,6 +35,7 @@ public class CollectionRun {
 	@NotNull
 	private Date collectionRunDate;
 	private Integer collectorId;
+	private LocalTime globalEstimatedTime;
 	private Date startTime;
 	private Date endTime; 
 	@ElementCollection
@@ -43,4 +45,5 @@ public class CollectionRun {
 	@Column(name = "container_id",unique = true)
 	@NotEmpty
 	private List<@NotNull Integer> containerIdList;
+	
 }

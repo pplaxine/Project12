@@ -45,7 +45,7 @@ public class OrganisationController {
 	}
 	
 	@GetMapping(value="/organisations/{id}")
-	public OrganisationDto findOrganisationById(@PathVariable int id){
+	public ResponseEntity<OrganisationDto> findOrganisationById(@PathVariable int id){
 		
 		Optional<Organisation> organisation = organisationDao.findById(id);
 		
@@ -53,7 +53,9 @@ public class OrganisationController {
 			throw new OrganisationNotFoundException("Organisation with id: " + id + " does not exist.");
 		}
 		
-		return organisationDtoMapper.organisationToOrganisationDto(organisation.get());
+		OrganisationDto organisationDto = organisationDtoMapper.organisationToOrganisationDto(organisation.get());
+		
+		return ResponseEntity.ok(organisationDto);
 	}
 	
 	//---- DELETE 

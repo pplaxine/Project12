@@ -18,6 +18,7 @@ public class GiveAwayController {
 	@Autowired
 	private GiveAwayCRUDMSProxy giveAwayCRUDProxy;
 	
+	//---- GET 
 	@GetMapping(value = "/giveaways/active")
 	ResponseEntity<List<GiveAwayBeanDto>> getAllActiveGiveAway(){
 		ResponseEntity<List<GiveAwayBeanDto>> resp = giveAwayCRUDProxy.getAllActiveGiveAway();
@@ -29,4 +30,6 @@ public class GiveAwayController {
 		}
 		return resp;
 	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.biocycle.giveAwayCRUD.dto;
+package com.biocycle.collectionManagmentService.bean;
 
 import java.util.Date;
 import java.util.List;
@@ -14,12 +14,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
-public class GiveAwayDto {
+public class GiveAwayBean {
 	
 	private int id;
 	private int organisationId;
-	private CollectionSpotAddressDto collectionSpotAddress;
 	private Date availableToBeCollectedFrom;
 	private Date collectionDate; 
-	private List<ContainerDto> containerList;
+	private List<Container> containerList;
 }
