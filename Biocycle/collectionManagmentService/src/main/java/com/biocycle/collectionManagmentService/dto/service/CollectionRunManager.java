@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.biocycle.collectionManagmentService.bean.CollectionRunBean;
+import com.biocycle.collectionManagmentService.bean.CollectionSpotAddress;
 import com.biocycle.collectionManagmentService.bean.GiveAwayBean;
 import com.biocycle.collectionManagmentService.bean.OrganisationBean;
 import com.biocycle.collectionManagmentService.dto.GiveAwayBeanDto;
@@ -57,19 +58,9 @@ public class CollectionRunManager {
 		for (GiveAwayBean gab : activeGiveAwayBeanList) {
 			
 			if(collectionRunBean.getContainerIdList().size() <= CONTAINER_PER_TRICYCLE && collectionRunBean.getGlobalEstimatedTime().isBefore(maxWorkingHoursADay)) {
-				ResponseEntity<OrganisationBeanDto> obResp = organisationCRUDMSProxy.getOrgnisationBeanById(gab.getOrganisationId());
-				if(obResp.getStatusCode() == HttpStatus.NO_CONTENT) {
-					//TODO exception 
-				}else if(obResp.getStatusCode() != HttpStatus.OK) {
-					//TODO exception
-				}
-				
-				OrganisationBean organisationBean = organisationBeanDtoMapper.organisationBeanDtoToOrganisationBean(obResp.getBody());
-				
-				
-				//get estimation from a to B 
-				//
-				
+
+				CollectionSpotAddress collectionSpotAddress = gab.getCollectionSpotAddress();
+
 				
 				//dispatch container by collectionRun 
 				

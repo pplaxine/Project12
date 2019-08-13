@@ -13,11 +13,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
+@ToString(of = {"id","organisationId","collectionSpotAddressDto","availableToBeCollectedFrom","collectionDate","containerList"})
 public class GiveAwayBeanDto {
 	
 	private int id;
 	private int organisationId;
+	private CollectionSpotAddressDto collectionSpotAddressDto;
 	private Date availableToBeCollectedFrom;
 	private Date collectionDate; 
 	private List<ContainerDto> containerList;
