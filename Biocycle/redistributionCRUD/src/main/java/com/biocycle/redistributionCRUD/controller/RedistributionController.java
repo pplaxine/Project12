@@ -30,7 +30,7 @@ public class RedistributionController {
 	private RedistributionDtoMapper redistributionDtoMapper;
 	
 	@GetMapping(value = "/redistributions/{id}")
-	public RedistributionDto redistribution (@PathVariable int id){
+	public ResponseEntity<RedistributionDto> findRedistributionById(@PathVariable int id){
 		
 		Optional<Redistribution> redistribution = redistributionDao.findById(id);
 		
@@ -38,7 +38,9 @@ public class RedistributionController {
 			throw new RedistributionNotFoundException("redistribution with id: " + id + " does not exist.");
 		}
 		
-		return redistributionDtoMapper.RedistribtionToRedistributionDto(redistribution.get());
+		RedistributionDto redistributionDto = redistributionDtoMapper.RedistribtionToRedistributionDto(redistribution.get());
+		
+		return ResponseEntity.ok(redistributionDto);
 	}
 	
 	@DeleteMapping(value = "/redistributions/{id}")

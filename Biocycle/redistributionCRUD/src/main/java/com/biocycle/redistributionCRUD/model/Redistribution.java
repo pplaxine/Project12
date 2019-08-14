@@ -38,7 +38,6 @@ public class Redistribution {
 		joinColumns = {@JoinColumn(name="redistribution_id", referencedColumnName = "id")} 
 		)
 	@Column(name = "productRequest_id",unique = true)
-	@NotEmpty
 	private List<Integer> productRequestId;
 	@Column(unique = true)
 	private Integer offerId;
