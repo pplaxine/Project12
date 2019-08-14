@@ -1,5 +1,6 @@
 package com.biocycle.productDispatchService.proxy;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.productDispatchService.dto.RedistributionBeanDto;
 
-@FeignClient(name = "redistributionCRUD", url = "localhost:9007")
+@FeignClient(name = "redistributionCRUD")
+@RibbonClient(name = "redistributionCRUD")
 public interface RedistributionCRUDMSProxy {
 	
 	@GetMapping(value = "/redistributions/{id}")

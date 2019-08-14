@@ -1,5 +1,6 @@
 package com.biocycle.productDispatchService.proxy;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.productDispatchService.dto.OfferBeanDto;
 
-@FeignClient(name = "offerCRUD", url = "localhost:9008")
+@FeignClient(name = "offerCRUD")
+@RibbonClient(name = "offerCRUD")
 public interface OfferCRUDMSProxy {
 	
 	@PostMapping(value = "/offers")

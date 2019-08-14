@@ -45,6 +45,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- RIBBON -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		</dependency>
+		
 		<!-- LOMBOK -->
 		<dependency>																	
 		    <groupId>org.projectlombok</groupId>

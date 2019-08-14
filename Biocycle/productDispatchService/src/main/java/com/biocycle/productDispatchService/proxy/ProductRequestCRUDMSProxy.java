@@ -2,6 +2,7 @@ package com.biocycle.productDispatchService.proxy;
 
 import java.util.List;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.biocycle.productDispatchService.dto.ProductRequestBeanDto;
 
-@FeignClient(name = "productRequestCRUD", url = "localhost:9006")
+@FeignClient(name = "productRequestCRUD")
+@RibbonClient(name = "productRequestCRUD")
 public interface ProductRequestCRUDMSProxy {
 	
 	@PostMapping(value = "/productrequests/list")

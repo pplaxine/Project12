@@ -35,7 +35,7 @@ public class OrganisationController {
 	@GetMapping(value = "/organisations")
 	public ResponseEntity<List<OrganisationDto>> findAllOrganisation(){
 		List<Organisation> organisationList = organisationDao.findAll();
-		if(!organisationList.isEmpty()) {
+		if(organisationList.isEmpty()) {
 			throw new OrganisationNotFoundException("No organisation could be found.");
 		}
 		

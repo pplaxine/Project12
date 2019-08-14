@@ -95,7 +95,6 @@ public class ProductDispatchManager {
 	}
 	
 	private ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean){
-		redistributionBean = null;	//test
 		RedistributionBeanDto redistributionBeanDto = redistributionBeanDtoMapper.redistributionBeanToRedistributionBeanDto(redistributionBean);
 		ResponseEntity<Void> resp = redistributionCRUDMSProxy.addRedistribution(redistributionBeanDto);
 		if(resp.getStatusCode() != HttpStatus.CREATED) {

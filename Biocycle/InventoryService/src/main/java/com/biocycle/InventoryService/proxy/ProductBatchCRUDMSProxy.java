@@ -1,5 +1,6 @@
 package com.biocycle.InventoryService.proxy;
 
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.InventoryService.dto.ProductBatchBeanDto;
 
-@FeignClient(name = "productBatchCRUD", url = "localhost:9004")
+@FeignClient(name = "productBatchCRUD")
+@RibbonClient(name = "productBatchCRUD")
 public interface ProductBatchCRUDMSProxy {
 	
 	@GetMapping(value = "/productbatches/{id}")
