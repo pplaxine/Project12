@@ -50,6 +50,7 @@ public class ProductRequestController {
 		return productRequestDtoMapper.productRequestToProductRequestDto(productRequest.get());
 	}
 	
+	
 	//---- DELETE 
 	@DeleteMapping(value = "/productrequests/{id}")
 	public void deleteProductRequest(@PathVariable int id) {
@@ -62,7 +63,9 @@ public class ProductRequestController {
 			productRequestDao.deleteById(productRequestId);
 		}
 	}
+
 	
+	//---- POST
 	@PostMapping(value = "/productrequests")
 	public ResponseEntity<Void> addProductRequest(@RequestBody ProductRequestDto productRequestDto){
 		
@@ -82,7 +85,6 @@ public class ProductRequestController {
 		return ResponseEntity.created(location).build();
 	}
 	
-	//---- POST
 	@PostMapping(value = "/productrequests/list")
 	@Transactional
 	public ResponseEntity<List<ProductRequestDto>> addProductRequestList(@RequestBody List<ProductRequestDto> productRequestDtoList){

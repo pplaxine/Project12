@@ -14,6 +14,7 @@ import com.biocycle.InventoryService.dto.ProductBatchDto;
 import com.biocycle.InventoryService.dto.StorageContainerBeanDto;
 import com.biocycle.InventoryService.dto.mapper.ProductBatchBeanMapper;
 import com.biocycle.InventoryService.dto.mapper.ProductBatchDtoMapper;
+import com.biocycle.InventoryService.exception.ProductBatchCreationErrorException;
 import com.biocycle.InventoryService.model.ProductBatch;
 import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.proxy.ProductStorageMSProxy;
@@ -23,11 +24,11 @@ import com.biocycle.InventoryService.proxy.StorageContainerCRUDMSProxy;
 public class ProductBatchManager {
 	
 	@Autowired
-	private ProductBatchCRUDMSProxy productBatchMsProxy;
+	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
 	@Autowired
-	private ProductStorageMSProxy productStorageMsProxy;
+	private ProductStorageMSProxy productStorageMSProxy;
 	@Autowired
-	private StorageContainerCRUDMSProxy storageContainerMsProxy;
+	private StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
 	@Autowired
 	private ProductBatchDtoMapper productBatchDtoMapper;
 	@Autowired
@@ -38,42 +39,26 @@ public class ProductBatchManager {
 		//Dto to model
 		ProductBatch productBatch = productBatchDtoMapper.productBatchDtoToProductBatch(productBatchDto);
 		
-		//Object construction -----
-		ResponseEntity<List<Integer>> storageContainerIdList = productStorageMsProxy.getOptimizedSpaceStorageContainers(numberOfContainer);
-		if(storageContainerIdList.getStatusCode() != HttpStatus.OK) {
-			return ResponseEntity.status(storageContainerIdList.getStatusCode()).build();
-		}
-		
+		//Get empty containers space 
+		ResponseEntity<List<Integer>> storageContainerIdList = productStorageMSProxy.getOptimizedSpaceStorageContainers(numberOfContainer);
 		productBatch.setStorageContainerId(storageContainerIdList.getBody());
 		
 		//model to Bean 
 		ProductBatchBean productBatchBean = productBatchBeanMapper.productBatchToProductBatchBean(productBatch);
-		
-		//Bean to Dto 
+		//Bean to BeanDto 
 		ProductBatchBeanDto productBatchBeanDto = productBatchDtoMapper.productBatchBeanToProductBatchBeanDto(productBatchBean);
 		
-		//ProductBatchCRUD MS call to persist data
-		ResponseEntity<Void> productBatchResp = productBatchMsProxy.addProductBatch(productBatchBeanDto);		
-		
-		//if data not persisted transfert response 
-		if(productBatchResp.getStatusCode() != HttpStatus.CREATED) {
-			return productBatchResp;
-		}
-		
-		//if data persisted update containers Status
-		Integer[]containerIdList = storageContainerIdList.getBody().stream().toArray(Integer[]::new);	//list to array 
-		Optional<List<StorageContainerBeanDto>> storageContainerBeanDtoList = storageContainerMsProxy.getStorageContainers(containerIdList);
-		if(!storageContainerBeanDtoList.isPresent()) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		storageContainerBeanDtoList.get().forEach(e -> e.setIsAvailable(false));
-		
-		ResponseEntity<Void> storageContainerResp = storageContainerMsProxy.updateStorageContainerList(storageContainerBeanDtoList.get());
-		if(storageContainerResp.getStatusCode() != HttpStatus.NO_CONTENT) {
-			return storageContainerResp;
-		}
+		//Persist productBatch 
+		ResponseEntity<Void> productBatchResp = productBatchCRUDMSProxy.addProductBatch(productBatchBeanDto);	
 
-		return productBatchResp;		//transfered to ProductBatchCRUD MS for persistence 
+		//Retrieve the StorageContainer been 
+		Integer[]containerIdList = storageContainerIdList.getBody().stream().toArray(Integer[]::new);	//list to array 
+		Optional<List<StorageContainerBeanDto>> storageContainerBeanDtoList = storageContainerCRUDMSProxy.getStorageContainers(containerIdList);
+		//set available to false 
+		storageContainerBeanDtoList.get().forEach(e -> e.setIsAvailable(false));
+		//persist StorageContainer list  
+		storageContainerCRUDMSProxy.updateStorageContainerList(storageContainerBeanDtoList.get());
+			
+		return productBatchResp;
 	}
 }

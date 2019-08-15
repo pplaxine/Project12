@@ -3,6 +3,7 @@ package com.biocycle.InventoryService.proxy;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,5 +24,8 @@ public interface ProductBatchCRUDMSProxy {
 	
 	@PutMapping(value = "/productbatches")
 	void updateProductBatch(@RequestBody ProductBatchBeanDto productBatchBeanDto);
+	
+	@DeleteMapping(value = "/productbatches/{id}")
+	void deleteProductBatch(@PathVariable("id") int id);
 	
 }

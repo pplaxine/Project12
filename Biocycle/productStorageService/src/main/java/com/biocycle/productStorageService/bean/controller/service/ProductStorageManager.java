@@ -23,10 +23,9 @@ public class ProductStorageManager {
 	StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
 	
 	public ResponseEntity<List<Integer>> getOptimizedStorageContainerSpace(int numberOfContainer){
+		
+		//get all empty storageContainer
 		Optional<List<StorageContainerBean>> emptyStorageContainerList =  storageContainerCRUDMSProxy.findEmptyStorageContainer();
-		if(!emptyStorageContainerList.isPresent()) {
-			//exception ...
-		}
 		
 		//find shelf / row / lev size  
 		String lastEmptyShelf = "A";
@@ -119,7 +118,7 @@ public class ProductStorageManager {
 	//return a random set of container space 
 	private List<StorageContainerBean> findRandomContainerSuit(Optional<List<StorageContainerBean>> emptyContainerList, int numberOfContainer ){
 		
-		if(numberOfContainer > emptyContainerList.get().size()) {
+		if(numberOfContainer > emptyContainerList.get().size()) {		
 			throw new OutOfStorageContainerException("There is not enough free storage container space available for " + numberOfContainer + " more containers.");
 		}
 		
