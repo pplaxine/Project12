@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Home</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home">
+		
+			<div class="col-sm-offset-4"> HOME PAGE !</div>
+			<div class="row text-light">
+				<div class="container-fluid">
+				
+					<ul>
+						<li>Redistribution id:  <span th:text="${rb.id}"></span></li>
+						<li>Organisation id: <span th:text="${rb.organisationId}"></span> </li>
+						<li>Requests :
+							<ul>
+								<li th:each="request : ${prList}">
+									<span th:text="${request.productRequested}"></span>
+								</li>
+							</ul>
+						</li>
+						<li>Is completed: <span th:text="${rb.isCompleted}"></span></li>
+					</ul>
+				</div>
+			</div>
+			
+			
+		</div>
+	</body>
+</html>
