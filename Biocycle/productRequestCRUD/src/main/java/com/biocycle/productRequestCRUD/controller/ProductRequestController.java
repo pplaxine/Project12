@@ -97,8 +97,8 @@ public class ProductRequestController {
 			ProductRequest prSaved;
 			try {
 				prSaved = productRequestDao.save(pr);
-			ProductRequestDto prSavedDto = productRequestDtoMapper.productRequestToProductRequestDto(prSaved);
-			prdList.add(prSavedDto);	
+				ProductRequestDto prSavedDto = productRequestDtoMapper.productRequestToProductRequestDto(prSaved);
+				prdList.add(prSavedDto);	
 			} catch (ConstraintViolationException e) {
 				throw new ConstrainTeaPotException("Contrain violation : " +e.getMessage());
 			}

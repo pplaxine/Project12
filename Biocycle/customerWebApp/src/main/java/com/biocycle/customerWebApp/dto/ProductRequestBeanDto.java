@@ -2,7 +2,7 @@ package com.biocycle.customerWebApp.dto;
 
 import java.math.BigDecimal;
 
-import com.biocycle.customerWebApp.bean.UnitOfMeasure;
+import com.biocycle.customerWebApp.bean.redistribution.UnitOfMeasure;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

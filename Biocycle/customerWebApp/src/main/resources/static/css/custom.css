@@ -30,6 +30,42 @@ body, html {
   
 }
 
+.bg_password_creation {
+		
+  background-image: url(/img/password_creation_bg.jpg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
+
+.bg_authentification {
+		
+  background-image: url(/img/authentification_bg.jpg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
+
+.container {
+		
+
+
+  height: 100%;
+
+
+  
+}
+
 
 .bg_dark_filter {
 		

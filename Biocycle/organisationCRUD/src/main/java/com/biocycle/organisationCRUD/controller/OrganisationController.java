@@ -1,10 +1,15 @@
 package com.biocycle.organisationCRUD.controller;
 
 import java.net.URI;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.biocycle.organisationCRUD.dao.OrganisationDao;
 import com.biocycle.organisationCRUD.dto.OrganisationDto;
 import com.biocycle.organisationCRUD.dto.mapper.OrganisationDtoMapper;
+import com.biocycle.organisationCRUD.exception.ConstrainTeaPotException;
 import com.biocycle.organisationCRUD.exception.OrganisationNotFoundException;
 import com.biocycle.organisationCRUD.helper.OrganisationHelper;
 import com.biocycle.organisationCRUD.model.Organisation;
@@ -71,19 +77,24 @@ public class OrganisationController {
 	public ResponseEntity<Void> addOrganisation(@RequestBody OrganisationDto organisationDto){
 		
 		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
-		
-		Organisation organi = organisationDao.save(organisation);		
-	 	if(organi == null) {
-	 		return ResponseEntity.noContent().build();
-	 	}
-	 	
-	 	URI location = ServletUriComponentsBuilder
-	 					.fromCurrentRequest()
-	 					.path("/{id}")
-	 					.buildAndExpand(organi.getId())
-	 					.toUri();
-	 	
-	 	return ResponseEntity.created(location).build();
+	
+	 	try {
+	 		Organisation organi = organisationDao.save(organisation);		
+	 	 	URI location = ServletUriComponentsBuilder
+ 					.fromCurrentRequest()
+ 					.path("/{id}")
+ 					.buildAndExpand(organi.getId())
+ 					.toUri();
+ 	
+	 	 	return ResponseEntity.created(location).build();
+	 	 	
+	 	} catch (Exception e) {
+			if(e.getClass() == DataIntegrityViolationException.class) {
+				throw new ConstrainTeaPotException("Contrain violation : " +e.getMessage());
+			}else {
+				throw e;
+			}
+		}
 	}
 	
 	//---- PUT

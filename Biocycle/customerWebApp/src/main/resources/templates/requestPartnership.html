@@ -8,6 +8,27 @@
 		<div class="bg_partnership_request">
 			
 			<div class="col-sm-offset-4"> PARTNERSHIP PAGE !</div>
+			<div th:if="!${info}">
+				<form action="#" th:action="@{/partnership/request/save}" th:object="${organisationBeanDto}" method="GET">
+					
+					Organisation Name: <input type="text" required="required" name="organisationName" th:field="*{organisationName}" /><br/>
+					email: <input type="email" required="required" name="emailAddress" th:field="*{emailAddress}" /><br/> 
+					address: <br/>
+					streetNumber; <input type="text" required="required" name="streetNumber" th:field="*{organisationAddress.streetNumber}" /><br/> 
+					streetName; <input type="text" required="required" name="streetName" th:field="*{organisationAddress.streetName}" /><br/> 
+					city; <input type="text" required="required" name="city" th:field="*{organisationAddress.city}" /><br/> 
+					postCode; <input type="text" required="required" name="postCode" th:field="*{organisationAddress.postCode}" /><br/>
+					phoneNumber <input type="tel" required="required" name="phoneNumber" th:field="*{phoneNumber}" /><br/> 
+					What kind of partnership are you looking for ? 
+					<input type="radio" id="isDonor" checked value="true" name="isDonor" th:checked="*{isValidated}" />
+					<label for="isDonor">I would like to be a donor partner</label>
+					<input type="radio" id="isReceiver" value="false" name="isDonor" th:checked="*{isValidated}" />
+					<label for="isReceiver">I would like to be receiver partner</label> <br/>
+					<button name="submit" type="submit" value="0">submit</button>
+				</form>
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+			</div>
+			<div th:if="${info}" th:text="${info}" class="text-success"></div>
 			
 		</div>
 	</body>

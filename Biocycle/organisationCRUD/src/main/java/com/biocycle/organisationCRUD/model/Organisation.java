@@ -3,6 +3,7 @@ package com.biocycle.organisationCRUD.model;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ public class Organisation {
 	@NotBlank
 	@Email
 	@Getter @Setter
+	@Column(unique = true)
 	private String emailAddress;
 	@JsonIgnore
 	@Getter @Setter
