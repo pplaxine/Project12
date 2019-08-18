@@ -20,6 +20,11 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("OrganisationCRUDMSProxy#addOrganisation(OrganisationBeanDto)") && response.status() == HttpStatus.I_AM_A_TEAPOT.value()) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ContraintViolationException in :" + response.request().url());
 		}
+		
+		if(methodKey.equals("OrganisationCRUDMSProxy#findOrganisationByEmail(String)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ContraintViolationException in :" + response.request().url());
+		}
+		
 		return new Exception(response.reason()); 
 	}
 	

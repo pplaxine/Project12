@@ -64,6 +64,21 @@ public class OrganisationController {
 		return ResponseEntity.ok(organisationDto);
 	}
 	
+	@GetMapping(value="/organisations/email/{email}")
+	public ResponseEntity<OrganisationDto> findOrganisationByEmail(@PathVariable String email){
+		
+		Optional<Organisation> organisation = organisationDao.findOrganisationByEmail(email);
+		
+		if(!organisation.isPresent()) {
+			throw new OrganisationNotFoundException("Organisation with email: " + email + " does not exist.");
+		}
+		
+		OrganisationDto organisationDto = organisationDtoMapper.organisationToOrganisationDto(organisation.get());
+		
+		return ResponseEntity.ok(organisationDto);
+	}
+	
+	
 	//---- DELETE 
 	
 	@DeleteMapping(value = "/organisations/{id}")
@@ -96,12 +111,13 @@ public class OrganisationController {
 			}
 		}
 	}
-	
+
 	//---- PUT
 	
 	@PutMapping(value = "/organisations")
-	public void updateOrganisation(@RequestBody OrganisationDto organisationDto) {
+	public ResponseEntity<Void> updateOrganisation(@RequestBody OrganisationDto organisationDto) {
 		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
 		organisationDao.save(organisation);
+		return ResponseEntity.ok().build();
 	}
 }

@@ -33,6 +33,12 @@ public class CustomerManagmentController {
 		return organisationManager.addOrganisation(organisationBeanDto);
 	}
 	
+	@PostMapping(value = "/organisations/password")
+	public ResponseEntity<Void> addPassword(@RequestBody OrganisationBeanDto organisationBeanDto){
+		return organisationManager.addPassword(organisationBeanDto);
+	}
+	
+	
 	
 	
 }
