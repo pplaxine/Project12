@@ -56,6 +56,19 @@ body, html {
   
 }
 
+.bg_user_space {
+		
+  background-image: url(/img/user_space_bg.jpg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
+
 .container {
 		
 

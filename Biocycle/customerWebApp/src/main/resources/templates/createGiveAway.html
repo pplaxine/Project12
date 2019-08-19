@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Create give away</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_user_space">
+
+			<div th:if="!${info}">
+				
+				
+				<div class="container-fluid text-light">
+					<div th:if="${session.containerViewDtoMap}">
+						<ul>
+							<li th:each="container : ${session.containerViewDtoMap}">
+								Container: <span th:text="${container.value.name}">
+								</span>
+								<a
+							th:href="@{|/user/giveaway/container/remove/${container.value.name}|}"> remove</a>
+
+						</li>
+						</ul>					
+					</div>
+					<br/>
+					<br/>
+					<form action="#" th:action="@{/user/giveaway/container}" method="GET">
+						<button name="submit" type="submit" value="0">add container</button>
+					</form>
+					<br/>
+					<br/>
+					<form action="#" th:action="@{/user/giveaway/create}" th:object="${giveAwayBeanDto}"  method="GET">
+						
+						When will it be available: <input type="datetime-local" required="required" name="availableToBeCollectedFrom" th:field="*{availableToBeCollectedFrom}" /><br/> 
+					<!--  	Which collection point: 
+						<select th:object="${collectionSpotAddress}">
+							<option th:each="collectionSpotAddress : ${session.organisation.collectionAddressList}" th:value="${collectionSpotAddress.value}" th:text="${collectionSpotAddress.value.spotName}"></option>							
+						</select> <br/>-->
+						
+						<button name="submit" type="submit" value="0">Create donation</button>
+					</form>
+					<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				</div>
+			</div>
+			<div th:if="${info}" th:text="${info}" class="text-success"></div>
+			
+		</div>
+	</body>
+</html>

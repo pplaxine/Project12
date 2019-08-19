@@ -1,4 +1,4 @@
-package com.biocycle.customerWebApp.dto;
+package com.biocycle.customerWebApp.dto.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(of = {"email","password","confPassword"})
-public class PasswordCreationDto {
+public class PasswordCreationViewDto {
 	
 	private String email;
 	private String password;

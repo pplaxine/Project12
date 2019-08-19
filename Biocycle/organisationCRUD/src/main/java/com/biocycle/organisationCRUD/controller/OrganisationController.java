@@ -1,16 +1,13 @@
 package com.biocycle.organisationCRUD.controller;
 
 import java.net.URI;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.ConstraintViolationException;
-
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +27,10 @@ import com.biocycle.organisationCRUD.model.Organisation;
 
 @RestController
 public class OrganisationController {
-
+	
+	//@Autowired
+	//private PasswordEncoder bcPasswordEncodeur;
+	
 	@Autowired
 	private OrganisationDao organisationDao;
 	
@@ -117,6 +117,8 @@ public class OrganisationController {
 	@PutMapping(value = "/organisations")
 	public ResponseEntity<Void> updateOrganisation(@RequestBody OrganisationDto organisationDto) {
 		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
+	//	String pwEncoded = bcPasswordEncodeur.encode(organisation.getPassword());
+	//	organisation.setPassword(pwEncoded);
 		organisationDao.save(organisation);
 		return ResponseEntity.ok().build();
 	}

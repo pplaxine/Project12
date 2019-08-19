@@ -17,4 +17,7 @@ public interface CustomerManagmentServiceProxy {
 	
 	@PostMapping(value = "/customermanagmentservice/organisations/password")
 	ResponseEntity<Void> addPassword(@RequestBody OrganisationBeanDto organisationBeanDto);
+	
+	
+	
 }

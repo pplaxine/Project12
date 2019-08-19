@@ -13,6 +13,7 @@ public class FeignErrorDecoder implements ErrorDecoder{
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		
+		//CustomerManagmentServiceProxy
 		if(methodKey.equals("CustomerManagmentServiceProxy#addOrganisation(OrganisationBeanDto)") && response.status() == 418) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "This email address is already registred.");
 		}
@@ -24,6 +25,18 @@ public class FeignErrorDecoder implements ErrorDecoder{
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No account with this email address found.");
 		}
 		
+		//GiveAwayServiceProxy
+		if(methodKey.equals("GiveAwayCRUDMSProxy#addGiveAway(GiveAwayBeanDto)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "Not Found ...");
+		}
+		if(methodKey.equals("GiveAwayCRUDMSProxy#addGiveAway(GiveAwayBeanDto)") && response.status() == 418) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "GiveAway already registreded ...");
+		}
+		
+		//OrganisationCRUDMSProxy
+		if(methodKey.equals("OrganisationCRUDMSProxy#findOrganisationByEmail(String)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy responed : Not Found");
+		}
 		
 		return new Exception(response.reason()); 
 	}

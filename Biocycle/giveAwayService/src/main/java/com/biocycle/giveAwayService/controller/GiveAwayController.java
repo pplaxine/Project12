@@ -6,17 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biocycle.giveAwayService.dto.GiveAwayBeanDto;
 import com.biocycle.giveAwayService.dto.proxy.GiveAwayCRUDMSProxy;
 import com.biocycle.giveAwayService.exception.GiveAwayNotFoundException;
+import com.biocycle.giveAwayService.service.GiveAwayManager;
 
 @RestController
 public class GiveAwayController {
 	
 	@Autowired
 	private GiveAwayCRUDMSProxy giveAwayCRUDProxy;
+	@Autowired
+	private GiveAwayManager giveAwayManager;
 	
 	//---- GET 
 	@GetMapping(value = "/giveaways/active")
@@ -30,6 +35,5 @@ public class GiveAwayController {
 		}
 		return resp;
 	}
-	
 	
 }

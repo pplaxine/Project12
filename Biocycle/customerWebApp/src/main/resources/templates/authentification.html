@@ -6,10 +6,12 @@
 	<body>
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_authentification">
-			<div class="container-fluid">
-				<div class="col-sm-offset-4 text-light"> Authentification PAGE !</div>
-				<div class="row text-light">
-				</div>
+			<div class="container-fluid text-light">
+				<form action="#" th:action="@{/authentification/login}" th:object="${authentificationDto}" method="GET">
+					Email: <input type="email" required="required" name="emailAddress" th:field="*{email}" /><br/> 
+					Password: <input type="password" required="required" name="emailAddress" th:field="*{password}" /><br/>
+					<button name="submit" type="submit" value="0">submit</button>
+				</form>
 			</div>
 			
 		</div>

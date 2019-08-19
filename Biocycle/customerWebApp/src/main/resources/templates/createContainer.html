@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Create container</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_user_space">
+
+			<div th:if="!${info}">
+				<div class="container-fluid text-light">
+					<form action="#" th:action="@{/user/giveaway/container/add}" th:object="${containerViewDto}"  method="GET">
+						Name : <input type="text" required="required" name="name" th:field="*{name}" /><br/> 
+						Description : <input type="text" required="required" name="description" th:field="*{description}" /><br/> 
+						<button name="submit" type="submit" value="0">add container</button>
+					</form>
+					<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				</div>
+			</div>
+			<div th:if="${info}" th:text="${info}" class="text-success"></div>
+			
+		</div>
+	</body>
+</html>

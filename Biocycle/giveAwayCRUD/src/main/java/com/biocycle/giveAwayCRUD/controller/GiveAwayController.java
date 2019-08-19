@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,19 +84,26 @@ public class GiveAwayController {
 		
 		GiveAway giveAway = giveAwayDtoMapper.giveAwayDtoToGiveAway(giveAwayDto);
 		
-		GiveAway ga = giveAwayDao.save(giveAway);
+//		try {
+//			GiveAway ga = giveAwayDao.save(giveAway);
+//			
+//			URI location = ServletUriComponentsBuilder
+//							.fromCurrentRequest()
+//							.path("/{id}")
+//							.buildAndExpand(ga.getId())
+//							.toUri();
+//			
+//			return ResponseEntity.created(location).build();
+//		} catch (Exception e) {
+//			if(e.getClass() == DataIntegrityViolationException.class) {
+//				return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+//			}else {
+//				throw e;
+//			}
+//		}	
 		
-		if(ga == null) {
-			return ResponseEntity.noContent().build();
-		}
-		
-		URI location = ServletUriComponentsBuilder
-						.fromCurrentRequest()
-						.path("/{id}")
-						.buildAndExpand(ga.getId())
-						.toUri();
-		
-		return ResponseEntity.created(location).build();
+		System.out.println("DODOOOOOOOOOOOOOOOOOOOOOO !");
+		return ResponseEntity.ok().build();			// A MODIF 
 	}
 	
 	//---- PUT
