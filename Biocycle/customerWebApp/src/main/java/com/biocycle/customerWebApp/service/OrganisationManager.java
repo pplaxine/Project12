@@ -1,10 +1,13 @@
 package com.biocycle.customerWebApp.service;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,12 +26,15 @@ public class OrganisationManager {
 	@Autowired
 	private CustomerManagmentServiceProxy customerManagmentServiceProxy;
 	
+	@Autowired
+	private PasswordEncoder bCryptPasswordEncoder;
 	
-	public void addUserInfoToSession(HttpSession session) {
+	public void addUserInfoToSession(HttpSession session, Principal principal) {
 		
 		if(session.getAttribute("organisation") == null) {
 			try {
-				OrganisationBeanDto organisationBeanDto = organisationCRUDMSProxy.findOrganisationByEmail("orga1@orange.fr").getBody();		//While not security set
+				//get email from Security 
+				OrganisationBeanDto organisationBeanDto = organisationCRUDMSProxy.findOrganisationByEmail(principal.getName()).getBody();		
 				session.setAttribute("organisation", organisationBeanDto);
 			} catch (ResponseStatusException e) {
 				if(e.getStatus() == HttpStatus.NOT_FOUND) {
@@ -36,7 +42,6 @@ public class OrganisationManager {
 				}else {
 					throw e;
 				}
-				
 			}
 		}
 	}
@@ -83,7 +88,7 @@ public class OrganisationManager {
 		//Persist Password
 		OrganisationBeanDto organisationBeanDto = new OrganisationBeanDto();
 		organisationBeanDto.setEmailAddress(passwordCreationViewDto.getEmail());
-		organisationBeanDto.setPassword(passwordCreationViewDto.getPassword());
+		organisationBeanDto.setPassword(bCryptPasswordEncoder.encode(passwordCreationViewDto.getPassword()));
 		
 		try {
 			ResponseEntity<Void> resp = customerManagmentServiceProxy.addPassword(organisationBeanDto);

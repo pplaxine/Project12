@@ -1,5 +1,7 @@
 package com.biocycle.customerWebApp.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.biocycle.customerWebApp.dto.GiveAwayBeanDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
 import com.biocycle.customerWebApp.dto.view.AuthentificationViewDto;
 import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
+import com.biocycle.customerWebApp.dto.view.GiveAwayViewDto;
 import com.biocycle.customerWebApp.dto.view.PasswordCreationViewDto;
 import com.biocycle.customerWebApp.service.GiveAwayManager;
 import com.biocycle.customerWebApp.service.OrganisationManager;
@@ -29,7 +32,7 @@ public class CustomerWebAppController {
 	@RequestMapping("/")
 	public String home(Model model, HttpSession session) {
 		
-		organisationManager.addUserInfoToSession(session); // while no security set !!!!!!!!!!!!!!!!!!!!!!!!
+		
 
 		
 		
@@ -88,36 +91,20 @@ public class CustomerWebAppController {
 		return organisationManager.savePassword(passwordCreationViewDto, model, red);
 	}
 	
-	//AUTHENTIFICATION
-	@RequestMapping("/authentification")
-	public String authentification(Model model, AuthentificationViewDto authentificationDto) {
-		model.addAttribute("authentificationDto", authentificationDto);
-		return "authentification";
-	}
-	
-	@RequestMapping("/authentification/login")
-	public String login(AuthentificationViewDto authentificationDto, Model model, RedirectAttributes red) {
-		
-		// recuperation du user ---> follow security
-		
-		System.out.println(authentificationDto.getEmail());
-		System.out.println(authentificationDto.getPassword());
-		return "authentification"; 
-	}
-	
-	
+
 	//GIVEAWAY 
 	@RequestMapping("/user/giveaway")
-	public String GiveAway(ContainerViewDto containerViewDto, Model model, HttpSession session) {
+	public String GiveAway(ContainerViewDto containerViewDto, Model model, HttpSession session, Principal principal) {
+		organisationManager.addUserInfoToSession(session, principal); 
 		//containers
 		giveawayManager.addContainerToMapInSession(containerViewDto, session);
 		//giveAway
-		model.addAttribute("giveAwayBeanDto", new GiveAwayBeanDto());
+		model.addAttribute("giveAwayViewDto", new GiveAwayViewDto());
 		return "createGiveAway";
 	}
 	@RequestMapping("/user/giveaway/create")
-	public String createGiveAway(GiveAwayBeanDto giveAwayBeanDto, Model model, RedirectAttributes red, HttpSession session) {
-		return giveawayManager.createGiveAway(giveAwayBeanDto, model, red, session);
+	public String createGiveAway(GiveAwayViewDto giveAwayViewDto, Model model, RedirectAttributes red, HttpSession session) {
+		return giveawayManager.createGiveAway(giveAwayViewDto, model, red, session);
 	}
 	@RequestMapping("/user/giveaway/container")
 	public String Container(ContainerViewDto containerViewDto, Model model) {

@@ -7,9 +7,9 @@
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_authentification">
 			<div class="container-fluid text-light">
-				<form action="#" th:action="@{/authentification/login}" th:object="${authentificationDto}" method="GET">
-					Email: <input type="email" required="required" name="emailAddress" th:field="*{email}" /><br/> 
-					Password: <input type="password" required="required" name="emailAddress" th:field="*{password}" /><br/>
+				<form action="#" th:action="@{/login.html}" method="POST">
+					Email: <input type="email" required="required" name="username"  /><br/> 
+					Password: <input type="password" required="required" name="password" /><br/>
 					<button name="submit" type="submit" value="0">submit</button>
 				</form>
 			</div>

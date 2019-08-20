@@ -84,26 +84,28 @@ public class GiveAwayController {
 		
 		GiveAway giveAway = giveAwayDtoMapper.giveAwayDtoToGiveAway(giveAwayDto);
 		
-//		try {
-//			GiveAway ga = giveAwayDao.save(giveAway);
-//			
-//			URI location = ServletUriComponentsBuilder
-//							.fromCurrentRequest()
-//							.path("/{id}")
-//							.buildAndExpand(ga.getId())
-//							.toUri();
-//			
-//			return ResponseEntity.created(location).build();
-//		} catch (Exception e) {
-//			if(e.getClass() == DataIntegrityViolationException.class) {
-//				return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
-//			}else {
-//				throw e;
-//			}
-//		}	
-		
-		System.out.println("DODOOOOOOOOOOOOOOOOOOOOOO !");
-		return ResponseEntity.ok().build();			// A MODIF 
+		try {
+			GiveAway ga = giveAwayDao.save(giveAway);
+			
+			//FIX 
+			
+			 //NEED TO HAVE ADDRESS
+			//---------------
+			
+			URI location = ServletUriComponentsBuilder
+							.fromCurrentRequest()
+							.path("/{id}")
+							.buildAndExpand(ga.getId())
+							.toUri();
+			
+			return ResponseEntity.created(location).build();
+		} catch (Exception e) {
+			if(e.getClass() == DataIntegrityViolationException.class) {
+				return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+			}else {
+				throw e;
+			}
+		}	
 	}
 	
 	//---- PUT

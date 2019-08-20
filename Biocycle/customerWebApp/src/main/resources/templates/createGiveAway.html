@@ -29,13 +29,13 @@
 					</form>
 					<br/>
 					<br/>
-					<form action="#" th:action="@{/user/giveaway/create}" th:object="${giveAwayBeanDto}"  method="GET">
+					<form action="#" th:action="@{/user/giveaway/create}" th:object="${giveAwayViewDto}"  method="GET">
 						
 						When will it be available: <input type="datetime-local" required="required" name="availableToBeCollectedFrom" th:field="*{availableToBeCollectedFrom}" /><br/> 
-					<!--  	Which collection point: 
-						<select th:object="${collectionSpotAddress}">
-							<option th:each="collectionSpotAddress : ${session.organisation.collectionAddressList}" th:value="${collectionSpotAddress.value}" th:text="${collectionSpotAddress.value.spotName}"></option>							
-						</select> <br/>-->
+						Which collection point: 
+						<select th:field="*{collectionSpotAddress}">
+							<option th:each="collectionSpotAddress : ${session.organisation.collectionAddressList}" th:value="${collectionSpotAddress.value.spotName}" th:text="${collectionSpotAddress.value.spotName}"></option>							
+						</select> <br/>
 						
 						<button name="submit" type="submit" value="0">Create donation</button>
 					</form>
