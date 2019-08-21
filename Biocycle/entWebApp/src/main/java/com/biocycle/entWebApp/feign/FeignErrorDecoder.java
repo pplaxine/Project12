@@ -15,8 +15,17 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		
 		//StaffCRUDMSProxy
 		if(methodKey.equals("StaffCRUDMSProxy#findStaffByUserName(String)") && response.status() == 404) {
-			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "Staff not found.");
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "StaffCRUDMSProxy#findStaffByUserName(String) replied : Staff not found.");
 		}
+		
+		//OrganisationCRUDMSProxy
+		if(methodKey.equals("OrganisationCRUDMSProxy#findAllOrganisationByIsValidated(boolean)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy#findAllOrganisationByIsValidated(boolean) replied : No organisation found.");
+		}
+		if(methodKey.equals("OrganisationCRUDMSProxy#findOrganisationById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy#findOrganisationById(int) replied : No organisation found.");
+		}
+		
 		
 		return new Exception("Feign Exception : Status " + response.status() + " . Error while accessing " + methodKey); 
 	}

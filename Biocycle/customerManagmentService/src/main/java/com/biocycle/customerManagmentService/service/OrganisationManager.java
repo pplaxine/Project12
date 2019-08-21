@@ -49,6 +49,9 @@ public class OrganisationManager {
 			if(organisationBeanDtoResp.getPassword() != null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).build();
 			}
+			if(organisationBeanDtoResp.getIsValidated()==false) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			}
 			
 			organisationBeanDtoResp.setPassword(organisationBeanDto.getPassword());
 			return organisationCRUDMSProxy.updateOrganisation(organisationBeanDtoResp);
@@ -61,8 +64,9 @@ public class OrganisationManager {
 			
 			throw e;
 		}
-
 	}
+	
+	
 	
 	//UTILITY METHOD 
 	private OrganisationBean addFirstSpotAddressFromOrganisationAddress(OrganisationBean organisationBean) {

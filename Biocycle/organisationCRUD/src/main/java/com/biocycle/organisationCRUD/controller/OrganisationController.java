@@ -78,6 +78,22 @@ public class OrganisationController {
 		return ResponseEntity.ok(organisationDto);
 	}
 	
+	@GetMapping(value="/organisations/validated/{isValidated}")
+	public ResponseEntity<List<OrganisationDto>> findAllOrganisationByIsValidated(@PathVariable boolean isValidated){
+		
+		Optional<List<Organisation>> organisationList = organisationDao.findAllOrganisationByIsValidated(isValidated);
+		
+		if(!organisationList.isPresent()) {
+			throw new OrganisationNotFoundException("No validated organisation found.");
+		}
+		List<OrganisationDto> organisationDtoList = OrganisationHelper.EntityListToDtoList(organisationList.get(), organisationDtoMapper);
+		
+		
+		return ResponseEntity.ok(organisationDtoList);
+	}
+	
+	
+	
 	
 	//---- DELETE 
 	
@@ -117,8 +133,6 @@ public class OrganisationController {
 	@PutMapping(value = "/organisations")
 	public ResponseEntity<Void> updateOrganisation(@RequestBody OrganisationDto organisationDto) {
 		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);
-	//	String pwEncoded = bcPasswordEncodeur.encode(organisation.getPassword());
-	//	organisation.setPassword(pwEncoded);
 		organisationDao.save(organisation);
 		return ResponseEntity.ok().build();
 	}

@@ -91,6 +91,7 @@ public class OrganisationManager {
 		organisationBeanDto.setPassword(bCryptPasswordEncoder.encode(passwordCreationViewDto.getPassword()));
 		
 		try {
+			
 			ResponseEntity<Void> resp = customerManagmentServiceProxy.addPassword(organisationBeanDto);
 
 			if(resp.getStatusCodeValue() == 200) {

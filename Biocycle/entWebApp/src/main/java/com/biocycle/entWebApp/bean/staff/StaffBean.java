@@ -1,4 +1,4 @@
-package com.biocycle.entWebApp.bean;
+package com.biocycle.entWebApp.bean.staff;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

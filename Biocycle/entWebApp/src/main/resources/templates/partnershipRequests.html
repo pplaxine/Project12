@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Home</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home">
+			
+			<div class="container pt-5">
+				
+				<h1 class="text-light pb-3">Partnership Requests</h1>
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+						<thead>
+						  <tr>
+						    <th scope="col"></th>
+						    <th scope="col">Organisation Name</th>
+						    <th scope="col">Address</th>
+						    <th scope="col">Email</th> 
+						    <th scope="col">Phone number</th>
+						    <th scope="col">Type</th>
+						    <th scope="col"></th>
+						  </tr>
+						</thead>
+						<tbody>
+							<tr th:each=" organisation : ${organisationBeanList}">
+								<th scope="row"></th>
+								<td th:text="${organisation.organisationName}" class="align-middle"></td>
+								<td>
+									<div>
+										<span th:text="${organisation.organisationAddress.streetNumber}"></span>
+										<span th:text="${organisation.organisationAddress.streetName}"></span>
+									</div>
+									<div th:text="${organisation.organisationAddress.city}"></div>
+									<div th:text="${organisation.organisationAddress.postCode}"></div>
+								</td>
+								<td th:text="${organisation.emailAddress}" class="align-middle"></td>
+								<td th:text="${organisation.phoneNumber}" class="align-middle"></td>
+								<td th:text="${organisation.isDonor} ? 'Donor':'Receiver'" class="align-middle"></td>
+								<td class="align-middle text-success"><a  th:href="@{|/cme/partnerships/requests/validate/${organisation.id}|}">Validate</a></td>
+							</tr>
+						</tbody>
+					</table>		
+			</div>
+		
+		</div>
+	</body>
+</html>
