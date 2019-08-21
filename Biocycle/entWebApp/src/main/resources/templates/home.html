@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Home</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home">
+			<td sec:authorize="!isAuthenticated()">
+				<div class="bg_dark_filter">
+					<div class="container h-100 ">
+						<div class="row h-100 justify-content-center align-items-center text-light">
+							<a href="/login" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Connect</a>
+						</div>			
+					</div>
+				</div>
+			</td>
+		</div>
+	</body>
+</html>

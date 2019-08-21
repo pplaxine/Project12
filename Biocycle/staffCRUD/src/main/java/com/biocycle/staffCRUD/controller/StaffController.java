@@ -41,6 +41,20 @@ public class StaffController {
 		return staffDtoMapper.staffToStaffDto(staff.get());
 	}
 	
+	@GetMapping(value = "/staff/username/{userName}")
+	public ResponseEntity<StaffDto> findStaffByUserName(@PathVariable String userName){
+		
+		Optional<Staff> staff = staffDao.findStaffByUserName(userName);
+		
+		if(!staff.isPresent()) {
+			throw new StaffNotFoundException("staff with id: " + userName + " does not exist.");
+		}
+		
+		StaffDto staffDto = staffDtoMapper.staffToStaffDto(staff.get());
+		
+		return ResponseEntity.ok(staffDto);
+	}
+	
 	@DeleteMapping(value = "/staff/{id}")
 	public void deleteStaff(@PathVariable int id) {
 		staffDao.deleteById(id);

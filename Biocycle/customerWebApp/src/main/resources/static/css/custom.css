@@ -30,6 +30,19 @@ body, html {
   
 }
 
+.bg_personal_space {
+		
+  background-image: url(/img/personal_space_bg.jpg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
+
 .bg_password_creation {
 		
   background-image: url(/img/password_creation_bg.jpg);
@@ -69,6 +82,19 @@ body, html {
   
 }
 
+.bg_redistribution_request {
+		
+  background-image: url(/img/redistribution_request_bg.jpg);
+
+  height: 100%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
+
 .container {
 		
 
@@ -79,10 +105,9 @@ body, html {
   
 }
 
-
 .bg_dark_filter {
 		
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
 
   height: 100%;
 

@@ -1,0 +1,62 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+	
+	<nav class="navbar navbar-expand-lg py-1 navbar-light bg-light">
+	
+	<div class="unselectable">
+	  <div class="navbar-brand font-weight-bold">Biocycle</div>
+	</div>
+	  
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent" sec:authorize="isAuthenticated()">
+	    <ul class="navbar-nav mr-auto" >
+	    	
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+	      </li>
+	      
+	      <!-- HR -->
+	      <span sec:authorize="hasAnyAuthority('HR','ADMIN')">
+		      <li class="nav-item">
+			      <a class="nav-link" href="/user/giveaway">HR !!!</a>
+			  </li>
+	      </span>
+	      
+	      <!-- CME -->
+	      <span sec:authorize="hasAnyAuthority('CME','ADMIN')">
+		      <li class="nav-item">
+			      <a class="nav-link" href="/user/giveaway">CME !!!</a>
+			  </li>
+	      </span>
+	      
+	      <!-- PME -->
+	      <span sec:authorize="hasAnyAuthority('PME','ADMIN')">
+		      <li class="nav-item">
+			      <a class="nav-link" href="/user/giveaway">PME !!!</a>
+			  </li>
+	      </span>
+	      
+	       <!-- CSE -->
+	      <span sec:authorize="hasAnyAuthority('CSE','ADMIN')">
+		      <li class="nav-item">
+			      <a class="nav-link" href="/user/giveaway">CSE !!!</a>
+			  </li>
+	      </span>
+    	</ul>
+
+		<ul  class="navbar-nav ml-auto">
+	    	<li>
+	    		Connected as <span sec:authentication="name" class="text-warning"></span>
+	    		
+      			<a href="/logout">logout</a>
+	    	</li>
+	    </ul>
+	
+		    
+	  </div>
+	</nav>
+</header>
+</html>

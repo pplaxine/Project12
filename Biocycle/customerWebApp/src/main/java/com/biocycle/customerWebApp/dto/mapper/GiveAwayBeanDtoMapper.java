@@ -8,9 +8,9 @@ import com.biocycle.customerWebApp.dto.GiveAwayBeanDto;
 
 
 @Mapper(componentModel = "spring")
-public interface GiveAwayDtoMapper {
+public interface GiveAwayBeanDtoMapper {
 	
-	GiveAwayBeanDto giveAwayToGiveAwayDto(GiveAwayBean giveAway);
-	GiveAwayBean giveAwayDtoToGiveAway(GiveAwayBeanDto giveAwayDto);
+	GiveAwayBeanDto giveAwayBeanToGiveAwayBeanDto(GiveAwayBean giveAwayBean);
+	GiveAwayBean giveAwayBeanDtoToGiveAwayBean(GiveAwayBeanDto giveAwayBeanDto);
 	
 }
