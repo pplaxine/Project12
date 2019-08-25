@@ -1,4 +1,4 @@
-package com.biocycle.customerWebApp.bean.giveAwayService;
+package com.biocycle.customerWebApp.bean.giveAway;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

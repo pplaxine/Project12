@@ -7,8 +7,86 @@
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_personal_space">
 
-			<div class="container-fluid">
-
+			<div class="container pt-5">
+				
+				<h1 class="text-light pb-3">Your donations</h1>
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				
+				<h5 class="pl-4">Awaiting to be collected</h5>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+						<thead>
+						  <tr>
+						    <th scope="col"></th>
+						    <th scope="col">To be collected from</th>
+						    <th scope="col">Collection spot</th>
+						    <th scope="col">Containers</th>
+						    <th scope="col">Status</th>
+					
+						  </tr>
+						</thead>
+						<tbody>
+							<tr th:each=" giveAway : ${giveAwayBeanDtoList}">  
+								<span th:if="${giveAway.isCollected != true}">
+									<th scope="row"></th>
+									<td th:text="${#temporals.format(giveAway.availableToBeCollectedFrom, 'dd-MM-yyyy HH:mm')}" class="align-middle"></td>
+									<td th:text="${giveAway.collectionSpotAddress.spotName}" class="align-middle"></td>
+									<td>
+										<div th:each="container : ${giveAway.containerList}">
+											<span th:text="${container.description}"></span>
+										</div>
+									</td>
+									<td>
+										<div th:each="container : ${giveAway.containerList}">
+											<span th:switch="${container.accepted}">
+												<span th:case="true" class="text-success">accepted</span>
+												<span th:case="false" class="text-danger">refused</span>
+												<span th:case=null class="text-warning">awaiting</span>
+											</span>
+										</div>
+									</td>
+								</span>
+							</tr> 
+						</tbody>
+					</table>
+					
+					<h5 class="pl-4 pt-5">Donation history</h5>
+					<table class="table table-dark mt-3" style="opacity:0.8">
+						<thead>
+						  <tr>
+						    <th scope="col"></th>
+						    <th scope="col">Collected date</th>
+						    <th scope="col">Containers</th>
+						    <th scope="col">Status</th>
+						  </tr>
+						</thead>
+						<tbody>
+							<tr th:each=" giveAway : ${giveAwayBeanDtoList}">  
+								<span th:if="${giveAway.isCollected == true}"> 
+								
+									<th scope="row"></th>
+									<td th:text="${#temporals.format(giveAway.collectionDate, 'dd-MM-yyyy HH:mm')}" class="align-middle"></td>
+									<td>
+										<div th:each="container : ${giveAway.containerList}">
+											<span th:text="${container.description}"></span>
+										</div>
+									</td>
+									<td>
+										<div th:each="container : ${giveAway.containerList}">
+											<span th:switch="${container.accepted}">
+												<span th:case="true" class="text-success">accepted</span>
+												<span th:case="false" class="text-danger">refused</span>
+												<span th:case=null class="text-warning">awaiting</span>
+											</span>
+										</div>
+									</td>
+									
+									
+								</span>
+							</tr> 
+						</tbody>
+					</table>
+					
+							
 			</div>
 			
 		</div>

@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString(of = {"name","description","accepted","collectionRunId","isCollected"})
 public class ContainerViewDto {
 	
+	private String id;
 	private String name;
 	private String description;
 	private Boolean accepted;

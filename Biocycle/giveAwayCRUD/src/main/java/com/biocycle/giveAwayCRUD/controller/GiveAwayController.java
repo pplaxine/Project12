@@ -62,6 +62,19 @@ public class GiveAwayController {
 		return ResponseEntity.ok(activeGiveAwayDtoList);
 	}
 	
+	@GetMapping(value = "/giveaways/all/{organisationId}")
+	public ResponseEntity<List<GiveAwayDto>> findAllGiveAwayByOrganisationId(@PathVariable int organisationId){
+		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findAllGiveAwayByOrganisationId(organisationId);
+		
+		if(!activeGiveAwayList.isPresent()) {
+			throw new GiveAwayNotFoundException("No active giveAway could be found");
+		}
+		
+		List<GiveAwayDto> activeGiveAwayDtoList = GiveAwayHelper.EntityListToDtoList(activeGiveAwayList.get(), giveAwayDtoMapper);
+		
+		return ResponseEntity.ok(activeGiveAwayDtoList);
+	}
+	
 	@GetMapping(value = "/giveaways/{id}")
 	public GiveAwayDto findGiveAway(@PathVariable int id){
 		Optional<GiveAway> giveAway = giveAwayDao.findById(id);

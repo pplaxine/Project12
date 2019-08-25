@@ -12,6 +12,6 @@ import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 @RibbonClient(name = "redistributionCRUD")
 public interface RedistributionCRUDMSProxy {
 	
-	@GetMapping(value = "/redistributioncrud/redistributions/{id}")
-	ResponseEntity<RedistributionBeanDto> getRedistributionById(@PathVariable("id") int id);
+//	@GetMapping(value = "/redistributioncrud/redistributions/{id}")
+//	ResponseEntity<RedistributionBeanDto> getRedistributionById(@PathVariable("id") int id);
 }

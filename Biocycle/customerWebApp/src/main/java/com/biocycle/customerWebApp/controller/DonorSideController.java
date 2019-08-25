@@ -3,6 +3,7 @@ package com.biocycle.customerWebApp.controller;
 import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,8 @@ public class DonorSideController {
 	
 	// OFFERS 				---------------------------------------------------------------------------------------	
 	@RequestMapping("/user/donations")
-	public String offers() {
-		return "donorPersoSpace";
+	public String offers(Model model, HttpSession session, Principal principal) {
+		organisationManager.addUserInfoToSession(session, principal); 
+		return giveawayManager.giveAway(model, session);
 	}
 }

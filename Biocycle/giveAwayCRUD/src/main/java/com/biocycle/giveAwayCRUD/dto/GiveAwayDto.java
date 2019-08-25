@@ -1,7 +1,11 @@
 package com.biocycle.giveAwayCRUD.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +23,10 @@ public class GiveAwayDto {
 	private int id;
 	private int organisationId;
 	private CollectionSpotAddressDto collectionSpotAddress;
-	private Date availableToBeCollectedFrom;
-	private Date collectionDate; 
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private LocalDateTime availableToBeCollectedFrom;
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private LocalDateTime collectionDate; 
 	private List<ContainerDto> containerList;
+	private Boolean isCollected;
 }

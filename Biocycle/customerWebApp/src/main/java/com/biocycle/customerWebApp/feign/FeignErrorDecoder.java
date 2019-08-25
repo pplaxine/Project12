@@ -25,6 +25,11 @@ public class FeignErrorDecoder implements ErrorDecoder{
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No account with this email address found.");
 		}
 		
+		//OrganisationCRUDMSProxy
+		if(methodKey.equals("OrganisationCRUDMSProxy#findOrganisationByEmail(String)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy responed : Not Found");
+		}
+
 		//GiveAwayServiceProxy
 		if(methodKey.equals("GiveAwayCRUDMSProxy#addGiveAway(GiveAwayBeanDto)") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "Not Found ...");
@@ -32,13 +37,15 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("GiveAwayCRUDMSProxy#addGiveAway(GiveAwayBeanDto)") && response.status() == 418) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "GiveAway already registreded ...");
 		}
-		
-		//OrganisationCRUDMSProxy
-		if(methodKey.equals("OrganisationCRUDMSProxy#findOrganisationByEmail(String)") && response.status() == 404) {
-			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy responed : Not Found");
+		if(methodKey.equals("GiveAwayCRUDMSProxy#findAllGiveAwayByOrganisationId(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No GiveAway could be found.");
 		}
-		
-		return new Exception(response.reason()); 
+
+		//ProductDispatchServiceProxy
+		if(methodKey.equals("ProductDispatchServiceProxy#addRedistributionForRequest(int,List)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductDispatchServiceProxy responed : Not Found");
+		}
+		return new Exception(methodKey +" : " + response.reason()); 
 	}
 	
 }

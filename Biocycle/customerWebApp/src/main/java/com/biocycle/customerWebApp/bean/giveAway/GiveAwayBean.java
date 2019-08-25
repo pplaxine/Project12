@@ -1,6 +1,6 @@
-package com.biocycle.customerWebApp.bean.giveAwayService;
+package com.biocycle.customerWebApp.bean.giveAway;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -13,13 +13,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
+@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList","isCollected"})
 public class GiveAwayBean {
 	
 	private int id;
 	private int organisationId;
 	private CollectionSpotAddress collectionSpotAddress;
-	private Date availableToBeCollectedFrom;
-	private Date collectionDate; 
+	private LocalDateTime availableToBeCollectedFrom;
+	private LocalDateTime collectionDate; 
 	private List<Container> containerList;
+	private Boolean isCollected;
 }

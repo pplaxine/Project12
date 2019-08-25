@@ -11,6 +11,6 @@ import com.biocycle.customerWebApp.dto.ProductRequestBeanDto;
 @RibbonClient(name = "productRequestCRUD")
 public interface ProductRequestCRUDMSProxy {
 	
-	@GetMapping(value = "/productrequestcrud/productrequests/{id}")
-	ProductRequestBeanDto findProductRequestById(@PathVariable("id") int id);
+//	@GetMapping(value = "/productrequestcrud/productrequests/{id}")
+//	ProductRequestBeanDto findProductRequestById(@PathVariable("id") int id);
 }

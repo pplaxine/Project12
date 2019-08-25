@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
+@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList","isCollected"})
 public class GiveAwayBeanDto {
 	
 	private int id;
@@ -25,6 +25,8 @@ public class GiveAwayBeanDto {
 	private CollectionSpotAddressDto collectionSpotAddress;
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime availableToBeCollectedFrom;
-	private Date collectionDate; 
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private LocalDateTime collectionDate; 
 	private List<ContainerDto> containerList;
+	private Boolean isCollected;
 }

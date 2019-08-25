@@ -1,7 +1,11 @@
 package com.biocycle.giveAwayService.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.biocycle.giveAwayService.bean.CollectionSpotAddress;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,13 +20,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationId","collectionSpotAddress","availableToBeCollectedFrom","collectionDate","containerList"})
+@ToString(of = {"id","organisationId","collectionSpotAddress","availableToBeCollectedFrom","collectionDate","containerList","isCollected"})
 public class GiveAwayBeanDto {
 	
 	private int id;
 	private int organisationId;
 	private CollectionSpotAddress collectionSpotAddress;
-	private Date availableToBeCollectedFrom;
-	private Date collectionDate; 
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private LocalDateTime availableToBeCollectedFrom;
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	private LocalDateTime collectionDate; 
 	private List<ContainerDto> containerList;
+	private Boolean isCollected;
 }

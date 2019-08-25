@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,6 +30,7 @@ public class GiveAwayManager {
 	@Autowired
 	private GiveAwayCRUDMSProxy giveAwayCRUDMSProxy;
 	
+	//---- GIVE AWAY CREATION 
 	@SuppressWarnings("unchecked")
 	public void addContainerToMapInSession(ContainerViewDto containerViewDto, HttpSession session){
 		
@@ -40,7 +43,10 @@ public class GiveAwayManager {
 				containerViewDtoMap = (Map<String, ContainerViewDto>)session.getAttribute("containerViewDtoMap");
 			}
 
-			containerViewDtoMap.put(containerViewDto.getName(), containerViewDto);
+			//generate id
+			containerViewDto.setId(UUID.randomUUID().toString());
+			
+			containerViewDtoMap.put(containerViewDto.getId(), containerViewDto);
 			session.setAttribute("containerViewDtoMap", containerViewDtoMap);
 		}
 	}
@@ -50,16 +56,16 @@ public class GiveAwayManager {
 		
 		Map<String, ContainerViewDto> containerViewDtoMap = (Map<String, ContainerViewDto>)session.getAttribute("containerViewDtoMap");
 		
-		if( containerViewDtoMap ==null || containerViewDtoMap.size() <= 0) {
+		if( containerViewDtoMap == null || containerViewDtoMap.size() <= 0) {
 			String error ="You have to add at least one container to your donation.";
 			model.addAttribute("error", error);
 			return "createGiveAway";
 		}
 		
 		try {
-			
 				GiveAwayBeanDto giveAwayBeanDto = new GiveAwayBeanDto();
-			
+				giveAwayBeanDto.setIsCollected(false);
+				
 				//list of container added to giveAway
 				List<ContainerDto> containerDtoList = ViewDtoMapToDtoList(containerViewDtoMap);
 				giveAwayBeanDto.setContainerList(containerDtoList);
@@ -92,11 +98,9 @@ public class GiveAwayManager {
 				}else {
 					String error ="Error occured while persisting your donation.";
 					model.addAttribute("error", error);
-					System.out.println(e.getMessage());
+					e.printStackTrace();
 					return "createGiveAway";
 				}
-				
-				
 			}
 		
 		return "redirect:/user/giveaway";
@@ -109,6 +113,33 @@ public class GiveAwayManager {
 		session.setAttribute("containerViewDtoMap", containerViewDtoMap);
 		return "redirect:/user/giveaway";
 	}
+	
+	//---- GIVE AWAY MANAGMENT 
+	
+	public String giveAway(Model model, HttpSession session) {
+		OrganisationBeanDto organisationBeanDto = (OrganisationBeanDto)session.getAttribute("organisation");
+		
+		try {
+			ResponseEntity<List<GiveAwayBeanDto>> giveAwayBeanDtoList = giveAwayCRUDMSProxy.findAllGiveAwayByOrganisationId(organisationBeanDto.getId());
+			model.addAttribute("giveAwayBeanDtoList", allContainerRefusedChecker(giveAwayBeanDtoList.getBody()));
+			
+		} catch (Exception e) {
+			if(e.getClass() == ResponseStatusException.class) {
+				String error ="Error occured while researching for your donations.";
+				model.addAttribute("error", error);
+				return "donorPersoSpace";
+			}else {
+				String error ="Error occured while researching for your donations.";
+				model.addAttribute("error", error);
+				System.out.println(e.getMessage());
+				return "donorPersoSpace";
+			}
+		}
+		
+		
+		return "donorPersoSpace";
+	}
+	
 	
 	
 	//UTILITY METHODS
@@ -124,7 +155,28 @@ public class GiveAwayManager {
 	private ContainerDto containerViewDtoToContainerDto(ContainerViewDto containerViewDto) {
 		ContainerDto containerDto = new ContainerDto();
 		containerDto.setDescription(containerViewDto.getDescription());
+		containerDto.setIsCollected(false);
 		return containerDto;
 	}
 	
+	private List<GiveAwayBeanDto> allContainerRefusedChecker(List<GiveAwayBeanDto> giveAwayBeanDtoListIn) {
+		List<GiveAwayBeanDto> giveAwayBeanDtout = new ArrayList<>();  
+		giveAwayBeanDtoListIn.forEach(e -> {
+			List<ContainerDto> containerDtoList = e.getContainerList();
+
+			boolean allContainerRefused = true;
+			for (ContainerDto containerDto : containerDtoList) {
+				if(containerDto.getAccepted() == null || containerDto.getAccepted() == true) {		
+					allContainerRefused = false;
+				}
+			}
+			
+			if(allContainerRefused) {
+				e.setCollectionDate(null);
+				e.setIsCollected(true);
+			}
+			giveAwayBeanDtout.add(e);
+		});
+		return giveAwayBeanDtoListIn;
+	}
 }

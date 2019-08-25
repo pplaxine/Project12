@@ -21,4 +21,6 @@ public interface GiveAwayDao extends JpaRepository<GiveAway, Integer>{
 			+ "AND GIVE_AWAY.AVAILABLE_TO_BE_COLLECTED_FROM < DATEADD(day,1, :date)"
 			,nativeQuery = true)
 	Optional<List<GiveAway>> findActiveGiveAwayByDate(Date date);
+	
+	Optional<List<GiveAway>> findAllGiveAwayByOrganisationId(int organisationId);
 }

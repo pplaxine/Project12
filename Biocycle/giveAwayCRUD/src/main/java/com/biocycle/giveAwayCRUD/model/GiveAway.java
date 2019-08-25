@@ -25,7 +25,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationId","availableToBeCollectedFrom","collectionDate","containerList"})
+@ToString(of = {"id","organisationId","availableToBeCollectedFrom","isCollected","collectionDate","containerList"})
 public class GiveAway {
 	
 	@Id
@@ -43,5 +43,5 @@ public class GiveAway {
 	@JoinColumn(name = "GIVEAWAY_ID")
 	@NotEmpty
 	private List<@NotNull Container> containerList;
-	
+	private Boolean isCollected;
 }
