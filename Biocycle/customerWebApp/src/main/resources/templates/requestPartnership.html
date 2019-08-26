@@ -7,29 +7,72 @@
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_partnership_request">
 			
-			<div class="col-sm-offset-4"> PARTNERSHIP PAGE !</div>
-			<div th:if="!${info}">
-				<form action="#" th:action="@{/partnership/request/save}" th:object="${organisationBeanDto}" method="GET">
-					
-					Organisation Name: <input type="text" required="required" name="organisationName" th:field="*{organisationName}" /><br/>
-					email: <input type="email" required="required" name="emailAddress" th:field="*{emailAddress}" /><br/> 
-					address: <br/>
-					streetNumber; <input type="text" required="required" name="streetNumber" th:field="*{organisationAddress.streetNumber}" /><br/> 
-					streetName; <input type="text" required="required" name="streetName" th:field="*{organisationAddress.streetName}" /><br/> 
-					city; <input type="text" required="required" name="city" th:field="*{organisationAddress.city}" /><br/> 
-					postCode; <input type="text" required="required" name="postCode" th:field="*{organisationAddress.postCode}" /><br/>
-					phoneNumber <input type="tel" required="required" name="phoneNumber" th:field="*{phoneNumber}" /><br/> 
-					What kind of partnership are you looking for ? 
-					<input type="radio" id="isDonor" checked value="true" name="isDonor" th:checked="*{isValidated}" />
-					<label for="isDonor">I would like to be a donor partner</label>
-					<input type="radio" id="isReceiver" value="false" name="isDonor" th:checked="*{isValidated}" />
-					<label for="isReceiver">I would like to be receiver partner</label> <br/>
-					<button name="submit" type="submit" value="0">submit</button>
-				</form>
-				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+			<div class="pl-3"> 
+				<h2 class="pt-4 pb-5 text-success">Request a partnership</h2>
+				<div class="row h-100 justify-content-center align-items-center">
+					<div th:if="!${info}" class="col-md-6 col-lg-4 text-light">
+						<form action="#" th:action="@{/partnership/request/save}" th:object="${organisationBeanDto}" method="GET" class="bg_dark_filter rounded pt-2 pb-4">
+							<div class="form-group col-sm-12">
+							<label for="organisationName">Organisation Name: </label>
+							<input type="text" required="required" id="Organisation Name" name="organisationName" th:field="*{organisationName}" class="form-control" placeholder="Enter organisation name"/>
+							</div>
+							<div class="form-group col-sm-12">
+							<label for="email">Email: </label>
+							<input type="email" required="required" id="email" name="emailAddress" th:field="*{emailAddress}" class="form-control" placeholder="Enter email"/>
+							</div>
+							
+							<div class="form-row col-sm-12">
+								<div class="form-group col-sm-4">
+								<label for="streetNumber">Street number:  </label>
+								<input type="text" required="required" id="streetNumber" name="streetNumber" th:field="*{organisationAddress.streetNumber}" class="form-control" placeholder="Street number"/> 
+								</div>
+								
+								<div class="form-group col-sm-8">
+								<label for="streetName">Street name: </label>
+								<input type="text" required="required" name="streetName" id="streetName" th:field="*{organisationAddress.streetName}" class="form-control" placeholder="Enter street name"/>
+								</div>
+							</div>
+							
+							<div class="form-row col-sm-12">
+								<div class="form-group col-sm-8">
+								<label for="city">City: </label>
+								<input type="text" required="required" id="city" name="city" th:field="*{organisationAddress.city}" class="form-control" placeholder="Enter city"/>
+								</div>
+								
+								<div class="form-group col-sm-4">
+								<label for="postCode">Post code:</label>
+								 <input type="text" required="required" id="postCode" name="postCode" th:field="*{organisationAddress.postCode}" class="form-control" placeholder="Post code"/>
+								</div>
+							</div>
+							
+							<div class="form-group col-sm-8">
+							<label for="phoneNymbere">Phone number: </label>
+							<input type="tel" required="required" id="phoneNumber" name="phoneNumber" th:field="*{phoneNumber}"class="form-control" placeholder="Phone number"/>
+							</div>
+							
+							<fieldset class="form-group col-sm-12">
+								<div class="row">
+									<legend class="col-form-label col-sm-12 pt-0">What kind of partnership are you looking for ?</legend>
+									<div class="col-sm-10 pl-5"> 
+										<div class="form-check">
+											<input type="radio" id="isDonor1" checked value="true" name="isDonor" th:checked="*{isValidated} " class="form-check-input" />
+											<label class="form-check-label" for="isDonor">I would like to be a donor partner</label>
+										</div>
+										<div class="form-check">
+											<input type="radio" id="isReceiver" value="false" name="isDonor" th:checked="*{isValidated}"  class="form-check-input" />
+											<label class="form-check-label" for="isReceiver">I would like to be receiver partner</label> 
+										</div>
+									</div>
+								</div>
+							</fieldset> <br/>
+							
+							<button class="btn btn-success ml-5" name="submit" type="submit" value="0">submit</button>
+						</form>
+						<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+					</div>
+				</div>
+				<div th:if="${info}" th:text="${info}" class="text-success"></div>
 			</div>
-			<div th:if="${info}" th:text="${info}" class="text-success"></div>
-			
 		</div>
 	</body>
 </html>

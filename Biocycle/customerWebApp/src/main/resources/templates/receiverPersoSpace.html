@@ -22,13 +22,12 @@
 					    <th scope="col">Offer</th>
 					    <th scope="col">Offer ending date</th>
 					    <th scope="col"></th>
-				
 					  </tr>
 					</thead>
 					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
 					 	
-							<div th:if="${redistributionViewDto.isCompleted == false  && (redistributionViewDto.offerViewDto == null || ( redistributionViewDto.offerViewDto != null && redistributionViewDto.offerViewDto.offerEndingDate < $now ) ) }">
+							<div th:if="${redistributionViewDto.isCompleted == false  && (redistributionViewDto.offerViewDto == null || ( redistributionViewDto.offerViewDto != null && redistributionViewDto.offerViewDto.offerEndingDate > $now && redistributionViewDto.offerViewDto.isAccepted == null)) }">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<td>
@@ -52,11 +51,11 @@
 									</td>
 									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td> 
 									<td class="align-middle">
-										<a>															<!-- controller /update completed true; but accepted yes  -->
+										<a th:href="@{|/user2/offers/accept/${redistributionViewDto.offerViewDto.id}|}">								<!-- controller /update accepted yes  -->
 											<span th:text="accept" class="text-success"></span> 
 										</a>
 										<span th:text="'|'" class="text-light"></span>
-										<a>															<!-- controller /update completed true; but accepted false  -->
+										<a th:href="@{|/user2/offers/refuse/${redistributionViewDto.offerViewDto.id}|}">															<!-- controller /update accepted false  -->
 											<span th:text="refuse" class="text-warning"></span>
 										</a>
 									</td> 
@@ -66,8 +65,9 @@
 						</tr> 
 					</tbody>
 				</table> 
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
 				
-				<h5 class="pl-4">Offers accepted</h5>
+				<h5 class="pl-4 pt-3">Offers accepted</h5>
 				<table class="table table-dark mt-3" style="opacity:0.8">
 					<thead>
 					  <tr>
@@ -83,7 +83,7 @@
 					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">
 					 	<div th:if="${redistributionViewDto.offerViewDto != null}">  
-							<div th:if="${(redistributionViewDto.isCompleted == true || redistributionViewDto.isCompleted == null) && redistributionViewDto.offerViewDto.offerEndingDate < $now}">
+							<div th:if="${redistributionViewDto.offerViewDto.isAccepted == true && redistributionViewDto.isCompleted == false && redistributionViewDto.offerViewDto.offerEndingDate > $now}">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<div th:if="${redistributionViewDto.offerViewDto != null}">
@@ -97,7 +97,7 @@
 									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.availableForCollection, 'dd-MM-yyyy')}" class="align-middle"></td>
 									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td>  
 									<td class="align-middle">
-										<a>															<!-- controller /update completed yes; but accepted false  -->
+										<a th:href="@{|/user2/offers/refuse/${redistributionViewDto.offerViewDto.id}|}">															<!-- controller /update completed yes; but accepted false  -->
 											<span th:text="cancel" class="text-danger"></span>
 										</a>
 									</td> 
@@ -108,7 +108,7 @@
 					</tbody>
 				</table>   
 				
-				<h5 class="pl-4">Previous offers</h5>
+				<h5 class="pl-4 pt-3">Previous offers</h5>
 				<table class="table table-dark mt-3" style="opacity:0.8">
 					<thead>
 					  <tr>
@@ -125,7 +125,7 @@
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
 							
 						<div th:if="${redistributionViewDto.offerViewDto != null}">
-							<div th:if="${redistributionViewDto.isCompleted == true || redistributionViewDto.offerViewDto.offerEndingDate > $now}">
+							<div th:if="${redistributionViewDto.isCompleted == true || redistributionViewDto.offerViewDto.offerEndingDate < $now || (redistributionViewDto.isCompleted == false && redistributionViewDto.offerViewDto.isAccepted == false)}">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<td>

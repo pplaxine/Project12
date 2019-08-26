@@ -68,9 +68,13 @@ public class OfferController {
 	}
 	
 	@PutMapping(value = "/offers")
-	public void updateOffer(@RequestBody OfferDto offerDto) {
+	public ResponseEntity<Void> updateOffer(@RequestBody OfferDto offerDto) {
 		Offer offer = offerDtoMapper.offerDtoToOffer(offerDto);
-		offerDao.save(offer);
+		Offer off = offerDao.save(offer);
+		if(off == null) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.accepted().build();
 	}
 }
 

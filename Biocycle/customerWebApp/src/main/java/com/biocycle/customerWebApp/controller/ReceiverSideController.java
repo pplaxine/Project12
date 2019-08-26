@@ -57,5 +57,13 @@ public class ReceiverSideController {
 		organisationManager.addUserInfoToSession(session, principal);
 		return redistributionManager.offers(model, session, principal);
 	}
+	@RequestMapping("/user2/offers/accept/{offerId}")
+	public String acceptOffer(@PathVariable int offerId, RedirectAttributes red) {
+		return redistributionManager.updateOfferStatus(offerId, true, red);
+	}
+	@RequestMapping("/user2/offers/refuse/{offerId}")
+	public String refuseOffer(@PathVariable int offerId, RedirectAttributes red) {
+		return redistributionManager.updateOfferStatus(offerId, false, red);
+	}
 
 }

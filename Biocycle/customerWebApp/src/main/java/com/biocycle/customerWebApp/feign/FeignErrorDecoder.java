@@ -60,6 +60,10 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("OfferCRUDMSProxy#findOfferById(int)") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy responed : Not Found");
 		}
+		if(methodKey.equals("OfferCRUDMSProxy#updateOffer(OfferBeanDto)") && response.status() == 204) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy responed : No content");
+		}
+		
 		
 		return new Exception(methodKey +" : " + response.reason()); 
 	}

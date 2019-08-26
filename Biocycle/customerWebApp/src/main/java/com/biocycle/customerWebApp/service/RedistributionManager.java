@@ -151,10 +151,33 @@ public class RedistributionManager {
 				return "receiverPersoSpace";
 			}
 		}
-		
 		return "receiverPersoSpace";
 	}
 	
+	public String updateOfferStatus(int offerId,Boolean isAccepted,RedirectAttributes red) {
+		try {
+			OfferBeanDto offerBeanDto = offerCRUDMSProxy.findOfferById(offerId).getBody();
+			offerBeanDto.setIsAccepted(isAccepted);
+			offerCRUDMSProxy.updateOffer(offerBeanDto);
+			
+		} catch (ResponseStatusException e) {
+			if(e.getStatus() == HttpStatus.NOT_FOUND) {
+				String error ="No offer could be found.Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/user2/offers";
+			}else if(e.getStatus() == HttpStatus.NO_CONTENT) {
+				String error ="Offer status could not be updated.Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/user2/offers";
+			}else {
+				String error ="Error occured while taking in account your response. Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/user2/offers";
+			}
+		}
+		
+		return "redirect:/user2/offers";
+	}
 	
 	//UTILITY METHODS ----------------------------------------------------------------------
 	
