@@ -1,6 +1,7 @@
 package com.biocycle.redistributionCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.biocycle.redistributionCRUD.dao.RedistributionDao;
 import com.biocycle.redistributionCRUD.dto.RedistributionDto;
 import com.biocycle.redistributionCRUD.dto.mapper.RedistributionDtoMapper;
 import com.biocycle.redistributionCRUD.exception.RedistributionNotFoundException;
+import com.biocycle.redistributionCRUD.helper.RedistributionHelper;
 import com.biocycle.redistributionCRUD.model.Redistribution;
 
 @RestController
@@ -42,6 +44,22 @@ public class RedistributionController {
 		
 		return ResponseEntity.ok(redistributionDto);
 	}
+	
+	@GetMapping(value = "/redistributions/organisations/{organisationId}")
+	public ResponseEntity<List<RedistributionDto>> findRedistributionByOrganisationId(@PathVariable int organisationId){
+		
+		Optional<List<Redistribution>> redistributionList = redistributionDao.findAllRedistributionByOrganisationId(organisationId);
+		
+		if(!redistributionList.isPresent() || redistributionList.get().isEmpty()) {
+			throw new RedistributionNotFoundException("No redistribution for organisation with id: " + organisationId + " has been found.");
+		}
+		
+		List<RedistributionDto> redistributionDtoList =  RedistributionHelper.entityListToDtoList(redistributionList.get(), redistributionDtoMapper);
+		
+		return ResponseEntity.ok(redistributionDtoList);
+	}
+	
+	
 	
 	@DeleteMapping(value = "/redistributions/{id}")
 	public void deleteRedistribution (@PathVariable int id) {

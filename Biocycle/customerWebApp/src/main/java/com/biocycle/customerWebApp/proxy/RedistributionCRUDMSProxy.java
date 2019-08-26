@@ -1,5 +1,7 @@
 package com.biocycle.customerWebApp.proxy;
 
+import java.util.List;
+
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,9 @@ import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 @RibbonClient(name = "redistributionCRUD")
 public interface RedistributionCRUDMSProxy {
 	
-//	@GetMapping(value = "/redistributioncrud/redistributions/{id}")
-//	ResponseEntity<RedistributionBeanDto> getRedistributionById(@PathVariable("id") int id);
+	@GetMapping(value = "/redistributioncrud/redistributions/{id}")
+	ResponseEntity<RedistributionBeanDto> getRedistributionById(@PathVariable("id") int id);
+	
+	@GetMapping(value = "/redistributioncrud/redistributions/organisations/{organisationId}")
+	ResponseEntity<List<RedistributionBeanDto>> getAllRedistributionByOrganisationId(@PathVariable("organisationId") int organisationId);
 }

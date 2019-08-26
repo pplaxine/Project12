@@ -30,14 +30,16 @@ public class OfferController {
 	private OfferDtoMapper offerDtoMapper;
 	
 	@GetMapping(value = "/offers/{id}")
-	public OfferDto findOfferById(@PathVariable int id){
+	public ResponseEntity<OfferDto> findOfferById(@PathVariable int id){
 		Optional<Offer> offer = offerDao.findById(id);
 		
 		if(!offer.isPresent()) {
 			throw new OfferNotFoundException("offer with id: " + id + " does not exist.");
 		}
 		
-		return offerDtoMapper.offerToOfferDto(offer.get());
+		OfferDto offerDto = offerDtoMapper.offerToOfferDto(offer.get());
+		
+		return ResponseEntity.ok(offerDto);
 	}
 	
 	@DeleteMapping(value = "/offers/{id}")

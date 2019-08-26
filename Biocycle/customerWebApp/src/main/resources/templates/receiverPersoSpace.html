@@ -7,8 +7,157 @@
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_personal_space">
 
-			<div class="container-fluid">
+			<div class="container pt-5">
+				
+				<h1 class="text-light pb-3">Offers</h1>
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				
+				<h5 class="pl-4">Offers</h5>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">ref</th>
+					    <th scope="col">Product requested</th>
+					    <th scope="col">Offer</th>
+					    <th scope="col">Offer ending date</th>
+					    <th scope="col"></th>
+				
+					  </tr>
+					</thead>
+					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
+					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
+					 	
+							<div th:if="${redistributionViewDto.isCompleted == false  && (redistributionViewDto.offerViewDto == null || ( redistributionViewDto.offerViewDto != null && redistributionViewDto.offerViewDto.offerEndingDate < $now ) ) }">
+								<th scope="row"></th>
+								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
+								<td>
+									<div th:each="request : ${redistributionViewDto.productRequestBeanDtoList}">
+										<span th:text="${request.productRequested}"></span>
+										<span>(
+											<span th:text="${request.quantity}"></span>
+											<span th:text="${request.unitOfMeasure}"></span>
+										)										
+										</span>
+										
+									</div>
+								</td>
+								<div th:if="${redistributionViewDto.offerViewDto != null}">
+									<td>
+										<span th:each="productBatchBean : ${redistributionViewDto.offerViewDto.productBatchBeanList}">
+											<span th:text="${productBatchBean.name}"></span>
+											<span th:text="${productBatchBean.quantity}"></span>
+											<span th:text="${productBatchBean.unitOfMeasure}"></span><br/>
+										</span>
+									</td>
+									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td> 
+									<td class="align-middle">
+										<a>															<!-- controller /update completed true; but accepted yes  -->
+											<span th:text="accept" class="text-success"></span> 
+										</a>
+										<span th:text="'|'" class="text-light"></span>
+										<a>															<!-- controller /update completed true; but accepted false  -->
+											<span th:text="refuse" class="text-warning"></span>
+										</a>
+									</td> 
+								</div>
+							</div>	
+					
+						</tr> 
+					</tbody>
+				</table> 
+				
+				<h5 class="pl-4">Offers accepted</h5>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">ref</th>
+					    <th scope="col">Offer</th>
+					    <th scope="col">collectable from</th>
+					    <th scope="col">Offer ending date</th>
+					    <th scope="col"></th>
+				
+					  </tr>
+					</thead>
+					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
+					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">
+					 	<div th:if="${redistributionViewDto.offerViewDto != null}">  
+							<div th:if="${(redistributionViewDto.isCompleted == true || redistributionViewDto.isCompleted == null) && redistributionViewDto.offerViewDto.offerEndingDate < $now}">
+								<th scope="row"></th>
+								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
+								<div th:if="${redistributionViewDto.offerViewDto != null}">
+									<td>
+										<span th:each="productBatchBean : ${redistributionViewDto.offerViewDto.productBatchBeanList}">
+											<span th:text="${productBatchBean.name}"></span>
+											<span th:text="${productBatchBean.quantity}"></span>
+											<span th:text="${productBatchBean.unitOfMeasure}"></span><br/>
+										</span>
+									</td>
+									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.availableForCollection, 'dd-MM-yyyy')}" class="align-middle"></td>
+									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td>  
+									<td class="align-middle">
+										<a>															<!-- controller /update completed yes; but accepted false  -->
+											<span th:text="cancel" class="text-danger"></span>
+										</a>
+									</td> 
+								</div>
+							</div>	
+						</div>	
+						</tr> 
+					</tbody>
+				</table>   
+				
+				<h5 class="pl-4">Previous offers</h5>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">ref</th>
+					    <th scope="col">Product requested</th>
+					    <th scope="col">Offer</th>
+					    <th scope="col">Your choice</th>
+					    <th scope="col"></th>
+				
+					  </tr>
+					</thead>
+					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
+					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
+							
+						<div th:if="${redistributionViewDto.offerViewDto != null}">
+							<div th:if="${redistributionViewDto.isCompleted == true || redistributionViewDto.offerViewDto.offerEndingDate > $now}">
+								<th scope="row"></th>
+								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
+								<td>
+									<div th:each="request : ${redistributionViewDto.productRequestBeanDtoList}">
+										<span th:text="${request.productRequested}"></span>
+										<span>(
+											<span th:text="${request.quantity}"></span>
+											<span th:text="${request.unitOfMeasure}"></span>
+										)										
+										</span>
+										
+									</div>
+								</td>
+								<td>
+									<span th:each="productBatchBean : ${redistributionViewDto.offerViewDto.productBatchBeanList}">
+										<span th:text="${productBatchBean.name}"></span>
+										<span th:text="${productBatchBean.quantity}"></span>
+										<span th:text="${productBatchBean.unitOfMeasure}"></span><br/>
+										
+									</span>
+								</td>
+							 	<td >
+							 		<span th:if="${redistributionViewDto.offerViewDto.isAccepted == true}" th:text="Accepted" class="text-warning"></span>
+							 		<span th:if="${redistributionViewDto.offerViewDto.isAccepted == false || redistributionViewDto.offerViewDto.isAccepted == null }" th:text="refused" class="text-danger"></span>
+							 	</td>
+							</div>
+						</div>	
+						</tr> 
+					</tbody>
+				</table>
 
+							
 			</div>
 			
 		</div>

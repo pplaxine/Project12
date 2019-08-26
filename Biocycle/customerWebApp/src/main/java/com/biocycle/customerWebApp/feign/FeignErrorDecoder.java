@@ -45,6 +45,22 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("ProductDispatchServiceProxy#addRedistributionForRequest(int,List)") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductDispatchServiceProxy responed : Not Found");
 		}
+		
+		//ProductRequestCRUDMSProxy
+		if(methodKey.equals("ProductRequestCRUDMSProxy#findProductRequestById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductRequestCRUDMSProxy responed : Not Found");
+		}
+		
+		//RedistributionCRUDMSProxy
+		if(methodKey.equals("RedistributionCRUDMSProxy#getAllRedistributionByOrganisationId(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy responed : Not Found");
+		}
+		
+		//OfferCRUDMSProxy
+		if(methodKey.equals("OfferCRUDMSProxy#findOfferById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy responed : Not Found");
+		}
+		
 		return new Exception(methodKey +" : " + response.reason()); 
 	}
 	

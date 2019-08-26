@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.biocycle.customerWebApp.dto.ProductRequestBeanDto;
+import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.service.OrganisationManager;
 import com.biocycle.customerWebApp.service.RedistributionManager;
 
@@ -51,6 +52,10 @@ public class ReceiverSideController {
 	
 	
 	// OFFERS 				---------------------------------------------------------------------------------------	
-
+	@RequestMapping("/user2/offers")
+	public String  offers(Model model, HttpSession session, Principal principal) {
+		organisationManager.addUserInfoToSession(session, principal);
+		return redistributionManager.offers(model, session, principal);
+	}
 
 }
