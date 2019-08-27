@@ -19,8 +19,8 @@ public class CustomerManagmentController {
 	
 	
 	@RequestMapping("/cme/partnerships/requests")
-	public String partnershipRequests(Model model, HttpSession session) {
-		return customerManagmentManager.partnershipRequests(model, session);
+	public String partnershipRequests(Model model) {
+		return customerManagmentManager.partnershipRequests(model);
 	}
 	
 	@RequestMapping("/cme/partnerships/requests/validate/{organisationId}")

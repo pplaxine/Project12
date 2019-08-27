@@ -16,6 +16,7 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("StorageContainerCRUDMSProxy#findEmptyStorageContainer()") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "No empty storageContainer could be found.");
 		}
+		
 		return new Exception(response.reason()); 
 	}
 	

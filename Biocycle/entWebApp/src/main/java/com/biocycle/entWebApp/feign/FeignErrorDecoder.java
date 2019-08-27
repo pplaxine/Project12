@@ -26,6 +26,20 @@ public class FeignErrorDecoder implements ErrorDecoder{
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OrganisationCRUDMSProxy#findOrganisationById(int) replied : No organisation found.");
 		}
 		
+		//InventoryServiceProxy
+		if(methodKey.equals("InventoryServiceProxy#createEntry(ProductBatchBeanDto,int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "InventoryServiceProxy#createEntry(ProductBatchBeanDto, int) replied : Not found.");
+		}
+		if(methodKey.equals("InventoryServiceProxy#createEntry(ProductBatchBeanDto,int)") && response.status() == 507) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "InventoryServiceProxy#createEntry(ProductBatchBeanDto, int) replied : There is not enough free storage container space available.");
+		}
+		if(methodKey.equals("InventoryServiceProxy#createEntry(ProductBatchBeanDto,int)") && response.status() == 418) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "InventoryServiceProxy#createEntry(ProductBatchBeanDto, int) replied : ContraintViolationException.");
+		}
+		//ProductBatchCRUDMSProxy
+		if(methodKey.equals("ProductBatchCRUDMSProxy#findProductBatchById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductBatchCRUDMSProxy#findProductBatchById(int) replied : Not found.");
+		}
 		
 		return new Exception("Feign Exception : Status " + response.status() + " . Error while accessing " + methodKey); 
 	}

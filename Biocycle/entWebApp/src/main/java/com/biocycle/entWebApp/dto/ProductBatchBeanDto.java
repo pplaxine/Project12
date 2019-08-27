@@ -1,14 +1,13 @@
-package com.biocycle.InventoryService.dto;
+package com.biocycle.entWebApp.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.biocycle.InventoryService.bean.UnitOfMeasure;
+import com.biocycle.entWebApp.bean.productBatch.UnitOfMeasure;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

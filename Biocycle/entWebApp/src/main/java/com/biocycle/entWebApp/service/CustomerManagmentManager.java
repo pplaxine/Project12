@@ -1,6 +1,7 @@
 package com.biocycle.entWebApp.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +27,7 @@ public class CustomerManagmentManager {
 	@Autowired
 	private OrganisationBeanDtoMapper organisationBeanDtoMapper;
 	
-	public String partnershipRequests(Model model, HttpSession session) {
+	public String partnershipRequests(Model model) {
 		
 		try {
 			//Not validated organisation 
@@ -67,6 +68,18 @@ public class CustomerManagmentManager {
 			}
 		}
 		return "redirect:/cme/partnerships/requests";
+	}
+	
+	public List<OrganisationBeanDto> getAllDonor() {
+		try {
+			List<OrganisationBeanDto> organisationBeanDtoList = organisationCRUDMSProxy.findAllOrganisationByIsValidated(true).getBody();
+			List<OrganisationBeanDto> organisationBeanDtoListFiltered = organisationBeanDtoList.stream()
+						.filter(e -> e.getIsDonor() == true)
+						.collect(Collectors.toList());
+			return organisationBeanDtoListFiltered;
+		} catch (ResponseStatusException e) {
+			throw e;
+		}
 	}
 	
 }

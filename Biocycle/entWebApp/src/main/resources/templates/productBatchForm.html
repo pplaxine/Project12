@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/head :: head">
+		<title>Home</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home_long">
+		<h1 class="text-light pl-5 pt-3">Product Batch Entry</h1>
+			<div class="row justify-content-center align-items-center">
+				<div th:if="!${info}" class="col-md-8 col-lg-6 mb-5" >
+					<div class="container-fluid pt-5 text-light">
+						<div class="bg_dark_filter rounded pt-2 pb-4 " >	
+						<form action="#" th:action="@{/pme/entry-forms/create}" th:object="${productBatchBeanDto}" method="GET" >
+							<div class="form-row col-sm-12">
+								<div class="form-group col-sm-5  offset-sm-1">
+									<label for="productName">Product </label>
+									<input type="text" required="required" id="productName" name="productName" th:field="*{name}" class="form-control" placeholder="Enter product name"/>
+								</div>
+									<div class="form-group col-sm-5">
+									<label for="donorId">Donor </label>
+									<select class="form-control" id="donorId" th:field="*{donorId}">
+										<option th:each=" organisationBeanDto:${organisationBeanDtoList}" th:value="${organisationBeanDto.id}" th:text="${organisationBeanDto.organisationName}"></option>	
+									</select> 
+								</div>
+							</div>
+							<div class="form-group col-sm-10 offset-sm-1">
+								<label for="description">Description </label>
+								<textarea rows="3" required="required" id="description" th:field="*{description}" class="form-control" placeholder="Enter product description"></textarea>
+							</div>
+						
+							<div class="form-row col-sm-12">
+								<div class="form-group col-sm-4  offset-sm-1">
+									<label for="quantity">Quantity</label>
+									<input type="text" required="required" id="quantity" name="quantity" th:field="*{quantity}" class="form-control"  placeholder="how many"/>
+								</div>
+								<div class="form-group col-sm-4  ">
+									<label for="unitOfMeasure">Unit of measure </label>
+									<select class="form-control" id="unitOfMeasure" th:field="*{unitOfMeasure}">
+										<option th:value="KG" th:text="Kg"></option>	
+										<option th:value="LITER" th:text="Litter"></option>							
+									</select> 
+								</div>
+							</div>
+							
+							<div class="form-group col-sm-4  offset-sm-1">
+								<label for="toBeUsedBy">To be redistributed by</label>
+								<input type="date" required="required" id="toBeUsedBy" name="ToBeUsedBy" th:field="*{toBeUsedBy}" class="form-control"/>
+							</div>
+							<div class="form-group col-sm-3  offset-sm-1">
+								<label for="containerNumber">How many containers</label>
+								<input type="text" required="required" id="containerNumber" name="containerNumber" th:field="*{storageContainerId}" class="form-control"  placeholder="Containers"/>
+							</div>
+							
+							<div class="row justify-content-center align-items-center">
+								<button name="submit" class="btn btn-info"  type="submit" value="0">submit</button>
+							</div>
+						</form>
+						<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+						</div>
+					</div>
+				</div>
+				<div th:if="${info}">
+					
+					<div class="col-sm-12 bg_dark_filter rounded text-light pb-3">
+						<h3>Container to be placed at :</h3>
+						<div th:each="storageContainer : ${storageContainerBeanDtoList}">
+							Container number :<span th:text="${storageContainer.id}"></span>
+							<div class="alert alert-danger" role="alert text-dark">
+								Row : <span th:text="${storageContainer.rowRef}"></span><br/>
+								Shelf : <span th:text="${storageContainer.shelfRef}"></span><br/>
+								Level : <span th:text="${storageContainer.levelRef}"></span><br/>
+							</div>
+						</div>
+						<div th:text="${info}" class="text-success"></div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</body>
+</html>

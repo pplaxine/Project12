@@ -59,6 +59,7 @@ public class ProductBatchManager {
 		//persist StorageContainer list  
 		storageContainerCRUDMSProxy.updateStorageContainerList(storageContainerBeanDtoList.get());
 			
+		
 		return productBatchResp;
 	}
 }
