@@ -40,7 +40,17 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("ProductBatchCRUDMSProxy#findProductBatchById(int)") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductBatchCRUDMSProxy#findProductBatchById(int) replied : Not found.");
 		}
-		
+		if(methodKey.equals("ProductBatchCRUDMSProxy#findAllProductBatch()") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductBatchCRUDMSProxy#findAllProductBatch() replied : Not found.");
+		}
+		//RedistributionCRUDMSProxy
+		if(methodKey.equals("RedistributionCRUDMSProxy#findAllActiveRedistributions()") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy#findAllActiveRedistributions() replied : Not found.");
+		}
+		//ProductRequestCRUDMSProxy
+		if(methodKey.equals("ProductRequestCRUDMSProxy#findProductRequestById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ProductRequestCRUDMSProxy#findProductRequestById(int) replied : Not found.");
+		}
 		return new Exception("Feign Exception : Status " + response.status() + " . Error while accessing " + methodKey); 
 	}
 	

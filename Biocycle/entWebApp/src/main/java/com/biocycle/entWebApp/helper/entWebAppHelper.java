@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.biocycle.entWebApp.bean.organisation.OrganisationBean;
+import com.biocycle.entWebApp.dto.OfferBeanDto;
 import com.biocycle.entWebApp.dto.OrganisationBeanDto;
+import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
+import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.mapper.OrganisationBeanDtoMapper;
+import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 
 public class entWebAppHelper {
 
@@ -17,6 +21,28 @@ public class entWebAppHelper {
 			organisationListBean.add(organisationBean);
 		});
 		return organisationListBean;
+	}
+	
+	
+	public static RedistributionViewDto redistributionViewBuilder(RedistributionBeanDto redistributionBeanDto, OfferBeanDto offerBeanDto, List<ProductRequestBeanDto> productRequestBeanDtoList, OrganisationBeanDto organisationBeanDto){
+		RedistributionViewDto redistributionViewDto = new RedistributionViewDto();
+		if(redistributionBeanDto == null) {
+			return null;
+		}
+		redistributionViewDto.setId(redistributionBeanDto.getId());
+		redistributionViewDto.setIsCompleted(redistributionBeanDto.getIsCompleted());
+		
+		if(offerBeanDto != null) {
+			redistributionViewDto.setOfferBeanDto(offerBeanDto);
+		}
+		if(productRequestBeanDtoList != null) {
+			redistributionViewDto.setProductRequestBeanDtoList(productRequestBeanDtoList);
+		}
+		if(organisationBeanDto != null) {
+			redistributionViewDto.setOrganisationBeanDto(organisationBeanDto);
+		}
+		
+		return redistributionViewDto;
 	}
 	
 }

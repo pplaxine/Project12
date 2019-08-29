@@ -25,4 +25,5 @@ public class ProductBatchDto {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable;
+	private Boolean isAwaitingForCollection;
 }

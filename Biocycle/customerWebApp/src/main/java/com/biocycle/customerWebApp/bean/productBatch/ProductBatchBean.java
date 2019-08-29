@@ -1,8 +1,10 @@
-package com.biocycle.entWebApp.bean.productBatch;
+package com.biocycle.customerWebApp.bean.productBatch;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import com.biocycle.customerWebApp.bean.redistribution.UnitOfMeasure;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,5 @@ public class ProductBatchBean {
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable;
 	private Boolean isAwaitingForCollection;
+	
 }

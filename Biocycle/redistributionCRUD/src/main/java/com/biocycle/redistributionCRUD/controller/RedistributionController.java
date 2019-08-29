@@ -53,12 +53,20 @@ public class RedistributionController {
 		if(!redistributionList.isPresent() || redistributionList.get().isEmpty()) {
 			throw new RedistributionNotFoundException("No redistribution for organisation with id: " + organisationId + " has been found.");
 		}
-		
 		List<RedistributionDto> redistributionDtoList =  RedistributionHelper.entityListToDtoList(redistributionList.get(), redistributionDtoMapper);
-		
 		return ResponseEntity.ok(redistributionDtoList);
 	}
 	
+	@GetMapping(value = "/redistributions/active")
+	public ResponseEntity<List<RedistributionDto>> findAllActiveRedistributions(){
+		Optional<List<Redistribution>> redistributionList = redistributionDao.findAllActiveRedistribution();
+		
+		if(!redistributionList.isPresent() || redistributionList.get().isEmpty()) {
+			throw new RedistributionNotFoundException("No redistribution for organisation has been found.");
+		}
+		List<RedistributionDto> redistributionDtoList =  RedistributionHelper.entityListToDtoList(redistributionList.get(), redistributionDtoMapper);
+		return ResponseEntity.ok(redistributionDtoList);
+	}
 	
 	
 	@DeleteMapping(value = "/redistributions/{id}")

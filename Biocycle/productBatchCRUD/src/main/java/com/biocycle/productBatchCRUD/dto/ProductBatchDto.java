@@ -2,7 +2,6 @@ package com.biocycle.productBatchCRUD.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +19,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","name","description","donorId","dateOfCollection","toBeUsedBy","quantity","unitOfMeasure","storageContainerId","isAvailable"})
+@ToString(of = {"id","name","description","donorId","dateOfCollection","toBeUsedBy","quantity","unitOfMeasure","storageContainerId","isAvailable","isAwaitingForCollection"})
 public class ProductBatchDto {
 
 	private int id;
@@ -35,5 +34,6 @@ public class ProductBatchDto {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable; 
+	private Boolean isAwaitingForCollection;
 
 }

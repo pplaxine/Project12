@@ -12,10 +12,12 @@ import com.biocycle.entWebApp.bean.productBatch.UnitOfMeasure;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(of = {"id","name","description","donorId","dateOfCollection","toBeUsedBy","quantity","unitOfMeasure","storageContainerId","isAvailable","isAwaitingForCollection"})
 public class ProductBatchBeanDto {
 
 	private int id;
@@ -30,4 +32,7 @@ public class ProductBatchBeanDto {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable;
+	private Boolean isAwaitingForCollection;
+	
+	
 }

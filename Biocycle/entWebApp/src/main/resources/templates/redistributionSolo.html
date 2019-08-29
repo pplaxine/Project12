@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head >
+		<meta th:insert="fragments/head :: head"/>
+		<title>Redistribution</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home">
+			<div class="container pt-5 text-light">
+				<h1 class="text-light pb-3">Redistribution</h1>
+				<div class="row align-items-start pb-5">
+						<div class="col">
+							<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+							<h3 th:text="${redistributionViewDto.organisationBeanDto.organisationName}"></h3>
+							<h4>Requests:</h4>
+							<div th:each="productRequestBeanDto : ${redistributionViewDto.productRequestBeanDtoList}">
+								<span th:text="${productRequestBeanDto.productRequested}"></span>
+								<span th:text="${productRequestBeanDto.quantity}"></span>
+								<span th:text="${productRequestBeanDto.unitOfMeasure}"></span>
+							</div>
+						</div>
+						<div th:if="${session.productBatchBeanDtoMap}" class="col">
+							<div th:if="${session.productBatchBeanDtoMap.size() > 0}" class="col  bg_dark_filter rounded pb-3">
+								<h3 class="pb-4">Offer</h3>
+								<table class="table table-hover table-sm ">
+									<tbody>
+										<tr th:each="productBatchOff : ${session.productBatchBeanDtoMap}">
+											<th scope="row"></th>
+											<td th:text="${productBatchOff.value.name}"></td>
+											<td >
+												<span th:text="${productBatchOff.value.quantity}"></span>
+												<span th:text="${productBatchOff.value.unitOfMeasure}"></span>
+											</td>
+											<td><a th:href="@{|/pme/redistribution/solo/remove/${redistributionViewDto.id}/${productBatchOff.value.id}|}" class="text-success">Remove</a></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="text-center">
+									<button name="submit" class="btn btn-dark btn-small btn-block btn-sm text-success"  type="submit" value="0">Create offer</button>
+								</div>
+							</div>
+						</div>
+				</div><br/>
+				
+				<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">To be used by</th>
+					    <th scope="col">Product</th>
+					    <th scope="col">Description</th>
+						<th scope="col">Quantity</th>
+						<th scope="col"></th>
+					  </tr>
+					</thead>
+					<tbody>
+						<tr th:each=" productBatch : ${session.productBatchBeanDtoForOfferList}">  
+							
+							<th scope="row"></th>
+							<td th:text="${productBatch.toBeUsedBy}" class="align-middle"></td>
+							<td th:text="${productBatch.name}" class="align-middle"></td>
+							<td th:text="${productBatch.description}" class="align-middle"></td>
+							<td>
+								<span th:text="${productBatch.quantity}"></span>
+								<span th:text="${productBatch.unitOfMeasure}"></span>
+							</td>
+							<td th:text="${productBatch.dateOfCollection}" class="align-middle"></td>
+							<td><a th:href="@{|/pme/redistribution/solo/add/${redistributionViewDto.id}/${productBatch.id}|}">add to offer</a></td>
+							
+						</tr> 
+					</tbody>
+				</table>
+						
+			</div>	
+		</div>
+	</body>
+</html>

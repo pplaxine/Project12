@@ -16,7 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","name","description","donorId","dateOfCollection","toBeUsedBy","quantity","unitOfMeasure","storageContainerId","isAvailable"})
+@ToString(of = {"id","name","description","donorId","dateOfCollection","toBeUsedBy","quantity","unitOfMeasure","storageContainerId","isAvailable","isAwaitingForCollection"})
 public class ProductBatchBeanDto {
 	
 	private int id;
@@ -29,5 +29,5 @@ public class ProductBatchBeanDto {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable; 
-
+	private Boolean isAwaitingForCollection;
 }

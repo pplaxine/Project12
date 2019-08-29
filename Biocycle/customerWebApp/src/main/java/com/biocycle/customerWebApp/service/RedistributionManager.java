@@ -179,6 +179,7 @@ public class RedistributionManager {
 		return "redirect:/user2/offers";
 	}
 	
+	
 	//UTILITY METHODS ----------------------------------------------------------------------
 	
 	private List<RedistributionViewDto> redistributionBeanDtoListToRedistributionViewDtoList(List<RedistributionBeanDto> redistributionBeanDtoList) throws ResponseStatusException {

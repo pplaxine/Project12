@@ -1,6 +1,7 @@
 package com.biocycle.productBatchCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.biocycle.productBatchCRUD.dao.ProductBatchDao;
 import com.biocycle.productBatchCRUD.dto.ProductBatchDto;
 import com.biocycle.productBatchCRUD.dto.mapper.ProductBatchDtoMapper;
 import com.biocycle.productBatchCRUD.exception.ProductBatchNotFoundException;
+import com.biocycle.productBatchCRUD.helper.ProductBatchHelper;
 import com.biocycle.productBatchCRUD.model.ProductBatch;
 
 @RestController
@@ -28,6 +30,16 @@ public class ProductBatchController  {
 	
 	@Autowired
 	private ProductBatchDtoMapper productBatchDtoMapper;
+	
+	@GetMapping(value = "/productbatches")
+	public ResponseEntity<List<ProductBatchDto>> findAllProductBatch(){
+		List<ProductBatch> productBatchList = productBatchDao.findAll();
+		if(productBatchList == null || productBatchList.size() <= 0) {
+			throw new ProductBatchNotFoundException("No product batch were found.");
+		}
+		List<ProductBatchDto> productBatchDtoList = ProductBatchHelper.ListEntityToListDto(productBatchList, productBatchDtoMapper);
+		return ResponseEntity.ok(productBatchDtoList);
+	}
 	
 	@GetMapping(value = "/productbatches/{id}")
 	public ProductBatchDto findProductBatchById(@PathVariable int id){

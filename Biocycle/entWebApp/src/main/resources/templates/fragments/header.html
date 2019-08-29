@@ -16,32 +16,39 @@
 	    	
 	      
 	      <!-- HR -->
-	      <span sec:authorize="hasAnyAuthority('HR','ADMIN')">
+	      <td sec:authorize="hasAnyAuthority('HR','ADMIN')">
 		      <li class="nav-item">
 			      <a class="nav-link" href="/user/giveaway">HR !!!</a>
 			  </li>
-	      </span>
+	      </td>
 	      
 	      <!-- CME -->
-	      <span sec:authorize="hasAnyAuthority('CME','ADMIN')">
+	      <td sec:authorize="hasAnyAuthority('CME','ADMIN')">
 		      <li class="nav-item">
 			      <a class="nav-link" href="/cme/partnerships/requests">Partnership Requests</a>
 			  </li>
-	      </span>
+	      </td>
 	      
 	      <!-- PME -->
-	      <span sec:authorize="hasAnyAuthority('PME','ADMIN')">
+	      <td sec:authorize="hasAnyAuthority('PME','ADMIN')">
 		      <li class="nav-item">
 			      <a class="nav-link" href="/pme/entry-forms">New entry</a>
 			  </li>
-	      </span>
+			  <li class="nav-item">
+			      <a class="nav-link" href="/pme/redistribution">Manage redistribution</a>
+			  </li>
+			  <li class="nav-item">
+			      <a class="nav-link" href="/pme/product-batch/list">Stocks</a>
+			  </li>
+			  
+	      </td>
 	      
 	       <!-- CSE -->
-	      <span sec:authorize="hasAnyAuthority('CSE','ADMIN')">
+	      <td sec:authorize="hasAnyAuthority('CSE','ADMIN')">
 		      <li class="nav-item">
 			      <a class="nav-link" href="/user/giveaway">CSE !!!</a>
 			  </li>
-	      </span>
+	      </td>
     	</ul>
 
 		<ul  class="navbar-nav ml-auto">
