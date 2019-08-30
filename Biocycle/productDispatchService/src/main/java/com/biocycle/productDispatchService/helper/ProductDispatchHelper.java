@@ -1,5 +1,6 @@
 package com.biocycle.productDispatchService.helper;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,5 +19,10 @@ public class ProductDispatchHelper {
 			productRequestBeanList.add(productRequestBean);
 		});
 		return productRequestBeanList;
+	}
+	
+	public static String getURILastPart(URI location) {
+		String[] parts = location.getPath().split("/");
+		return parts[parts.length-1];
 	}
 }

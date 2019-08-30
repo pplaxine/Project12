@@ -82,4 +82,20 @@ public class ProductBatchController  {
 		ProductBatch productBatch = productBatchDtoMapper.productBatchDtoToProductBatch(productBatchDto);
 		productBatchDao.save(productBatch);
 	}
+	
+	@PutMapping(value = "/productbatches/is-awaiting-for-collection/{productBatchId}/{status}")
+	public ResponseEntity<Void> updateProductBatchIsAwaitingToBeCollectedStatus(@PathVariable int productBatchId, @PathVariable Boolean status) {
+		
+		Optional <ProductBatch> productBatchOpt = productBatchDao.findById(productBatchId);
+		if(!productBatchOpt.isPresent()) {
+			return ResponseEntity.noContent().build();
+		} 
+		
+		ProductBatch productBatchFromDB =  productBatchOpt.get(); 
+		productBatchFromDB.setIsAwaitingForCollection(status);
+		productBatchDao.save(productBatchFromDB);
+		
+		return ResponseEntity.ok().build(); 
+	}
+	
 }

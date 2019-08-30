@@ -1,7 +1,11 @@
 package com.biocycle.offerCRUD.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +22,9 @@ public class OfferDto {
 	
 	private int id;
 	private List<Integer> productBatchIdList;
-	private Date availableForCollection;
-	private Date offerEndingDate;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate availableForCollection;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate offerEndingDate;
 	private Boolean isAccepted;
 }

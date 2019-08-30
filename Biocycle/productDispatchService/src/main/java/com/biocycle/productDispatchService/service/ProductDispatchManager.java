@@ -1,5 +1,6 @@
 package com.biocycle.productDispatchService.service;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.biocycle.productDispatchService.bean.ProductRequestBean;
 import com.biocycle.productDispatchService.bean.RedistributionBean;
@@ -18,6 +20,7 @@ import com.biocycle.productDispatchService.dto.mapper.RedistributionBeanDtoMappe
 import com.biocycle.productDispatchService.exception.RedistributionCreationException;
 import com.biocycle.productDispatchService.helper.ProductDispatchHelper;
 import com.biocycle.productDispatchService.proxy.OfferCRUDMSProxy;
+import com.biocycle.productDispatchService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.productDispatchService.proxy.ProductRequestCRUDMSProxy;
 import com.biocycle.productDispatchService.proxy.RedistributionCRUDMSProxy;
 
@@ -30,6 +33,8 @@ public class ProductDispatchManager {
 	private ProductRequestCRUDMSProxy productRequestCRUDMSProxy;
 	@Autowired
 	private OfferCRUDMSProxy offerCRUDMSProxy;
+	@Autowired
+	private ProductBatchCRUDMSProxy ProductBatchCRUDMSProxy;
 	@Autowired
 	private RedistributionBeanDtoMapper redistributionBeanDtoMapper;
 	@Autowired
@@ -79,8 +84,36 @@ public class ProductDispatchManager {
 		}
 	}
 	
+	public ResponseEntity<Void> addOfferToRedistribution(int redistributionId, OfferBeanDto offerBeanDto){
+		
+		Integer offerId = null; 
+		
+		try {
+			//retrieve redistribution from id 
+			RedistributionBeanDto redistributionBeanDtoFromDB = redistributionCRUDMSProxy.getRedistributionById(redistributionId).getBody();
+			
+			//persist offer 
+			ResponseEntity<Void> resp = offerCRUDMSProxy.addOffer(offerBeanDto);
+			offerId = Integer.parseInt(ProductDispatchHelper.getURILastPart(resp.getHeaders().getLocation()));
+			//update productbatch stat 
+			updateProductBatchStat(offerBeanDto.getProductBatchIdList(), true);
+			
+			//add id to redistribution 
+			redistributionBeanDtoFromDB.setOfferId(offerId);
+			//update redistribution 
+			redistributionCRUDMSProxy.updateRedistribution(redistributionBeanDtoFromDB);
+			
+		} catch ( ResponseStatusException rse) {
+			throw new RedistributionCreationException("Probleme occured while building Redistribution Object");
+		}
+		
+		//update redistribution crud 
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	//UTILITY METHOD 
-	private List<Integer> persistProductRequestBean(List<ProductRequestBeanDto> productRequestBeanDtoList){
+	private List<Integer> persistProductRequestBean(List<ProductRequestBeanDto> productRequestBeanDtoList) throws ResponseStatusException {
 		ResponseEntity<List<ProductRequestBeanDto>> productRequestBeanDtoPersistedListResp  = productRequestCRUDMSProxy.addProductRequestList(productRequestBeanDtoList);
 		List<ProductRequestBean> productRequestBeanPersistedList = ProductDispatchHelper.ListDtoToListEntity(productRequestBeanDtoPersistedListResp.getBody(), productRequestBeanDtoMapper);
 		List<Integer> productRequestIdList = new ArrayList<>();
@@ -88,13 +121,13 @@ public class ProductDispatchManager {
 		return productRequestIdList;
 	}
 	
-	private Integer persistOfferBean(OfferBeanDto offerBeanDto) {
+	private Integer persistOfferBean(OfferBeanDto offerBeanDto) throws ResponseStatusException {
 		ResponseEntity<Void> resp = offerCRUDMSProxy.addOffer(offerBeanDto);
 		String[] path = resp.getHeaders().getLocation().getRawPath().split("/");
 		return Integer.parseInt(path[path.length-1]);
 	}
 	
-	private ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean){
+	private ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean) throws ResponseStatusException {
 		RedistributionBeanDto redistributionBeanDto = redistributionBeanDtoMapper.redistributionBeanToRedistributionBeanDto(redistributionBean);
 		ResponseEntity<Void> resp = redistributionCRUDMSProxy.addRedistribution(redistributionBeanDto);
 		if(resp.getStatusCode() != HttpStatus.CREATED) {
@@ -102,5 +135,12 @@ public class ProductDispatchManager {
 		}
 		return resp;
 	}
+	
+	private void updateProductBatchStat(List<Integer> productBatchDtoList, Boolean status) throws ResponseStatusException {
+		for (Integer pbd : productBatchDtoList) {
+			ProductBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(pbd, status); 
+		}
+	}
+	
 	
 }

@@ -1,10 +1,12 @@
-package com.biocycle.entWebApp.dto;
+package com.biocycle.entWebApp.dto.view;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,11 +18,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","productBatchIdList","availableForCollection","offerEndingDate","isAccepted"})
-public class OfferBeanDto {
+@ToString(of = {"id","productBatchBeanDtoList","availableForCollection","offerEndingDate","isAccepted"})
+public class OfferViewDto {
 	
 	private int id;
-	private List<Integer> productBatchIdList;
+	private List<ProductBatchBeanDto> productBatchBeanDtoList;
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate availableForCollection;
 	@DateTimeFormat(iso = ISO.DATE)

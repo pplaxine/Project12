@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
+import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 import com.biocycle.entWebApp.service.ProductManagmentManager;
 
 @Controller
@@ -50,11 +51,16 @@ public class ProductManagmentController {
 	
 	@RequestMapping("/pme/redistribution/solo/add/{redistributionId}/{productBatchBeanDtoId}")
 	public String addProductBatchBeanDtoToOffer(@PathVariable int redistributionId, @PathVariable int productBatchBeanDtoId, HttpSession session) {
-		return productManagmentManager.addProductBatchToRedistributionRequest(redistributionId, productBatchBeanDtoId, session);		
+		return productManagmentManager.addProductBatchToOffer(redistributionId, productBatchBeanDtoId, session);		
 	}
 	
 	@RequestMapping("/pme/redistribution/solo/remove/{redistributionId}/{productBatchBeanDtoId}")
 	public String removeProductBatchBeanDtoToOffer(@PathVariable int redistributionId, @PathVariable int productBatchBeanDtoId, RedirectAttributes red, HttpSession session) {
-		return productManagmentManager.removeProductBatchToRedistributionRequest(redistributionId, productBatchBeanDtoId, red, session);		
+		return productManagmentManager.removeProductBatchToOffer(redistributionId, productBatchBeanDtoId, red, session);		
+	}
+	
+	@RequestMapping("/pme/redistribution/offer/add")
+	public String addOfferToRedistribution(RedistributionViewDto redistributionViewDto, Model model, RedirectAttributes red, HttpSession session) {
+		return productManagmentManager.addOfferToRedistribution(redistributionViewDto, model, red, session);
 	}
 }

@@ -19,4 +19,6 @@ public interface ProductBatchCRUDMSProxy {
 
 	@GetMapping(value = "/productbatchcrud/productbatches")
 	ResponseEntity<List<ProductBatchBeanDto>> findAllProductBatch();
+	
+	
 }

@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biocycle.productDispatchService.bean.OfferBean;
+import com.biocycle.productDispatchService.bean.RedistributionBean;
 import com.biocycle.productDispatchService.dto.OfferBeanDto;
 import com.biocycle.productDispatchService.dto.ProductRequestBeanDto;
+import com.biocycle.productDispatchService.dto.RedistributionBeanDto;
 import com.biocycle.productDispatchService.service.ProductDispatchManager;
 
 @RestController
@@ -29,6 +32,11 @@ public class ProductDispatchController {
 	@PostMapping(value = "/redistributions/offers/{organisationId}")
 	public ResponseEntity<Void> addRedistributionForOffer(@PathVariable int organisationId, @RequestBody OfferBeanDto offerBeanDto){
 		return  productDispatchManager.createRedistributionForOffer(organisationId, offerBeanDto);
+	}
+	
+	@PutMapping(value = "/redistributions/offers/add/{redistributionId}")
+	public ResponseEntity<Void> updateRedistributionWithoffer(@PathVariable int redistributionId, @RequestBody OfferBeanDto offerBeanDto){
+		return productDispatchManager.addOfferToRedistribution(redistributionId, offerBeanDto);
 	}
 	
 }

@@ -13,6 +13,17 @@ public class FeignErrorDecoder implements ErrorDecoder{
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		
+		//RedistributionCRUDMSProxy
+		if(methodKey.equals("RedistributionCRUDMSProxy#getRedistributionById(int)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy#getRedistributionById(int) replied : Not found.");
+		}
+		
+		//ProductBatchCRUDMSProxy
+		if(methodKey.equals("ProductBatchCRUDMSProxy#updateProductBatchIsAwaitingToBeCollectedStatus(int)")) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "RedistributionCRUDMSProxy#getRedistributionById(int) replied with error.");
+		}
+		
+		
 		if(methodKey.equals("ProductRequestCRUDMSProxy#addProductRequestList(List)") && response.status() == HttpStatus.I_AM_A_TEAPOT.value()) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "ContraintViolationException in :" + response.request().url());
 		}

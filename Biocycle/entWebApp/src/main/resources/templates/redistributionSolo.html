@@ -36,9 +36,14 @@
 										</tr>
 									</tbody>
 								</table>
-								<div class="text-center">
+								<form action="#" th:action="@{/pme/redistribution/offer/add}" method="GET" class="text-center">
+									<div class="form-group col-sm-12 offset-4 form-inline">
+										<label for="offerEndingDate">Offer ending date </label>
+										<input type="date" required="required" id="offerEndingDate" name="offerEndingDate" th:field="*{redistributionViewDto.offerViewDto.offerEndingDate}" class="form-control ml-2 "/>
+										<input type="hidden" th:field="*{redistributionViewDto.id}" value="${redistributionViewDto.id}"/>
+									</div>
 									<button name="submit" class="btn btn-dark btn-small btn-block btn-sm text-success"  type="submit" value="0">Create offer</button>
-								</div>
+								</form>
 							</div>
 						</div>
 				</div><br/>

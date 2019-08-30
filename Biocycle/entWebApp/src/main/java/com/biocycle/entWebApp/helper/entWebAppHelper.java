@@ -9,6 +9,7 @@ import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.mapper.OrganisationBeanDtoMapper;
+import com.biocycle.entWebApp.dto.view.OfferViewDto;
 import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 
 public class entWebAppHelper {
@@ -24,7 +25,7 @@ public class entWebAppHelper {
 	}
 	
 	
-	public static RedistributionViewDto redistributionViewBuilder(RedistributionBeanDto redistributionBeanDto, OfferBeanDto offerBeanDto, List<ProductRequestBeanDto> productRequestBeanDtoList, OrganisationBeanDto organisationBeanDto){
+	public static RedistributionViewDto redistributionViewBuilder(RedistributionBeanDto redistributionBeanDto, OfferViewDto offerViewDto, List<ProductRequestBeanDto> productRequestBeanDtoList, OrganisationBeanDto organisationBeanDto){
 		RedistributionViewDto redistributionViewDto = new RedistributionViewDto();
 		if(redistributionBeanDto == null) {
 			return null;
@@ -32,8 +33,8 @@ public class entWebAppHelper {
 		redistributionViewDto.setId(redistributionBeanDto.getId());
 		redistributionViewDto.setIsCompleted(redistributionBeanDto.getIsCompleted());
 		
-		if(offerBeanDto != null) {
-			redistributionViewDto.setOfferBeanDto(offerBeanDto);
+		if(offerViewDto != null) {
+			redistributionViewDto.setOfferViewDto(offerViewDto);
 		}
 		if(productRequestBeanDtoList != null) {
 			redistributionViewDto.setProductRequestBeanDtoList(productRequestBeanDtoList);

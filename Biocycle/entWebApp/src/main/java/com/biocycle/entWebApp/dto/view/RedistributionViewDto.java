@@ -16,13 +16,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString(of = {"id","organisationBeanDto","productRequestBeanDtoList","offerBeanDto","isCompleted"})
+@ToString(of = {"id","organisationBeanDto","productRequestBeanDtoList","offerViewDto","isCompleted"})
 public class RedistributionViewDto {
 	
 	private int id;
 	private OrganisationBeanDto organisationBeanDto;
 	private List<ProductRequestBeanDto> productRequestBeanDtoList;
-	private OfferBeanDto offerBeanDto;
+	private OfferViewDto offerViewDto;
 	private Boolean isCompleted;
 	
 }

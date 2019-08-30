@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import com.biocycle.InventoryService.dto.ProductBatchDto;
 import com.biocycle.InventoryService.dto.StorageContainerBeanDto;
 import com.biocycle.InventoryService.dto.mapper.ProductBatchBeanMapper;
 import com.biocycle.InventoryService.dto.mapper.ProductBatchDtoMapper;
-import com.biocycle.InventoryService.exception.ProductBatchCreationErrorException;
 import com.biocycle.InventoryService.model.ProductBatch;
 import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.proxy.ProductStorageMSProxy;
