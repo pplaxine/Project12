@@ -56,7 +56,6 @@ public class ProductBatch {
 		joinColumns = {@JoinColumn(name="productBatch_id", referencedColumnName = "id")} 
 		)
 	@Column(name = "storageContainer_id",unique = true)
-	@NotEmpty
 	private List<@NotNull Integer> storageContainerId; 
 	private Boolean isAvailable; 
 	private Boolean isAwaitingForCollection;

@@ -37,6 +37,10 @@ public class ProductManagmentController {
 		return productManagmentManager.productBatchList(model);
 	}
 	
+	@RequestMapping("/pme/product-batch/collect/{productBatchId}")
+	public String productBatchList(@PathVariable int productBatchId, RedirectAttributes red) {
+		return productManagmentManager.validateCollectionOfProductBatch(productBatchId, red);
+	}
 	
 	//Redistribution 
 	@RequestMapping("/pme/redistribution")
@@ -62,5 +66,10 @@ public class ProductManagmentController {
 	@RequestMapping("/pme/redistribution/offer/add")
 	public String addOfferToRedistribution(RedistributionViewDto redistributionViewDto, Model model, RedirectAttributes red, HttpSession session) {
 		return productManagmentManager.addOfferToRedistribution(redistributionViewDto, model, red, session);
+	}
+	
+	@RequestMapping("/pme/redistribution/offer/cancel/{redistributionId}/{offerId}")
+	public String addOfferToRedistribution(@PathVariable int redistributionId, @PathVariable int offerId, RedirectAttributes red) {
+		return productManagmentManager.cancelOffer(redistributionId, offerId, false, red);
 	}
 }

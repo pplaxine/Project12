@@ -7,6 +7,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 
@@ -19,4 +21,7 @@ public interface RedistributionCRUDMSProxy {
 	
 	@GetMapping(value = "/redistributioncrud/redistributions/organisations/{organisationId}")
 	ResponseEntity<List<RedistributionBeanDto>> getAllRedistributionByOrganisationId(@PathVariable("organisationId") int organisationId);
+	
+	@PutMapping(value = "redistributioncrud/redistributions")
+	void updateRedistribution(@RequestBody RedistributionBeanDto redistributionDto);
 }

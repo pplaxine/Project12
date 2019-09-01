@@ -80,6 +80,7 @@ public class ProductManagmentManager {
 		productBatchBeanDto.setStorageContainerId(null);
 		productBatchBeanDto.setDateOfCollection(LocalDate.now());
 		productBatchBeanDto.setIsAvailable(true);
+		productBatchBeanDto.setIsAwaitingForCollection(false);
 		try {
 			//persist productBatch 
 			ResponseEntity<Void> resp = inventoryServiceProxy.createEntry(productBatchBeanDto, numberOfContainer);
@@ -148,6 +149,38 @@ public class ProductManagmentManager {
 		}
 			
 		return "productBatchList";
+	}
+	
+	public String validateCollectionOfProductBatch(int productBatchId, RedirectAttributes red){
+		
+		try {
+			ProductBatchBeanDto productBatchBeanDto = productBatchCRUDMSProxy.findProductBatchById(productBatchId).getBody();
+			List<Integer> storageContainerIdList = productBatchBeanDto.getStorageContainerId();
+			Integer[] storageContainerArray = storageContainerIdList.toArray(new Integer[storageContainerIdList.size()]);
+			//update storageContainers
+			List<StorageContainerBeanDto> storageContainerBeanDtoList = storageContainerCRUDMSProxy.findStorageContainerFromIdList(storageContainerArray).get();
+			for (StorageContainerBeanDto scbd : storageContainerBeanDtoList) {
+				scbd.setIsAvailable(true);
+			}
+			storageContainerCRUDMSProxy.updateStorageContainer(storageContainerBeanDtoList);
+			
+			//update productBatch 
+			productBatchBeanDto.setIsAvailable(false);
+			productBatchBeanDto.setIsAwaitingForCollection(false);
+			productBatchBeanDto.setStorageContainerId(null);		//ici
+			productBatchCRUDMSProxy.updateProductBatch(productBatchBeanDto);
+			
+		} catch (ResponseStatusException rse) {
+			
+			String error ="No productBatch could be found.";
+			red.addFlashAttribute("error", error);
+			System.out.println(rse.getReason());
+			
+		} catch (Exception e) {
+			red.addFlashAttribute("error", "Error occured. Please Try again.");
+		}
+		
+		return "redirect:/pme/product-batch/list";
 	}
 	
 	//REDISTRIBUTION ------------------------------------------------------------------------------
@@ -310,6 +343,47 @@ public class ProductManagmentManager {
 		return "redirect:/pme/redistribution";
 	}
 	
+	//OFFER 
+	
+	public String cancelOffer(int redistributionId, int offerId, Boolean isAccepted, RedirectAttributes red) { //update make list of productbatchlistid empty 
+		try {
+			
+			//update redistribution 
+			RedistributionBeanDto redistributionBeanDto = redistributionCRUDMSProxy.findRedistributionById(redistributionId).getBody();
+			redistributionBeanDto.setOfferId(null);
+			redistributionCRUDMSProxy.updateRedistribution(redistributionBeanDto);
+			
+			//update offer
+			OfferBeanDto offerBeanDto = offerCRUDMSProxy.findOfferById(offerId).getBody();
+			offerBeanDto.setIsAccepted(isAccepted);
+			offerCRUDMSProxy.updateOffer(offerBeanDto);
+			
+			if(!isAccepted) {
+				List<Integer> productBatchIdList = offerBeanDto.getProductBatchIdList();
+				for (Integer productBatchId : productBatchIdList) {
+					productBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(productBatchId, false);	//update productbatch
+				}
+			}
+			
+		} catch (ResponseStatusException e) {
+			if(e.getStatus() == HttpStatus.NOT_FOUND) {
+				String error ="No offer could be found.Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/pme/redistribution";
+			}else if(e.getStatus() == HttpStatus.NO_CONTENT) {
+				String error ="Offer status could not be updated.Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/pme/redistribution";
+			}else {
+				String error ="Error occured while taking in account your response. Please try again";
+				red.addFlashAttribute("error", error);
+				return "redirect:/pme/redistribution";
+			}
+		}
+		
+		return "redirect:/pme/redistribution";
+	}
+	
 	
 	
 	//UTILITY METHODS -------------------------------------------------------------------------------------------------------------
@@ -369,7 +443,7 @@ public class ProductManagmentManager {
 		OfferViewDto offerViewDto = new OfferViewDto();
 		//object building
 		if(offerBeanDto.getId() != 0) {
-			offerViewDto.setId(offerViewDto.getId());
+			offerViewDto.setId(offerBeanDto.getId());
 		}
 		if(offerBeanDto.getAvailableForCollection() != null) {
 			offerViewDto.setAvailableForCollection(offerBeanDto.getAvailableForCollection() );

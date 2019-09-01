@@ -35,7 +35,7 @@ public class Offer {
 	@CollectionTable(name = "offer_productBatch_mapping", 
 		joinColumns = {@JoinColumn(name="offer_id", referencedColumnName = "id")} 
 		)
-	@Column(name = "productBatch_id",unique = true)
+	@Column(name = "productBatch_id")
 	@NotEmpty
 	private List<Integer> productBatchIdList;
 	@NotNull

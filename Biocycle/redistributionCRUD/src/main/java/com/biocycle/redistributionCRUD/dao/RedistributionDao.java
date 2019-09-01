@@ -16,4 +16,6 @@ public interface RedistributionDao extends JpaRepository<Redistribution, Integer
 	
 	@Query(value = "SELECT r FROM Redistribution r WHERE r.isCompleted = false")
 	Optional<List<Redistribution>> findAllActiveRedistribution();
+	
+	
 }

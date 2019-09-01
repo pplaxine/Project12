@@ -59,6 +59,9 @@ public class FeignErrorDecoder implements ErrorDecoder{
 		if(methodKey.equals("OfferCRUDMSProxy#findOfferById(int)") && response.status() == 404) {
 			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OfferCRUDMSProxy#findOfferById(int) replied : Not found.");
 		}
+		if(methodKey.equals("OfferCRUDMSProxy#updateOffer(OfferBeanDto)") && response.status() == 404) {
+			return new ResponseStatusException(HttpStatus.valueOf(response.status()), "OfferCRUDMSProxy#updateOffer(OfferBeanDto) replied : Not found.");
+		}
 		
 		//ProductDispatchServiceProxy
 		if(methodKey.equals("ProductDispatchServiceProxy#updateRedistributionWithoffer(int, OfferBeanDto)") && response.status() == 424) {

@@ -24,10 +24,10 @@
 					    <th scope="col"></th>
 					  </tr>
 					</thead>
-					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
+					<tbody>
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
 					 	
-							<div th:if="${redistributionViewDto.isCompleted == false  && (redistributionViewDto.offerViewDto == null || ( redistributionViewDto.offerViewDto != null && redistributionViewDto.offerViewDto.offerEndingDate > $now && redistributionViewDto.offerViewDto.isAccepted == null)) }">
+							<div th:if="${redistributionViewDto.isCompleted == false  && (redistributionViewDto.offerViewDto == null || ( redistributionViewDto.offerViewDto != null && redistributionViewDto.offerViewDto.offerEndingDate.isAfter(#temporals.createToday())  && redistributionViewDto.offerViewDto.isAccepted == null)) }">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<td>
@@ -49,7 +49,7 @@
 											<span th:text="${productBatchBean.unitOfMeasure}"></span><br/>
 										</span>
 									</td>
-									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td> 
+									<td th:text="${#temporals.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td> 
 									<td class="align-middle">
 										<a th:href="@{|/user2/offers/accept/${redistributionViewDto.offerViewDto.id}|}">								<!-- controller /update accepted yes  -->
 											<span th:text="accept" class="text-success"></span> 
@@ -83,7 +83,7 @@
 					<tbody th:with="now=${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}">
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">
 					 	<div th:if="${redistributionViewDto.offerViewDto != null}">  
-							<div th:if="${redistributionViewDto.offerViewDto.isAccepted == true && redistributionViewDto.isCompleted == false && redistributionViewDto.offerViewDto.offerEndingDate > $now}">
+							<div th:if="${redistributionViewDto.offerViewDto.isAccepted == true && redistributionViewDto.isCompleted == false && redistributionViewDto.offerViewDto.offerEndingDate.isAfter(#temporals.createToday())}">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<div th:if="${redistributionViewDto.offerViewDto != null}">
@@ -94,8 +94,8 @@
 											<span th:text="${productBatchBean.unitOfMeasure}"></span><br/>
 										</span>
 									</td>
-									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.availableForCollection, 'dd-MM-yyyy')}" class="align-middle"></td>
-									<td th:text="${#dates.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td>  
+									<td th:text="${#temporals.format(redistributionViewDto.offerViewDto.availableForCollection, 'dd-MM-yyyy')}" class="align-middle"></td>
+									<td th:text="${#temporals.format(redistributionViewDto.offerViewDto.offerEndingDate, 'dd-MM-yyyy')}" class="align-middle"></td>  
 									<td class="align-middle">
 										<a th:href="@{|/user2/offers/refuse/${redistributionViewDto.offerViewDto.id}|}">															<!-- controller /update completed yes; but accepted false  -->
 											<span th:text="cancel" class="text-danger"></span>
@@ -125,7 +125,9 @@
 					 	<tr th:each=" redistributionViewDto : ${redistributionViewDtoList}">  
 							
 						<div th:if="${redistributionViewDto.offerViewDto != null}">
-							<div th:if="${redistributionViewDto.isCompleted == true || redistributionViewDto.offerViewDto.offerEndingDate < $now || (redistributionViewDto.isCompleted == false && redistributionViewDto.offerViewDto.isAccepted == false)}">
+							<div th:if="${redistributionViewDto.isCompleted == true || 
+									redistributionViewDto.offerViewDto.offerEndingDate.isBefore(#temporals.createToday()) || 
+									(redistributionViewDto.isCompleted != true && redistributionViewDto.offerViewDto.isAccepted == false)}">
 								<th scope="row"></th>
 								<td th:text="${redistributionViewDto.id}" class="align-middle"></td>
 								<td>

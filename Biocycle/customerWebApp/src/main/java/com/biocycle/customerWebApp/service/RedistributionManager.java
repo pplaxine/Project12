@@ -10,13 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.biocycle.customerWebApp.bean.redistribution.RedistributionBean;
 import com.biocycle.customerWebApp.dto.OfferBeanDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
 import com.biocycle.customerWebApp.dto.ProductBatchBeanDto;
@@ -154,11 +152,19 @@ public class RedistributionManager {
 		return "receiverPersoSpace";
 	}
 	
-	public String updateOfferStatus(int offerId,Boolean isAccepted,RedirectAttributes red) {
+	public String updateOfferStatus(int offerId, Boolean isAccepted,RedirectAttributes red) { //update make list of productbatchlistid empty 
 		try {
+			//update offer
 			OfferBeanDto offerBeanDto = offerCRUDMSProxy.findOfferById(offerId).getBody();
 			offerBeanDto.setIsAccepted(isAccepted);
 			offerCRUDMSProxy.updateOffer(offerBeanDto);
+			
+			if(!isAccepted) {
+				List<Integer> productBatchIdList = offerBeanDto.getProductBatchIdList();
+				for (Integer productBatchId : productBatchIdList) {
+					productBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(productBatchId, false);	//update productbatch
+				}
+			}
 			
 		} catch (ResponseStatusException e) {
 			if(e.getStatus() == HttpStatus.NOT_FOUND) {
@@ -199,13 +205,32 @@ public class RedistributionManager {
 				}
 				//offer from id
 				if(redistributionBeanDto.getOfferId() != null) {
-				OfferBeanDto offerBeanDto = getOfferBeanDtoById(redistributionBeanDto.getOfferId());
-				OfferViewDto offerViewDto = offerBeanDtoToOfferViewDto(offerBeanDto);
-				rvd.setOfferViewDto(offerViewDto);
+					OfferBeanDto offerBeanDto = getOfferBeanDtoById(redistributionBeanDto.getOfferId());
+					OfferViewDto offerViewDto = offerBeanDtoToOfferViewDto(offerBeanDto);
+					rvd.setOfferViewDto(offerViewDto);
 				}
 				//is completed 
 				if(redistributionBeanDto.getIsCompleted() != null) {
-				rvd.setIsCompleted(redistributionBeanDto.getIsCompleted());
+					rvd.setIsCompleted(redistributionBeanDto.getIsCompleted());
+					
+					if(rvd.getOfferViewDto() != null) {
+						List<ProductBatchBeanDto> productBatchBeanDtoList = rvd.getOfferViewDto().getProductBatchBeanList();
+						
+						//update status 
+						for (ProductBatchBeanDto pbbd : productBatchBeanDtoList) {
+							if(pbbd.getIsAvailable() == false && pbbd.getIsAwaitingForCollection() == false) {
+								redistributionBeanDto.setIsCompleted(true); //
+								redistributionCRUDMSProxy.updateRedistribution(redistributionBeanDto); 
+								ProductRequestBeanDto productRequestBeanDto = productRequestCRUDMSProxy.findProductRequestById(redistributionBeanDto.getId());
+								productRequestBeanDto.setIsAccepted(true);
+								productRequestCRUDMSProxy.updateProductRequest(productRequestBeanDto);
+								rvd.setIsCompleted(true);
+							}
+						}
+						
+					}
+					
+					
 				}
 
 				redistributionViewDtoList.add(rvd);
@@ -242,6 +267,7 @@ public class RedistributionManager {
 		if(offerBeanDto.getProductBatchIdList() != null) {
 			// get productBatch
 			List<Integer> productBatchIdList = offerBeanDto.getProductBatchIdList();
+
 			try {
 				List<ProductBatchBeanDto> productBatchBeanList = getListProductBatchByProductBatchIdList(productBatchIdList);
 				offerViewDto.setProductBatchBeanList(productBatchBeanList);

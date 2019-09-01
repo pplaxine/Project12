@@ -29,6 +29,19 @@ body, html {
   background-size: cover;
   
 }
+
+.bg_home__very_long {
+		
+  background-image: url(/img/home_bg.jpg);
+
+  height: 250%;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  
+}
 	
 
 .bg_dark_filter {
