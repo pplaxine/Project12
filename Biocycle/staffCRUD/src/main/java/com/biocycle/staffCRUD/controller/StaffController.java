@@ -1,6 +1,7 @@
 package com.biocycle.staffCRUD.controller;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.biocycle.staffCRUD.dao.StaffDao;
 import com.biocycle.staffCRUD.dto.StaffDto;
 import com.biocycle.staffCRUD.dto.mapper.StaffDtoMapper;
 import com.biocycle.staffCRUD.exception.StaffNotFoundException;
+import com.biocycle.staffCRUD.helper.StaffCRUDHelper;
 import com.biocycle.staffCRUD.model.Staff;
 
 @RestController
@@ -28,6 +30,18 @@ public class StaffController {
 	
 	@Autowired
 	private StaffDtoMapper staffDtoMapper;
+	
+	@GetMapping(value = "/staff")
+	public ResponseEntity<List<StaffDto>> findAllStaff(){
+		List<Staff> staffList = staffDao.findAll();
+		if(staffList.isEmpty()) {
+			throw new StaffNotFoundException("No Staff could be found");
+		}
+		
+		List<StaffDto> staffDtoList = StaffCRUDHelper.EntityListToDtoList(staffList, staffDtoMapper);
+		
+		return ResponseEntity.ok(staffDtoList);
+	}
 	
 	@GetMapping(value = "/staff/{id}")
 	public StaffDto findStaffById(@PathVariable int id){

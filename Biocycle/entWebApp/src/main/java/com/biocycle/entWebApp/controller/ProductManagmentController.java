@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
-import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 import com.biocycle.entWebApp.service.ProductManagmentManager;
 
