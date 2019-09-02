@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta th:insert="fragments/head :: head"/>
+		<title>Staff Creation form </title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home_long">
+		<h1 class="text-light pl-5 pt-3">Staff member creation</h1>
+			<div class="row justify-content-center align-items-center">
+				<div th:if="!${info}" class="col-md-8 col-lg-6 mb-5" >
+					<div class="container-fluid pt-5 text-light">
+						<div class="bg_dark_filter rounded pt-2 pb-4 " >	
+						
+						<form action="#" th:action="@{/hr/staff/form/create}" th:object="${staffBeanDto}" method="POST">
+							<div class="text-warning pl-5 pt-3">User credentials</div> 
+							<div class="form-row col-sm-12">
+								<div class="form-group col-sm-5  offset-sm-1">
+									<label for="userName">User name</label>
+									<input type="text" required="required" id="userName" name="userName" th:field="*{userName}" class="form-control" placeholder="Enter user name"/>
+								</div>
+								<div class="form-group col-sm-5  offset-sm-1">
+									<label for="password">Password</label>
+									<input type="text" required="required" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Enter password"/>
+								</div>
+							</div>
+							<div class="text-warning pl-5 pt-3">Staff member details</div> 
+							<div class="form-row col-sm-12"> 
+								<div class="form-row col-sm-12">
+									<div class="form-group col-sm-5  offset-sm-1">
+										<label for="staffName">Name</label>
+										<input type="text" required="required" id="staffName" name="staffName" th:field="*{name}" class="form-control" placeholder="Enter staff member name"/>
+									</div>
+								</div>
+								<div class="form-row col-sm-12">
+									<div class="form-group col-sm-5  offset-sm-1">
+										<label for="staffSurame">Surname</label>
+										<input type="text" required="required" id="staffSurname" name="staffSurname" th:field="*{surname}" class="form-control" placeholder="Enter staff member surname"/>
+									</div>
+								</div>
+								<div class="form-row col-sm-12">
+									
+									<div class="form-group col-sm-5  offset-sm-1">
+										<label for="role">Role</label>
+										<input type="text" required="required" id="role" name="role" th:field="*{role}" class="form-control" placeholder="Role"/>
+									</div>
+									<div class="form-group col-sm-2  offset-sm-1">
+										<label for="access">access</label>
+										<input type="number" required="required" id="access" name="access" th:field="*{access}" class="form-control" placeholder="Acces"/>
+									</div>
+								</div>
+							</div>
+							<div class="row justify-content-center align-items-center pt-3">
+								<button name="submit" class="btn btn-warning "  type="submit" value="0">submit</button>
+							</div>
+
+						</form>
+						<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+						</div>
+					</div>
+				</div>
+				<div th:if="${info}" th:text="${info}" class="text-success"></div>
+			</div>
+		
+		</div>
+	</body>
+</html>
