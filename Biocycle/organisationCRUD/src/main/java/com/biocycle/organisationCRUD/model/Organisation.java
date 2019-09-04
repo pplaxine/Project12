@@ -57,7 +57,7 @@ public class Organisation {
 		joinColumns = {@JoinColumn(name="organisation_id", referencedColumnName = "id")},
 		inverseJoinColumns =  {@JoinColumn(name = "address_id", referencedColumnName = "id")}
 	)
-	@MapKey(name = "spotName")	//see is String can be added 
+	@MapKey(name = "spotName")	 
 	@Getter @Setter
 	private Map<String,CollectionSpotAddress> collectionAddressList;
 	@NotBlank

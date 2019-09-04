@@ -7,6 +7,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,8 +32,8 @@ public class Offer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ElementCollection
-	@CollectionTable(name = "offer_productBatch_mapping", 
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable( name = "offer_productBatch_mapping", 
 		joinColumns = {@JoinColumn(name="offer_id", referencedColumnName = "id")} 
 		)
 	@Column(name = "productBatch_id")

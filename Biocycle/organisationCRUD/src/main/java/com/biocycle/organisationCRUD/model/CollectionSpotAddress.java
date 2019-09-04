@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(of = {"id","spotName","streetNumber","streetName","city","postCode"})
+@Table(name = "collection_spot_address")
 public class CollectionSpotAddress {
 
 	@Id

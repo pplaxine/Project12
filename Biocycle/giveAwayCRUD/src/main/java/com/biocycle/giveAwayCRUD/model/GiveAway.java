@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,8 +40,8 @@ public class GiveAway {
 	@NotNull
 	private Date availableToBeCollectedFrom;
 	private Date collectionDate; 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "GIVEAWAY_ID")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "give_away_id")
 	@NotEmpty
 	private List<@NotNull Container> containerList;
 	private Boolean isCollected;
