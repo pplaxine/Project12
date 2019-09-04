@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import com.biocycle.redistributionCRUD.model.Redistribution;
 
-@Repository
+@NoRepositoryBean
 public interface RedistributionDao extends JpaRepository<Redistribution, Integer> {
 	
 	Optional<List<Redistribution>> findAllRedistributionByOrganisationId(int organisationId);
