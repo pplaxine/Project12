@@ -17,6 +17,7 @@ import com.biocycle.entWebApp.bean.organisation.OrganisationBean;
 import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.mapper.OrganisationBeanDtoMapper;
 import com.biocycle.entWebApp.helper.entWebAppHelper;
+import com.biocycle.entWebApp.proxy.MailServiceProxy;
 import com.biocycle.entWebApp.proxy.OrganisationCRUDMSProxy;
 
 @Service
@@ -26,11 +27,12 @@ public class CustomerManagmentManager {
 	private OrganisationCRUDMSProxy organisationCRUDMSProxy;
 	@Autowired
 	private OrganisationBeanDtoMapper organisationBeanDtoMapper;
+	@Autowired
+	private MailServiceProxy mailServiceProxy;
 	
 	public String partnershipRequests(Model model) {
 		
 		try {
-			//Not validated organisation 
 			ResponseEntity<List<OrganisationBeanDto>> resp = organisationCRUDMSProxy.findAllOrganisationByIsValidated(false);
 			List<OrganisationBean> organisationBeanList = entWebAppHelper.dtoListToEntityList(resp.getBody(), organisationBeanDtoMapper);
 			
@@ -45,7 +47,6 @@ public class CustomerManagmentManager {
 				throw e;
 			}
 		}
-		
 		return "partnershipRequests";
 	}
 	
@@ -57,6 +58,12 @@ public class CustomerManagmentManager {
 			OrganisationBeanDto organisationBeanDto = resp.getBody();
 			organisationBeanDto.setIsValidated(true);
 			organisationCRUDMSProxy.updateOrganisation(organisationBeanDto);
+			
+			
+			//String emailAddress = organisationBeanDto.getEmailAddress(); fixed address for demo
+			String emailAddress = "p.plaxine@orange.fr";
+			
+			mailServiceProxy.sendPartnershipAcceptedEmail(organisationBeanDto.getOrganisationName(), emailAddress);
 			
 		} catch (ResponseStatusException e) {
 			if(e.getStatus() == HttpStatus.NOT_FOUND) {
