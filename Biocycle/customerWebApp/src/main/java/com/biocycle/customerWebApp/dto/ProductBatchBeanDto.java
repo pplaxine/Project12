@@ -1,8 +1,12 @@
 package com.biocycle.customerWebApp.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.biocycle.customerWebApp.bean.redistribution.UnitOfMeasure;
 
@@ -24,7 +28,8 @@ public class ProductBatchBeanDto {
 	private String description;
 	private int donorId;
 	private Date dateOfCollection;
-	private Date toBeUsedBy;
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate toBeUsedBy;
 	private BigDecimal quantity;
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 

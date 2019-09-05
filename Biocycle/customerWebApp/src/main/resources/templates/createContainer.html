@@ -9,12 +9,25 @@
 
 			<div th:if="!${info}">
 				<div class="container-fluid text-light">
-					<form action="#" th:action="@{/user/giveaway/container/add}" th:object="${containerViewDto}"  method="GET">
-						Name : <input type="text" required="required" name="name" th:field="*{name}"/><br/> 
-						Description : <input type="text" required="required" name="description" th:field="*{description}"/><br/> 
-						<button name="submit" type="submit" value="0">add container</button>
-					</form>
-					<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+					<h4 class="pt-3 pl-3">New Container</h4>
+					<div class="row pl-5 pr-5 pt-3 ">
+						<form action="#" th:action="@{/user/giveaway/container/add}" th:object="${containerViewDto}"  method="GET">
+						<div class="form-group col-sm-12">
+							<label for="name">Name (ref) : </label>
+							<input type="text" required="required" id="name" name="name" th:field="*{name}" class="form-control"/>
+						</div>
+						<div class="form-group col-sm-12">
+							<label for="description">Description :  </label>
+							<input type="text" required="required" id="description" name="description" th:field="*{description}" class="form-control"/> 
+						</div>
+						<div class="text-right pr-4">
+							<button name="submit" class="btn btn-info btn-sm" type="submit" value="0">add container</button>
+						</div>
+						</form>
+						<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+					
+					</div>
+					
 				</div>
 			</div>
 			<div th:if="${info}" th:text="${info}" class="text-success"></div>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,6 +43,23 @@ public class RedistributionManager {
 	@Autowired
 	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
 	
+	
+	//---- HOME PAGE PRODUCT SOON TO EXPIRED  ---------------------------------------------------------------------
+	
+	public String productSoonToBeExpired(Model model){
+		
+		try {
+			ResponseEntity<List<ProductBatchBeanDto>> resp = productBatchCRUDMSProxy.getProductSoonToExpire();
+			List<ProductBatchBeanDto> listProductBatchBeanDto = resp.getBody();
+			model.addAttribute("listProductBatchBeanDto", listProductBatchBeanDto);
+			
+		} catch (ResponseStatusException e) {
+				String error ="Error occured while searching for offers. Please try again";
+				model.addAttribute("error", error);
+				return "home";
+		}
+		return "home";
+	}
 	
 	
 	//---- REDISTRIBUTION CREATION ---------------------------------------------------------------------

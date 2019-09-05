@@ -53,6 +53,16 @@ public class ProductBatchController  {
 		return productBatchDtoMapper.productBatchToProductBatchDto(productBatch.get());
 	}
 	
+	@GetMapping(value = "/productbatches/soon/expired")
+	public ResponseEntity<List<ProductBatchDto>> getProductSoonToExpire(){
+		List<ProductBatch> productBatchList = productBatchDao.findTop15ByIsAvailableAndIsAwaitingForCollectionOrderByToBeUsedByAsc(true, false);
+		if(productBatchList == null || productBatchList.size() <= 0) {
+			throw new ProductBatchNotFoundException("No product batch were found.");
+		}
+		List<ProductBatchDto> productBatchDtoList = ProductBatchHelper.ListEntityToListDto(productBatchList, productBatchDtoMapper);
+		return ResponseEntity.ok(productBatchDtoList);
+	}
+	
 	@DeleteMapping(value = "/productbatches/{id}")
 	public void deleteProdictBatch(@PathVariable int id) {
 		productBatchDao.deleteById(id);

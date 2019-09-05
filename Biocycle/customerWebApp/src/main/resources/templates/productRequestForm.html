@@ -7,36 +7,69 @@
 		<header th:replace="fragments/header :: header"></header>
 		<div class="bg_redistribution_request">
 			<div th:if="!${info}">
-				<div class="container-fluid text-light">
-					<form action="#" th:action="@{/user2/redistributions/productrequests/add}" th:object="${productRequestBeanDto}"  method="GET">
-						Product Requested : <input type="text" required="required" name="productRequested" th:field="*{productRequested}"/><br/> 
-						Quantity : <input type="number" required="required" name="quantity" th:field="*{quantity}"/><br/>
-						Unit of measure :  
-						<select th:field="*{unitOfMeasure}">
-							<option th:value="KG" th:text="Kg"></option>
-							<option th:value="LITER" th:text="Liter"></option>							
-						</select> <br/>
-						<button name="submit" type="submit" value="0">Add product</button>
-					</form>
-					
-					
-					<div th:if="${session.productRequestBeanDtoMap}">
-						<ul>
-							<li th:each="productRequest : ${session.productRequestBeanDtoMap}">
-								Product: <span th:text="${productRequest.value.productRequested}">
-								</span>
-								<a th:href="@{|/user2/redistributions/productrequests/remove/${productRequest.value.productRequested}|}"> remove</a>
-						</li>
-						</ul>					
-					</div><br/>
-					<form action="#" th:action="@{/user2/redistributions/add}" method="GET">
-					    <button name="submit" type="submit" value="0">Add Request</button>
-					</form>
+				<div class="container-fluid text-light pt-4 ">
+					<h2>Make your requests</h2>
+					<div class="row pl-5 pr-5 pt-4 ">
+						<div class="col-4 bg_dark_filter rounded pt-3 pb-2">
+							<h5 class="text-warning text-center pb-2">What product do you need?</h5>
+							<form action="#" th:action="@{/user2/redistributions/productrequests/add}" th:object="${productRequestBeanDto}"  method="GET">
+								<div class="form-group col-sm-12">
+									<label for="productRequested">Product Requested : </label>
+									<input type="text" required="required"  id="productRequested" name="productRequested" th:field="*{productRequested}" class="form-control"/>
+								</div>
+								<div class="form-group col-sm-5">
+									<label for="quantity">Quantity : </label>
+									<input type="number" required="required" id="quantity" name="quantity" th:field="*{quantity}" class="form-control"/>
+								</div>
+								<div class="form-group col-sm-5  ">
+									<label for="unitOfMeasure">Unit of measure </label>
+									<select class="form-control" id="unitOfMeasure" th:field="*{unitOfMeasure}">
+										<option th:value="KG" th:text="Kg"></option>	
+										<option th:value="LITER" th:text="Litter"></option>							
+									</select> 
+								</div>
+								<div class="form-group col-sm-12 text-right">
+									<button name="submit" class="btn btn-info btn-sm" type="submit" value="0">Add product</button>
+								</div>
+								
+							</form>
+						</div>
+						<div th:if="${session.productRequestBeanDtoMap}" class="col-4 offset-3">
+							<div th:if="${session.productRequestBeanDtoMap.size() > 0}" class="bg_dark_filter rounded pl-3 pt-3 pb-4">
+								<h5 class="text-warning pb-2">Your request contains :</h5>
+									
+								<div th:each="productRequest : ${session.productRequestBeanDtoMap}" class="pl-4 text-lg">
+									<a th:href="@{|/user2/redistributions/productrequests/remove/${productRequest.value.productRequested}|}" >
+										<button class="btn btn bg-dark mb-3 text-light">								
+											
+											<span th:text="${productRequest.value.productRequested}">
+											</span>
+											<span class="text-danger"> x</span>
+										</button>	
+									</a>
+								
+								</div><br/>
+								<form action="#" th:action="@{/user2/redistributions/add}" method="GET" class="text-center" >
+								    <button name="submit" class="btn btn-info btn-lg" type="submit" value="0">Make Request</button>
+								</form>
+							</div>
+						</div>
+						
+					</div>
+	
 					<div th:if="${error}" th:text="${error}" class="text-danger"></div>
 					
 				</div>
 			</div>
-			<div th:if="${info}" th:text="${info}" class="text-success"></div>
+			
+			<div th:if="${info}">
+				<div class="container h-100 ">
+					<div class="row h-100 justify-content-center align-items-center ">
+						<div th:text="${info}" class="col-8 offset-2 text-success bg_dark_filter rounded text-center mt-5"></div>
+					</div>			
+				</div>
+			</div>
+	
 		</div>
 		<script type="text/javascript" th:src="@{/js/file.js}"></script>
 	</body>

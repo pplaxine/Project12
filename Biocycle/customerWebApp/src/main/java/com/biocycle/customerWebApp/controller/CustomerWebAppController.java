@@ -1,7 +1,5 @@
 package com.biocycle.customerWebApp.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,41 +10,19 @@ import com.biocycle.customerWebApp.dto.ContainerDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
 import com.biocycle.customerWebApp.dto.view.PasswordCreationViewDto;
 import com.biocycle.customerWebApp.service.OrganisationManager;
+import com.biocycle.customerWebApp.service.RedistributionManager;
 
 @Controller
 public class CustomerWebAppController {
-
-
 	
 	@Autowired
 	private OrganisationManager organisationManager;
+	@Autowired
+	private RedistributionManager redistributionManager;
 	
 	@RequestMapping("/")
-	public String home(Model model, HttpSession session) {
-		
-//		//retrieve redistribution 
-//		ResponseEntity<RedistributionBeanDto> resp = redistributionCRUDMSProxy.getRedistributionById(1);
-//		RedistributionBeanDto rbd =  resp.getBody();
-//		RedistributionBean rb = redistributionBeanDtoMapper.redistributionBeanDtoToRedistributionBean(rbd);
-//		
-//		//retrieve productRequests
-//		List<Integer> productRequestIdList = rb.getProductRequestId();
-//		List<ProductRequestBean> productRequestBeanList = new ArrayList<>();
-//		
-//		for (Integer productRequestId : productRequestIdList) {
-//			
-//			ProductRequestBeanDto prb = productRequestCRUDMSProxy.findProductRequestById(productRequestId);
-//			ProductRequestBean pr = productRequestBeanDtoMapper.productRequestBeanDtoToProductRequestBean(prb);
-//			productRequestBeanList.add(pr);
-//		}
-//		
-//		
-//		
-//		//send to view 
-//		model.addAttribute("rb", rb );
-//		model.addAttribute("prList", productRequestBeanList);
-		
-		return "home";
+	public String home(Model model) {
+		return redistributionManager.productSoonToBeExpired(model);
 	}
 	
 	//REQUEST PARTNERSHIP 	---------------------------------------------------------------------------------------
