@@ -77,7 +77,7 @@ public class OrganisationCrudApplicationUnitTests {
 		
 		//Request
 		MvcResult mvcResult = mockMvc.perform(
-			MockMvcRequestBuilders.get("/organisations/")	
+			MockMvcRequestBuilders.get("/organisations")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andReturn();
 		
