@@ -72,7 +72,8 @@ public class StaffCrudApplicationUnitTests {
 		staffList = new ArrayList<>();
 		staffList.add(staff);
 	}
-		
+	
+	//---- GET
 	@Test
 	public void ControllerFindAllStaffUT() throws Exception {
 		
@@ -188,6 +189,7 @@ public class StaffCrudApplicationUnitTests {
 		assertEquals("Unexpected status : ", expectedStatusCode, mvcResult.getResponse().getStatus());
 	}
 	
+	//---- POST
 	@Test
 	public void ControllerAddStaffUT() throws Exception {
 		

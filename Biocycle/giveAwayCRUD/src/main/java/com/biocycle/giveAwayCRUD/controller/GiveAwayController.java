@@ -100,11 +100,6 @@ public class GiveAwayController {
 		try {
 			GiveAway ga = giveAwayDao.save(giveAway);
 			
-			//FIX 
-			
-			 //NEED TO HAVE ADDRESS
-			//---------------
-			
 			URI location = ServletUriComponentsBuilder
 							.fromCurrentRequest()
 							.path("/{id}")
