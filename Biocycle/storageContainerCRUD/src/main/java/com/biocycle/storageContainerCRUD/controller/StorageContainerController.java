@@ -35,6 +35,17 @@ public class StorageContainerController {
 	
 	//---- GET 
 	
+	@GetMapping(value = "/storagecontainers/{id}" )
+	public StorageContainerDto findStorageContainerById(@PathVariable int id){
+		Optional<StorageContainer> storageContainer = storageContainerDao.findById(id);
+		
+		if(!storageContainer.isPresent()) {
+			throw new StorageContainerNotFoundException("storageContainer with" + id + " does not exist.");
+		}
+		
+		return storageContainerDtoMapper.storageContainerToStorageContainerDto(storageContainer.get());
+	}
+	
 	@GetMapping(value = "/storagecontainers/empty")
 	public List<StorageContainerDto> findAllEmptyStorageContainer(){
 		Optional<List<StorageContainer>> emptyStorageContainerList = storageContainerDao.findAllEmptyStorageContainer();
@@ -67,18 +78,6 @@ public class StorageContainerController {
 		List<StorageContainerDto> emptyStorageContainerDtoList = StorageContainerHelper.entityListToDtoList(emptyStorageContainerList, storageContainerDtoMapper);
 		
 		return Optional.of(emptyStorageContainerDtoList);
-	}
-	
-	
-	@GetMapping(value = "/storagecontainers/{id}" )
-	public StorageContainerDto findStorageContainerById(@PathVariable int id){
-		Optional<StorageContainer> storageContainer = storageContainerDao.findById(id);
-		
-		if(!storageContainer.isPresent()) {
-			throw new StorageContainerNotFoundException("storageContainer with" + id + " does not exist.");
-		}
-		
-		return storageContainerDtoMapper.storageContainerToStorageContainerDto(storageContainer.get());
 	}
 	
 	//---- DELETE 
@@ -136,13 +135,5 @@ public class StorageContainerController {
 		
 		return ResponseEntity.noContent().build();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

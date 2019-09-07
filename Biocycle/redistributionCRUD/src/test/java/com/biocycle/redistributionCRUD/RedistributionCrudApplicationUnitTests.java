@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
-public class RedistributionCrudApplicationTests {
+public class RedistributionCrudApplicationUnitTests {
 
 	@Autowired
 	MockMvc mockMvc;
@@ -84,7 +84,6 @@ public class RedistributionCrudApplicationTests {
 		//Assert
 		int expectedStatusCode = 200;
 		assertEquals("Unexpected status : ", expectedStatusCode, mvcResult.getResponse().getStatus());
-		
 	}
 	
 	@Test
