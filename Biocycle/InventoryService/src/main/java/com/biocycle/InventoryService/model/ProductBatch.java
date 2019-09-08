@@ -29,4 +29,5 @@ public class ProductBatch {
 	private UnitOfMeasure unitOfMeasure;
 	private List<Integer> storageContainerId; 
 	private Boolean isAvailable;
+	private Boolean isAwaitingForCollection;
 }

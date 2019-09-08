@@ -24,7 +24,10 @@ public class CustomerManagmentController {
 	//---- GET 
 	@GetMapping(value = "/organisations")
 	public ResponseEntity<List<OrganisationBeanDto>> findAllOrganisation(){
-		return organisationCRUDMSProxy.findAllOrganisation();
+		
+		ResponseEntity<List<OrganisationBeanDto>> resp = organisationCRUDMSProxy.findAllOrganisation();
+		
+		return resp;
 	}
 	
 	//---- POST 

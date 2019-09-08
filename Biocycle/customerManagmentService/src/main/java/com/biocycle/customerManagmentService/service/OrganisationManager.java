@@ -69,7 +69,7 @@ public class OrganisationManager {
 	
 	
 	//UTILITY METHOD 
-	private OrganisationBean addFirstSpotAddressFromOrganisationAddress(OrganisationBean organisationBean) {
+	protected OrganisationBean addFirstSpotAddressFromOrganisationAddress(OrganisationBean organisationBean) {
 		if ( organisationBean == null ) {
             return null;
         }
