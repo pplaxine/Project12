@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.biocycle.productDispatchService.bean.OfferBean;
-import com.biocycle.productDispatchService.bean.RedistributionBean;
 import com.biocycle.productDispatchService.dto.OfferBeanDto;
 import com.biocycle.productDispatchService.dto.ProductRequestBeanDto;
-import com.biocycle.productDispatchService.dto.RedistributionBeanDto;
 import com.biocycle.productDispatchService.service.ProductDispatchManager;
 
 @RestController

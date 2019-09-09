@@ -112,7 +112,7 @@ public class ProductDispatchManager {
 	}
 	
 	//UTILITY METHOD 
-	private List<Integer> persistProductRequestBean(List<ProductRequestBeanDto> productRequestBeanDtoList) throws ResponseStatusException {
+	protected List<Integer> persistProductRequestBean(List<ProductRequestBeanDto> productRequestBeanDtoList) throws ResponseStatusException {
 		ResponseEntity<List<ProductRequestBeanDto>> productRequestBeanDtoPersistedListResp  = productRequestCRUDMSProxy.addProductRequestList(productRequestBeanDtoList);
 		List<ProductRequestBean> productRequestBeanPersistedList = ProductDispatchHelper.ListDtoToListEntity(productRequestBeanDtoPersistedListResp.getBody(), productRequestBeanDtoMapper);
 		List<Integer> productRequestIdList = new ArrayList<>();
@@ -120,13 +120,13 @@ public class ProductDispatchManager {
 		return productRequestIdList;
 	}
 	
-	private Integer persistOfferBean(OfferBeanDto offerBeanDto) throws ResponseStatusException {
+	protected Integer persistOfferBean(OfferBeanDto offerBeanDto) throws ResponseStatusException {
 		ResponseEntity<Void> resp = offerCRUDMSProxy.addOffer(offerBeanDto);
 		String[] path = resp.getHeaders().getLocation().getRawPath().split("/");
 		return Integer.parseInt(path[path.length-1]);
 	}
 	
-	private ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean) throws ResponseStatusException {
+	protected ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean) throws ResponseStatusException {
 		RedistributionBeanDto redistributionBeanDto = redistributionBeanDtoMapper.redistributionBeanToRedistributionBeanDto(redistributionBean);
 		ResponseEntity<Void> resp = redistributionCRUDMSProxy.addRedistribution(redistributionBeanDto);
 		if(resp.getStatusCode() != HttpStatus.CREATED) {
@@ -135,7 +135,7 @@ public class ProductDispatchManager {
 		return resp;
 	}
 	
-	private void updateProductBatchStat(List<Integer> productBatchDtoList, Boolean status) throws ResponseStatusException {
+	protected void updateProductBatchStat(List<Integer> productBatchDtoList, Boolean status) throws ResponseStatusException {
 		for (Integer pbd : productBatchDtoList) {
 			ProductBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(pbd, status); 
 		}
