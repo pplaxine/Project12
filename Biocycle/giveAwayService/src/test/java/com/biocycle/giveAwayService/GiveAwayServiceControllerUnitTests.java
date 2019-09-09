@@ -73,7 +73,7 @@ public class GiveAwayServiceControllerUnitTests {
 		
 		String giveAwayBeanDtoListJsonFormat = objectWriter.writeValueAsString(giveAwayBeanDtoList);
 		
-		//Dao
+		//Proxy
 		Mockito.when(giveAwayCRUDMSProxy.getAllActiveGiveAway()).thenReturn(ResponseEntity.ok(giveAwayBeanDtoList));
 		
 		//Manager
