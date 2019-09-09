@@ -42,7 +42,7 @@ public class MailServiceManager {
 	}
 	
 	//UTILITY METHOD 
-	private String composeEmail(String organisationName) {
+	protected String composeEmail(String organisationName) {
 		StringBuilder sb = new StringBuilder();
 		
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(env.getProperty("mail.template.partnership.accepted.path")))){
@@ -61,7 +61,7 @@ public class MailServiceManager {
 	 * @param from the String to replace 
 	 * @param to the String to replace with 
 	 */
-	private void replaceAll(StringBuilder builder, String from, String to)
+	protected void replaceAll(StringBuilder builder, String from, String to)
 	{
 	    int index = builder.indexOf(from);
 	    while (index != -1)
