@@ -1,4 +1,4 @@
-package com.biocycle.productStorageService.bean.controller.feign;
+package com.biocycle.productStorageService.feign;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

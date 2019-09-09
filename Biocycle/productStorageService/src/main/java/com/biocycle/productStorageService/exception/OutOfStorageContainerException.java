@@ -1,4 +1,4 @@
-package com.biocycle.productStorageService.bean.controller.exception;
+package com.biocycle.productStorageService.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

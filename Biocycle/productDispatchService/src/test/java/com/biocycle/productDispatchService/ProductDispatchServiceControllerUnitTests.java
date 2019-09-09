@@ -2,7 +2,6 @@ package com.biocycle.productDispatchService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.anything;
 
 import java.util.ArrayList;
 import java.util.List;

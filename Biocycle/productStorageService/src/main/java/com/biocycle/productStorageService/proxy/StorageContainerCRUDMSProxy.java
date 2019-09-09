@@ -1,4 +1,4 @@
-package com.biocycle.productStorageService.bean.controller.proxy;
+package com.biocycle.productStorageService.proxy;
 
 import java.util.List;
 import java.util.Optional;
