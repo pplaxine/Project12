@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta th:insert="fragments/head :: head"/>
+		<title>Donations</title>
+	</head>
+	<body>
+		<header th:replace="fragments/header :: header"></header>
+		<div class="bg_home">
+
+			<div class="container pt-5">
+				
+				<h1 class="text-light pb-3">Donation offers</h1>
+				<div th:if="${error}" th:text="${error}" class="text-danger"></div>
+				
+				<h5 class="pl-4 text-success">Awaiting to be accepted</h5>
+				<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">Organisation</th>
+					    <th scope="col">Collection address</th>
+					    <th scope="col">Can be collected from</th>
+					    <th scope="col">Containers</th>
+					    <th scope="col" class="text-center">Status</th>
+				
+					  </tr>
+					</thead>
+					<tbody>
+						<tr th:each=" giveAway : ${giveAwayViewDtoList}">  
+							<span th:if="${giveAway.isCollected != true && giveAway.containerValidationDone == false}">
+								<th scope="row"></th>
+								<td th:text="${giveAway.organisationBeanDto.organisationName}" class="align-middle"></td>
+								<td >
+									<span th:text="${giveAway.collectionSpotAddress.streetNumber}" ></span>
+									<span th:text="${giveAway.collectionSpotAddress.streetName}" ></span><br/>
+									<span th:text="${giveAway.collectionSpotAddress.city}" ></span>
+									<span th:text="${giveAway.collectionSpotAddress.postCode}" ></span>
+								</td>
+								<td th:text="${#temporals.format(giveAway.availableToBeCollectedFrom, 'dd-MM-yyyy HH:mm')}" class="align-middle"></td>
+								<td>
+									<div th:each="container : ${giveAway.containerList}">
+										<span th:text="${container.description}"></span>
+									</div>
+								</td>
+								<td>
+									<div th:each="container : ${giveAway.containerList}" class="text-center">
+										<span th:if="${container.accepted == null}">
+											<a  th:href="@{|/cse/donation/offers/${giveAway.id}/${container.id}/${'true'}|}" class="text-success">accept</a>
+											<span>|</span>
+											<a  th:href="@{|/cse/donation/offers/${giveAway.id}/${container.id}/${'false'}|}" class="text-danger">refuse</a>
+										</span>
+										<span th:if="${container.accepted == true}" class="text-success ">accepted</span>
+										<span th:if="${container.accepted == false}" class="text-danger ">refused</span>
+									</div>
+								</td>
+							</span>
+						</tr> 
+					</tbody>
+				</table>
+				<h5 class="pl-4 text-warning">Awaiting to be collected</h5>
+					<table class="table table-dark mt-3" style="opacity:0.8">
+					<thead>
+					  <tr>
+					    <th scope="col"></th>
+					    <th scope="col">Organisation</th>
+					    <th scope="col">Collection address</th>
+					    <th scope="col">Can be collected from</th>
+					    <th scope="col">Containers content</th>
+					    <th scope="col" class="text-center">Status</th>
+				
+					  </tr>
+					</thead>
+					<tbody>
+						<tr th:each=" giveAway : ${giveAwayViewDtoList}">  
+							<span th:if="${giveAway.isCollected != true && giveAway.containerValidationDone != false }">
+								<th scope="row"></th>
+								<td th:text="${giveAway.organisationBeanDto.organisationName}" class="align-middle"></td>
+								<td >
+									<span th:text="${giveAway.collectionSpotAddress.streetNumber}" ></span>
+									<span th:text="${giveAway.collectionSpotAddress.streetName}" ></span><br/>
+									<span th:text="${giveAway.collectionSpotAddress.city}" ></span>
+									<span th:text="${giveAway.collectionSpotAddress.postCode}" ></span>
+								</td>
+								<td th:text="${#temporals.format(giveAway.availableToBeCollectedFrom, 'dd-MM-yyyy HH:mm')}" class="align-middle"></td>
+								<td>
+									<div th:each="container : ${giveAway.containerList}">
+										<span th:text="${container.description}"></span>
+									</div>
+								</td>
+								<td>
+									<div th:each="container : ${giveAway.containerList}" class="text-center">
+										<div th:if="${container.accepted == true}" class="text-success">
+											<span class="text-success">accepted</span>
+										</div>
+										<div th:if="${container.accepted == false}" class="text-danger">
+											<span class="text-danger">refused</span>
+										</div>
+										
+									</div>
+								</td>
+								<td th:text="@{${giveAwayAccepted}}"></td>
+							</span>
+						</tr> 
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

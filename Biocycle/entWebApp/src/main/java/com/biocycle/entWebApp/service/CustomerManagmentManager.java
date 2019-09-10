@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.biocycle.entWebApp.bean.organisation.OrganisationBean;
 import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.mapper.OrganisationBeanDtoMapper;
-import com.biocycle.entWebApp.helper.entWebAppHelper;
+import com.biocycle.entWebApp.helper.EntWebAppHelper;
 import com.biocycle.entWebApp.proxy.MailServiceProxy;
 import com.biocycle.entWebApp.proxy.OrganisationCRUDMSProxy;
 
@@ -34,7 +34,7 @@ public class CustomerManagmentManager {
 		
 		try {
 			ResponseEntity<List<OrganisationBeanDto>> resp = organisationCRUDMSProxy.findAllOrganisationByIsValidated(false);
-			List<OrganisationBean> organisationBeanList = entWebAppHelper.dtoListToEntityList(resp.getBody(), organisationBeanDtoMapper);
+			List<OrganisationBean> organisationBeanList = EntWebAppHelper.dtoListToEntityList(resp.getBody(), organisationBeanDtoMapper);
 			
 			model.addAttribute("organisationBeanList", organisationBeanList);
 		} catch (ResponseStatusException e) {

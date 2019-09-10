@@ -53,18 +53,5 @@ public class CustomerWebAppController {
 	public String savePassword(PasswordCreationViewDto passwordCreationViewDto, Model model, RedirectAttributes red) {
 		return organisationManager.savePassword(passwordCreationViewDto, model, red);
 	}
-	
-
-	
-	//TEST
-	@RequestMapping("/test")
-	public String muController() {
-		
-		ContainerDto container = new ContainerDto( 1, "First Container", true, 3, false);
-		
-		
-		return container.toString();
-	}
-	
 
 }

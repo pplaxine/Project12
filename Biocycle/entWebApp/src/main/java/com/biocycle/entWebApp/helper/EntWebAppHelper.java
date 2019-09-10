@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.biocycle.entWebApp.bean.organisation.OrganisationBean;
+import com.biocycle.entWebApp.dto.ContainerDto;
+import com.biocycle.entWebApp.dto.GiveAwayBeanDto;
 import com.biocycle.entWebApp.dto.OfferBeanDto;
 import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.mapper.OrganisationBeanDtoMapper;
+import com.biocycle.entWebApp.dto.view.GiveAwayViewDto;
 import com.biocycle.entWebApp.dto.view.OfferViewDto;
 import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 
-public class entWebAppHelper {
+public class EntWebAppHelper {
 
 	
 	public static List<OrganisationBean> dtoListToEntityList(List<OrganisationBeanDto> organisationBeanDtoList, OrganisationBeanDtoMapper organisationBeanDtoMapper){
@@ -46,4 +49,63 @@ public class entWebAppHelper {
 		return redistributionViewDto;
 	}
 	
+	public static GiveAwayViewDto giveAwayViewBuilder(OrganisationBeanDto organisationBeanDto, GiveAwayBeanDto giveAwayBeanDto) {
+		if(organisationBeanDto == null || giveAwayBeanDto == null) {
+			return null;
+		}
+
+		GiveAwayViewDto gavd = new GiveAwayViewDto();
+		gavd.setOrganisationBeanDto(organisationBeanDto);
+		gavd.setId(giveAwayBeanDto.getId());
+		if(giveAwayBeanDto.getCollectionSpotAddress() != null) {
+			gavd.setCollectionSpotAddress(giveAwayBeanDto.getCollectionSpotAddress());
+		}
+		if(giveAwayBeanDto.getAvailableToBeCollectedFrom() != null) {
+			gavd.setAvailableToBeCollectedFrom(giveAwayBeanDto.getAvailableToBeCollectedFrom());
+		}
+		if(giveAwayBeanDto.getCollectionDate() != null) {
+			gavd.setCollectionDate(giveAwayBeanDto.getCollectionDate());
+		}
+		if(giveAwayBeanDto.getContainerList() != null) {
+			List<ContainerDto> giveAwayBeanDtoList = giveAwayBeanDto.getContainerList();
+			gavd.setContainerList(giveAwayBeanDtoList);
+			if(!giveAwayBeanDtoList.isEmpty()) {
+				gavd.setContainerValidationDone(true);
+				giveAwayBeanDtoList.forEach(e -> {
+					if(e.getAccepted() == null) {
+						gavd.setContainerValidationDone(false);
+					}
+				});
+			}
+			
+		}
+		if(giveAwayBeanDto.getIsCollected() != null) {
+			
+			if(gavd.getContainerList() != null && !gavd.getContainerList().isEmpty()) {
+				gavd.setIsCollected(true);
+				gavd.getContainerList().forEach(e -> {
+					if(e.getAccepted() == null || e.getAccepted() != false) {
+						gavd.setIsCollected(giveAwayBeanDto.getIsCollected());
+					}
+				});
+			}
+			
+		}
+		
+		
+		return gavd;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

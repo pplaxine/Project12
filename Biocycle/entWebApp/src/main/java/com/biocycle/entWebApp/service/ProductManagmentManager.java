@@ -27,7 +27,7 @@ import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.StorageContainerBeanDto;
 import com.biocycle.entWebApp.dto.view.OfferViewDto;
 import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
-import com.biocycle.entWebApp.helper.entWebAppHelper;
+import com.biocycle.entWebApp.helper.EntWebAppHelper;
 import com.biocycle.entWebApp.proxy.InventoryServiceProxy;
 import com.biocycle.entWebApp.proxy.OfferCRUDMSProxy;
 import com.biocycle.entWebApp.proxy.OrganisationCRUDMSProxy;
@@ -419,7 +419,7 @@ public class ProductManagmentManager {
 		}
 		
 		List<ProductRequestBeanDto> productRequestBeanDtoList = getProductRequestBeanFromIdList(redistributionBeanDto.getProductRequestId());
-		return entWebAppHelper.redistributionViewBuilder(redistributionBeanDto, offerViewDto, productRequestBeanDtoList, organisationBeanDto);
+		return EntWebAppHelper.redistributionViewBuilder(redistributionBeanDto, offerViewDto, productRequestBeanDtoList, organisationBeanDto);
 	}
 	
 	private List<ProductRequestBeanDto> getProductRequestBeanFromIdList(List<Integer> productRequestIdList) throws ResponseStatusException{
