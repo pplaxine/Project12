@@ -3,7 +3,6 @@ package com.biocycle.customerWebApp.controller;
 import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,20 +34,24 @@ public class DonorSideController {
 		model.addAttribute("giveAwayViewDto", new GiveAwayViewDto());
 		return "createGiveAway";
 	}
+	
 	@RequestMapping("/user/giveaway/create")
 	public String createGiveAway(GiveAwayViewDto giveAwayViewDto, Model model, RedirectAttributes red, HttpSession session) {
 		return giveawayManager.createGiveAway(giveAwayViewDto, model, red, session);
 	}
+	
 	@RequestMapping("/user/giveaway/container")
 	public String container(ContainerViewDto containerViewDto, Model model) {
 		model.addAttribute("containerDto", new ContainerViewDto());
 		return "createContainer";
 	}
+	
 	@RequestMapping("/user/giveaway/container/add")
 	public String addContainer(ContainerViewDto containerViewDto, Model model, RedirectAttributes red) {
 		red.addFlashAttribute("containerViewDto", containerViewDto);
 		return "redirect:/user/giveaway";
 	}
+	
 	@RequestMapping("/user/giveaway/container/remove/{ref}")
 	public String removeContainer(@PathVariable String ref, Model model, HttpSession session) {
 		return giveawayManager.removeContainer(ref, model, session);
