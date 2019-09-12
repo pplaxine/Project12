@@ -143,7 +143,7 @@ public class GiveAwayManager {
 	
 	
 	//UTILITY METHODS
-	private List<ContainerDto> ViewDtoMapToDtoList(Map<String, ContainerViewDto> containerViewDtoMap) {
+	protected List<ContainerDto> ViewDtoMapToDtoList(Map<String, ContainerViewDto> containerViewDtoMap) {
 		List<ContainerDto> containerDtoList = new ArrayList<>();
 		containerViewDtoMap.values().forEach(e -> {
 			ContainerDto containerDto = containerViewDtoToContainerDto(e);
@@ -152,14 +152,14 @@ public class GiveAwayManager {
 		return containerDtoList;
 	}
 	
-	private ContainerDto containerViewDtoToContainerDto(ContainerViewDto containerViewDto) {
+	protected ContainerDto containerViewDtoToContainerDto(ContainerViewDto containerViewDto) {
 		ContainerDto containerDto = new ContainerDto();
 		containerDto.setDescription(containerViewDto.getDescription());
 		containerDto.setIsCollected(false);
 		return containerDto;
 	}
 	
-	private List<GiveAwayBeanDto> allContainerRefusedChecker(List<GiveAwayBeanDto> giveAwayBeanDtoListIn) {
+	protected List<GiveAwayBeanDto> allContainerRefusedChecker(List<GiveAwayBeanDto> giveAwayBeanDtoListIn) {
 		List<GiveAwayBeanDto> giveAwayBeanDtout = new ArrayList<>();  
 		giveAwayBeanDtoListIn.forEach(e -> {
 			List<ContainerDto> containerDtoList = e.getContainerList();
