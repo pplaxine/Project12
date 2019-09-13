@@ -387,16 +387,17 @@ public class ProductManagmentManager {
 	
 	
 	//UTILITY METHODS -------------------------------------------------------------------------------------------------------------
-	private String getURILastPart(URI location) {
+	protected String getURILastPart(URI location) {
 		String[] parts = location.getPath().split("/");
 		return parts[parts.length-1];
 	}
 	
 	//Redistribution BeanList to ViewList 
-	private List<RedistributionViewDto> beanDtoListToViewDtoList(List<RedistributionBeanDto> redistributionWithRequestList) throws ResponseStatusException{
+	protected List<RedistributionViewDto> beanDtoListToViewDtoList(List<RedistributionBeanDto> redistributionWithRequestList) throws ResponseStatusException{
 		List<RedistributionViewDto> redistributionViewDtoList = new ArrayList<>();
 		
 		for (RedistributionBeanDto rbd : redistributionWithRequestList) {
+			
 			try {
 				RedistributionViewDto redistributionViewDto = redistributionBeanDtoToViewDto(rbd);
 				redistributionViewDtoList.add(redistributionViewDto);
@@ -409,7 +410,7 @@ public class ProductManagmentManager {
 	}
 	
 	//Redistribution BeantoView
-	private RedistributionViewDto redistributionBeanDtoToViewDto(RedistributionBeanDto redistributionBeanDto) throws ResponseStatusException {
+	protected RedistributionViewDto redistributionBeanDtoToViewDto(RedistributionBeanDto redistributionBeanDto) throws ResponseStatusException {
 		OfferViewDto offerViewDto = null;
 		OrganisationBeanDto organisationBeanDto = organisationCRUDMSProxy.findOrganisationById(redistributionBeanDto.getOrganisationId()).getBody();
 		if(redistributionBeanDto.getOfferId() != null) {
@@ -422,7 +423,7 @@ public class ProductManagmentManager {
 		return EntWebAppHelper.redistributionViewBuilder(redistributionBeanDto, offerViewDto, productRequestBeanDtoList, organisationBeanDto);
 	}
 	
-	private List<ProductRequestBeanDto> getProductRequestBeanFromIdList(List<Integer> productRequestIdList) throws ResponseStatusException{
+	protected List<ProductRequestBeanDto> getProductRequestBeanFromIdList(List<Integer> productRequestIdList) throws ResponseStatusException{
 		List<ProductRequestBeanDto> productRequestBeanDtoList = new ArrayList<>();
 		for (Integer productRequestId : productRequestIdList) {
 			try {
@@ -436,7 +437,8 @@ public class ProductManagmentManager {
 		return productRequestBeanDtoList;
 	}
 	
-	private OfferViewDto offerBeanDtoToOfferviewDto(OfferBeanDto offerBeanDto) throws ResponseStatusException {
+	
+	protected OfferViewDto offerBeanDtoToOfferviewDto(OfferBeanDto offerBeanDto) throws ResponseStatusException {
 		if(offerBeanDto == null) {
 			return null;
 		}
@@ -461,7 +463,7 @@ public class ProductManagmentManager {
 			List<Integer> productBatchIdList = offerBeanDto.getProductBatchIdList();
 			try {
 				for (Integer productBatchId : productBatchIdList) {
-					ProductBatchBeanDto productBatchBeanDto = productBatchCRUDMSProxy.findProductBatchById(productBatchId).getBody();
+					ProductBatchBeanDto productBatchBeanDto = productBatchCRUDMSProxy.findProductBatchById(productBatchId).getBody();		//mock this
 					productBatchBeanDtoList.add(productBatchBeanDto);
 				}
 			} catch (ResponseStatusException e) {
@@ -478,7 +480,7 @@ public class ProductManagmentManager {
 
 	
 	//FILTERS 
-	private List<RedistributionBeanDto> filterRedistributionWithRequestOnly(List<RedistributionBeanDto> redistributionBeanDtoList){
+	protected List<RedistributionBeanDto> filterRedistributionWithRequestOnly(List<RedistributionBeanDto> redistributionBeanDtoList){
 		List<RedistributionBeanDto> redistributionWithRequestOnly = new ArrayList<>();
 		redistributionWithRequestOnly = redistributionBeanDtoList
 														.stream()
@@ -487,7 +489,7 @@ public class ProductManagmentManager {
 		return redistributionWithRequestOnly;
 	}
 	
-	private List<RedistributionBeanDto> filterRedistributionWithoutOffer(List<RedistributionBeanDto> redistributionBeanDtoList){
+	protected List<RedistributionBeanDto> filterRedistributionWithoutOffer(List<RedistributionBeanDto> redistributionBeanDtoList){
 		List<RedistributionBeanDto> redistributionWithoutOffer = new ArrayList<>();
 		redistributionWithoutOffer = redistributionBeanDtoList
 														.stream()
@@ -496,7 +498,7 @@ public class ProductManagmentManager {
 		return redistributionWithoutOffer;
 	}
 	
-	private List<ProductBatchBeanDto> filterProductBatchActive(List<ProductBatchBeanDto> productBatchBeanDtoList){
+	protected List<ProductBatchBeanDto> filterProductBatchActive(List<ProductBatchBeanDto> productBatchBeanDtoList){
 		List<ProductBatchBeanDto> productBatchBeanDtoActiveList = new ArrayList<>();
 		productBatchBeanDtoActiveList = productBatchBeanDtoList
 														.stream()
@@ -505,7 +507,7 @@ public class ProductManagmentManager {
 		return productBatchBeanDtoActiveList;
 	}
 	
-	private List<ProductBatchBeanDto> filterProductBatchAvailableForOffer(List<ProductBatchBeanDto> productBatchBeanDtoList){
+	protected List<ProductBatchBeanDto> filterProductBatchAvailableForOffer(List<ProductBatchBeanDto> productBatchBeanDtoList){
 		List<ProductBatchBeanDto> productBatchBeanDtoForOfferList = new ArrayList<>();
 		productBatchBeanDtoForOfferList = productBatchBeanDtoList
 														.stream()
