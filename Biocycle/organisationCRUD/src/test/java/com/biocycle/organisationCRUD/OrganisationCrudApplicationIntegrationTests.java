@@ -1,4 +1,4 @@
-package com.biocycle.giveAwayCRUD;
+package com.biocycle.organisationCRUD;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,84 +20,81 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 )
 @AutoConfigureMockMvc
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class GiveAwayCrudApplicationIntegrationTests {
+public class OrganisationCrudApplicationIntegrationTests {
 
 	@Autowired
 	MockMvc mockMvc;
 	
 	//---- GET
 	@Test
-	public void iT01FindActiveGiveAwayByDate() throws Exception {
+	public void iT01findAllOrganisation() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/giveaways/date/2019-07-21")	
+			MockMvcRequestBuilders.get("/organisations")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void iT02findActiveGiveAway() throws Exception {
+	public void iT02findOrganisationById() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/giveaways/active")	
+			MockMvcRequestBuilders.get("/organisations/1")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void iT03findAllGiveAwayByOrganisationId() throws Exception {
+	public void iT03findOrganisationByEmail() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/giveaways/all/1")	
+			MockMvcRequestBuilders.get("/organisations/email/orga1@orange.fr")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void iT04findGiveAway() throws Exception {
+	public void iT04findAllOrganisationByIsValidated() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/giveaways/1")	
+			MockMvcRequestBuilders.get("/organisations/validated/true")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	//---- POST 
 	@Test
-	public void iT05addGiveAway() throws Exception {
+	public void iT05addOrganisation() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.post("/giveaways")
+			MockMvcRequestBuilders.post("/organisations")
 								.contentType(MediaType.APPLICATION_JSON_UTF8)
-								.content(GiveAwayTestHelper.getGiveAwayDtoPOSTJson())
+								.content(OrganisationTestHelper.getOrganisationDtoPOSTJson())
 				).andExpect(status().is2xxSuccessful());
 	}
 	
 	//---- PUT 
 	@Test
-	public void iT06updateGiveAway() throws Exception {
+	public void iT06updateOrganisation() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.put("/giveaways")
+			MockMvcRequestBuilders.put("/organisations")
 								.contentType(MediaType.APPLICATION_JSON_UTF8)
-								.content(GiveAwayTestHelper.getGiveAwayDtoPUTJson())
+								.content(OrganisationTestHelper.getOrganisationDtoPUTJson())
 				).andExpect(status().is2xxSuccessful());
 	}
 	
 	//---- DELETE 
 	@Test
-	public void iT07deleteGiveAway() throws Exception {
+	public void iT07deleteOrganisation() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.delete("/giveaways/4")
+			MockMvcRequestBuilders.delete("/organisations/3")
 				).andExpect(status().is2xxSuccessful());
 	}
 	
 	
-	
-	
-
 }

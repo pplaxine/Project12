@@ -14,20 +14,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.biocycle.offerCRUD.dao.OfferDao;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @AutoConfigureMockMvc
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class OfferCrudIntegretionTests {
+public class OfferCrudApplicationIntegretionTests {
 
 	@Autowired
 	MockMvc mockMvc;
-	@Autowired
-	OfferDao offerDao;
 	
 	//---- GET
 	@Test
