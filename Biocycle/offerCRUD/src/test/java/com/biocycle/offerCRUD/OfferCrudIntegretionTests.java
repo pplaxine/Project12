@@ -62,4 +62,14 @@ public class OfferCrudIntegretionTests {
 								.content(OfferTestHelper.getOfferDtoPUTJson())
 				).andExpect(status().is2xxSuccessful());
 	}
+	
+	//---- DELETE 
+	@Test
+	public void iT04deleteOffer() throws Exception {
+		
+		//Request
+		mockMvc.perform(
+			MockMvcRequestBuilders.delete("/offers/4")
+				).andExpect(status().is2xxSuccessful());
+	}
 }
