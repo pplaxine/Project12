@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 )
 @AutoConfigureMockMvc
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class OfferCrudApplicationIntegretionTests {
+public class OfferCrudApplicationIntegrationTests {
 
 	@Autowired
 	MockMvc mockMvc;

@@ -1,4 +1,4 @@
-package com.biocycle.redistributionCRUD;
+package com.biocycle.staffCRUD;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,72 +20,70 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 )
 @AutoConfigureMockMvc
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class RedistributionCrudApplicationIntegrationTests {
+public class StaffCrudApplicationIntegrationTests {
 	
 	@Autowired
 	MockMvc mockMvc;
 	
 	//---- GET
 	@Test
-	public void iT01findRedistributionById() throws Exception {
+	public void iT01findAllStaff() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/redistributions/1")	
+			MockMvcRequestBuilders.get("/staff")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void iT02findRedistributionByOrganisationId() throws Exception {
+	public void iT02findStaffById() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/redistributions/organisations/2")	
+			MockMvcRequestBuilders.get("/staff/1")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	@Test
-	public void iT03findAllActiveRedistributions() throws Exception {
+	public void iT03findStaffByUserName() throws Exception {
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.get("/redistributions/active")	
+			MockMvcRequestBuilders.get("/staff/username/pme")	
 								.accept(MediaType.APPLICATION_JSON)
 				).andExpect(status().isOk());
 	}
 	
 	//---- POST 
 	@Test
-	public void iT04addRedistribution() throws Exception {
+	public void iT04addStaff() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.post("/redistributions")
+			MockMvcRequestBuilders.post("/staff")
 								.contentType(MediaType.APPLICATION_JSON_UTF8)
-								.content(RedistributionTestHelper.getRedistributionDtoPOSTJson())
+								.content(StaffTestHelper.getStaffDtoPOSTJson())
 				).andExpect(status().is2xxSuccessful());
 	}
 	
 	//---- PUT 
 	@Test
-	public void iT05updateredistribution() throws Exception {
+	public void iT05updateStaff() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.put("/redistributions")
+			MockMvcRequestBuilders.put("/staff")
 								.contentType(MediaType.APPLICATION_JSON_UTF8)
-								.content(RedistributionTestHelper.getRedistributionDtoPUTJson())
+								.content(StaffTestHelper.getStaffDtoPUTJson())
 				).andExpect(status().is2xxSuccessful());
 	}
 	
 	//---- DELETE 
 	@Test
-	public void iT06deleteRedistribution() throws Exception {
+	public void iT06deleteStaff() throws Exception {
 		
 		//Request
 		mockMvc.perform(
-			MockMvcRequestBuilders.delete("/redistributions/4")
+			MockMvcRequestBuilders.delete("/staff/9")
 				).andExpect(status().is2xxSuccessful());
 	}
-	
-	
 }

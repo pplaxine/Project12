@@ -2,7 +2,7 @@ package com.biocycle.redistributionCRUD;
 
 public class RedistributionTestHelper {
 	
-	public static String RedistributionDtoPOSTJson() {
+	public static String getRedistributionDtoPOSTJson() {
 		return "{\r\n" + 
 				"    \"organisationId\": 2,\r\n" + 
 				"    \"productRequestId\": [\r\n" + 
@@ -12,7 +12,7 @@ public class RedistributionTestHelper {
 				"}";
 	}
 	
-	public static String RedistributionDtoPUTJson() {
+	public static String getRedistributionDtoPUTJson() {
 		return "{\r\n" + 
 				"    \"id\": 4,\r\n" + 
 				"    \"organisationId\": 2,\r\n" + 
