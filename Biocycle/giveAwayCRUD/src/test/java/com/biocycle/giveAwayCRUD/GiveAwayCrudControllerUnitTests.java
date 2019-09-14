@@ -32,7 +32,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
-public class GiveAwayCrudApplicationUnitTests {
+public class GiveAwayCrudControllerUnitTests {
 
 	@Autowired
 	MockMvc mockMvc;
