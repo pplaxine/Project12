@@ -3,6 +3,7 @@ package com.biocycle.productDispatchService.proxy;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,5 +24,8 @@ public interface RedistributionCRUDMSProxy {
 
 	@PutMapping(value = "/redistributions")
 	void updateRedistribution(@RequestBody RedistributionBeanDto redistributionDto);
+	
+	@DeleteMapping(value = "/redistributions/{redistributionId}")
+	public void deleteRedistribution (@PathVariable("redistributionId") int redistributionId);
 	
 }
