@@ -22,4 +22,7 @@ public interface StorageContainerCRUDMSProxy {
 	
 	@PutMapping(value = "/storagecontainers/updatestatus")
 	ResponseEntity<Void> updateStorageContainerList(@RequestBody List<StorageContainerBeanDto> storageContainerBeanDtoList);
+	
+	@PutMapping(value = "/storagecontainers")
+	ResponseEntity<Void> updateStorageContainer(@RequestBody StorageContainerBeanDto storageContainerDto);
 }

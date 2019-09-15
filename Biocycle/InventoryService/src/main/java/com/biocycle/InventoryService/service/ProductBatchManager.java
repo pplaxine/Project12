@@ -22,11 +22,12 @@ import com.biocycle.InventoryService.proxy.StorageContainerCRUDMSProxy;
 public class ProductBatchManager {
 	
 	@Autowired
-	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
-	@Autowired
 	private ProductStorageMSProxy productStorageMSProxy;
 	@Autowired
+	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
+	@Autowired
 	private StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
+	
 	@Autowired
 	private ProductBatchDtoMapper productBatchDtoMapper;
 	@Autowired
@@ -45,6 +46,7 @@ public class ProductBatchManager {
 		ProductBatchBean productBatchBean = productBatchBeanMapper.productBatchToProductBatchBean(productBatch);
 		//Bean to BeanDto 
 		ProductBatchBeanDto productBatchBeanDto = productBatchDtoMapper.productBatchBeanToProductBatchBeanDto(productBatchBean);
+		
 		
 		//Persist productBatch 
 		ResponseEntity<Void> productBatchResp = productBatchCRUDMSProxy.addProductBatch(productBatchBeanDto);	
