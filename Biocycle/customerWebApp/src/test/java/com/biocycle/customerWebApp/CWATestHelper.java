@@ -14,6 +14,7 @@ import com.biocycle.customerWebApp.dto.CollectionSpotAddressDto;
 import com.biocycle.customerWebApp.dto.ContainerDto;
 import com.biocycle.customerWebApp.dto.OfferBeanDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
+import com.biocycle.customerWebApp.dto.ProductBatchBeanDto;
 import com.biocycle.customerWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
@@ -125,6 +126,20 @@ public class CWATestHelper {
 		Map<String,ProductRequestBeanDto> prbdMap = new HashMap<>();
 		prbdMap.put("productTest", getProductRequestBeanDto());
 		return prbdMap;
+	}
+	
+	public static ProductBatchBeanDto getProductBatchBeanDto() {
+		ProductBatchBeanDto pbbd = new ProductBatchBeanDto();
+		pbbd.setDonorId(1);
+		pbbd.setDescription("testProductBatch");
+		pbbd.setId(1);
+		pbbd.setIsAvailable(false);
+		pbbd.setIsAwaitingForCollection(false);
+		pbbd.setName("TestBatch");
+		pbbd.setQuantity(BigDecimal.valueOf(40));
+		pbbd.setUnitOfMeasure(UnitOfMeasure.KG);
+		pbbd.setToBeUsedBy(LocalDate.now().plusDays(1));
+		return pbbd;
 	}
 
 	

@@ -40,7 +40,7 @@ public class CWAProductDispatchServiceIntegrationTests {
 								.sessionAttr("productRequestBeanDtoMap", CWATestHelper.getProductRequestBeanDtoMap())
 								.sessionAttr("organisation", CWATestHelper.getOrganisationBeanDto(true))
 			
-				).andExpect(status().is2xxSuccessful());
+				).andExpect(status().is3xxRedirection());
 		
 	}
 
