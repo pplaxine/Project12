@@ -1,5 +1,6 @@
 package com.biocycle.customerWebApp;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,11 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.biocycle.customerWebApp.bean.redistribution.UnitOfMeasure;
 import com.biocycle.customerWebApp.dto.AddressDto;
 import com.biocycle.customerWebApp.dto.CollectionSpotAddressDto;
 import com.biocycle.customerWebApp.dto.ContainerDto;
 import com.biocycle.customerWebApp.dto.OfferBeanDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
+import com.biocycle.customerWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
 import com.biocycle.customerWebApp.dto.view.GiveAwayViewDto;
@@ -106,6 +109,22 @@ public class CWATestHelper {
 		List<RedistributionBeanDto> rbdList = new ArrayList<>();
 		rbdList.add(getRedistributionBeanDto());
 		return rbdList;
+	}
+	
+	public static ProductRequestBeanDto getProductRequestBeanDto() {
+		ProductRequestBeanDto prbd = new ProductRequestBeanDto();
+		prbd.setId(1);
+		prbd.setIsAccepted(false);
+		prbd.setProductRequested("productTest");
+		prbd.setQuantity(BigDecimal.valueOf(40));
+		prbd.setUnitOfMeasure(UnitOfMeasure.KG);
+		return prbd;
+	}
+	
+	public static Map<String,ProductRequestBeanDto> getProductRequestBeanDtoMap(){
+		Map<String,ProductRequestBeanDto> prbdMap = new HashMap<>();
+		prbdMap.put("productTest", getProductRequestBeanDto());
+		return prbdMap;
 	}
 
 	
