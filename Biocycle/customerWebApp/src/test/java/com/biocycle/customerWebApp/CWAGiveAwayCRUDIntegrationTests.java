@@ -35,7 +35,6 @@ public class CWAGiveAwayCRUDIntegrationTests {
 	@WithMockUser(username = "orga1@orange.fr",authorities = {"DONOR"})
 	@Test
 	public void iT01GiveawayManagerCreateGiveAway() throws Exception {
-
 		//Request
 		mockMvc.perform(
 			MockMvcRequestBuilders.get("/user/donations")	
@@ -47,7 +46,6 @@ public class CWAGiveAwayCRUDIntegrationTests {
 	@WithMockUser(username = "orga1@orange.fr",authorities = {"DONOR"})
 	@Test
 	public void iT02GiveawayManagergGiveAway() throws Exception {
-
 		//Request
 		mockMvc.perform(
 			MockMvcRequestBuilders.get("/user/giveaway/create")	
