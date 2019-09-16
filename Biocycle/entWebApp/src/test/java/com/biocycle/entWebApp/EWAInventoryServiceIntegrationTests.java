@@ -1,0 +1,67 @@
+package com.biocycle.entWebApp;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Optional;
+
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.biocycle.entWebApp.proxy.InventoryServiceProxy;
+import com.biocycle.entWebApp.proxy.ProductBatchCRUDMSProxy;
+import com.biocycle.entWebApp.proxy.StorageContainerCRUDMSProxy;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(
+		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
+@AutoConfigureMockMvc
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class EWAInventoryServiceIntegrationTests {
+	
+	@Autowired
+	MockMvc mockMvc;
+	@Autowired
+	InventoryServiceProxy InventoryServiceProxy;
+	@MockBean
+	ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
+	@MockBean
+	StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
+	
+	@Captor
+	private ArgumentCaptor<Integer> productBatchIdCaptor;
+	@Captor
+	private ArgumentCaptor<Integer[]> containerIdArrayCaptor;
+	
+	
+	//---- Tests 
+	@WithMockUser(username = "pme",roles = {"PME"})
+	@Test
+	public void iT01ProductManagmentManagerCreateProductBatch() throws Exception {
+		
+		//Mock 
+		when(productBatchCRUDMSProxy.findProductBatchById(productBatchIdCaptor.capture())).thenReturn(ResponseEntity.ok(EWATestHelper.getProductBatchBeanDto()));
+		when(storageContainerCRUDMSProxy.findStorageContainerFromIdList(containerIdArrayCaptor.capture())).thenReturn(Optional.of(EWATestHelper.getStorageContainerBeanDtoList(false)));
+		
+		//Request
+		mockMvc.perform(
+			MockMvcRequestBuilders.get("/pme/entry-forms/create")
+								.flashAttr("productBatchBeanDto", EWATestHelper.getProductBatchBeanDto())
+				).andExpect(status().is3xxRedirection());
+	}
+
+}

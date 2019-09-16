@@ -16,6 +16,7 @@ import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
+import com.biocycle.entWebApp.dto.StorageContainerBeanDto;
 
 public class EWATestHelper {
 	
@@ -123,6 +124,30 @@ public class EWATestHelper {
 			return prbdMap;
 		}
 		
+		//-- ProductBatchBeanDto Object and embedded
+		
+		public static StorageContainerBeanDto getStorageContainerBeanDto(boolean available) {
+			StorageContainerBeanDto scbd = new StorageContainerBeanDto();
+			scbd.setId(1);
+			scbd.setLevelRef(1);
+			scbd.setShelfRef("A");
+			scbd.setRowRef(1);
+			scbd.setIsAvailable(available);
+			return scbd;	
+		}
+		
+		public static List<StorageContainerBeanDto> getStorageContainerBeanDtoList(boolean StorageContainerAvailable){
+			List<StorageContainerBeanDto> StorageContainerBeanDtoList = new ArrayList<>();
+			StorageContainerBeanDtoList.add(getStorageContainerBeanDto(StorageContainerAvailable));
+			return StorageContainerBeanDtoList;
+		}
+		
+		public static List<Integer> getStorageContainerIdList(){
+			List<Integer> storageContainerIdList = new ArrayList<>();
+			storageContainerIdList.add(2);
+			return storageContainerIdList;
+		}
+		
 		public static ProductBatchBeanDto getProductBatchBeanDto() {
 			ProductBatchBeanDto pbbd = new ProductBatchBeanDto();
 			pbbd.setDonorId(1);
@@ -134,6 +159,7 @@ public class EWATestHelper {
 			pbbd.setQuantity(BigDecimal.valueOf(40));
 			pbbd.setUnitOfMeasure(UnitOfMeasure.KG);
 			pbbd.setToBeUsedBy(LocalDate.now().plusDays(1));
+			pbbd.setStorageContainerId(getStorageContainerIdList());
 			return pbbd;
 		}
 
