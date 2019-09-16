@@ -10,6 +10,7 @@ import com.biocycle.customerWebApp.dto.AddressDto;
 import com.biocycle.customerWebApp.dto.CollectionSpotAddressDto;
 import com.biocycle.customerWebApp.dto.ContainerDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
+import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
 import com.biocycle.customerWebApp.dto.view.GiveAwayViewDto;
 import com.biocycle.customerWebApp.dto.view.PasswordCreationViewDto;
@@ -77,7 +78,22 @@ public class CWATestHelper {
 		return containerDtoList;
 	}
 	
+	//-- RedistributionBeanDto Object and embedded
+	public static RedistributionBeanDto getRedistributionBeanDto() {
+		RedistributionBeanDto rbd = new RedistributionBeanDto();
+		rbd.setId(1);
+		rbd.setIsCompleted(false);
+		rbd.setOfferId(1);
+		rbd.setOrganisationId(2);
+		return rbd;
+	}
 	
+	public static List<RedistributionBeanDto> getRedistributionBeanDtoList(){
+		List<RedistributionBeanDto> rbdList = new ArrayList<>();
+		rbdList.add(getRedistributionBeanDto());
+		return rbdList;
+	}
+
 	
 	//-------- VIEWS OBJECTS 
 	
