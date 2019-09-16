@@ -1,5 +1,6 @@
 package com.biocycle.customerWebApp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import com.biocycle.customerWebApp.dto.AddressDto;
 import com.biocycle.customerWebApp.dto.CollectionSpotAddressDto;
 import com.biocycle.customerWebApp.dto.ContainerDto;
+import com.biocycle.customerWebApp.dto.OfferBeanDto;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
 import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
@@ -79,6 +81,18 @@ public class CWATestHelper {
 	}
 	
 	//-- RedistributionBeanDto Object and embedded
+	public static OfferBeanDto getOfferBeanDto() {
+		OfferBeanDto obd = new OfferBeanDto();
+		obd.setId(1);
+		obd.setIsAccepted(false);
+		obd.setOfferEndingDate(LocalDate.now().plusDays(1));
+		obd.setAvailableForCollection(LocalDate.now());
+		List<Integer> productBatchIdList = new ArrayList<>();
+		productBatchIdList.add(1);
+		obd.setProductBatchIdList(productBatchIdList);
+		return obd;
+	}
+	
 	public static RedistributionBeanDto getRedistributionBeanDto() {
 		RedistributionBeanDto rbd = new RedistributionBeanDto();
 		rbd.setId(1);
