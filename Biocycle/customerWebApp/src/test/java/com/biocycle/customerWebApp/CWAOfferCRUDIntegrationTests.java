@@ -57,7 +57,6 @@ public class CWAOfferCRUDIntegrationTests {
 	@WithMockUser(username = "orga2@orange.fr",authorities = {"RECEIVER"})
 	@Test
 	public void iT01UpdateOfferStatus() throws Exception {
-
 		//Mock
 		when(productBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(productBatchIdCaptor.capture(), statusCaptor.capture())).thenReturn(ResponseEntity.ok().build());
 		
@@ -70,7 +69,6 @@ public class CWAOfferCRUDIntegrationTests {
 	@WithMockUser(username = "orga2@orange.fr",authorities = {"RECEIVER"})
 	@Test
 	public void iT02UpdateOfferStatus() throws Exception {
-
 		//Mock
 		when(productBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(productBatchIdCaptor.capture(), statusCaptor.capture())).thenReturn(ResponseEntity.ok().build());
 		
