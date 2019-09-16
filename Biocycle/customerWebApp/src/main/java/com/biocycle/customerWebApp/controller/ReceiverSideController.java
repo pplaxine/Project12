@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.biocycle.customerWebApp.dto.ProductRequestBeanDto;
-import com.biocycle.customerWebApp.dto.RedistributionBeanDto;
 import com.biocycle.customerWebApp.service.OrganisationManager;
 import com.biocycle.customerWebApp.service.RedistributionManager;
 

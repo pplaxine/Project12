@@ -22,7 +22,7 @@ import com.biocycle.customerWebApp.proxy.GiveAwayCRUDMSProxy;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {GiveAwayManager.class})
-public class CustomerWebAppManagerUnitTest {
+public class CustomerWebAppManagerUnitTests {
 	
 	@Autowired
 	GiveAwayManager giveAwayManager;

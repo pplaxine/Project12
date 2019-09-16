@@ -1,4 +1,4 @@
-package com.biocycle.productStorageService.service;
+package com.biocycle.productStorageService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
