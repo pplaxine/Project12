@@ -20,6 +20,8 @@ import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
 import com.biocycle.entWebApp.dto.StorageContainerBeanDto;
+import com.biocycle.entWebApp.dto.view.OfferViewDto;
+import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
 
 public class EWATestHelper {
 	
@@ -137,6 +139,12 @@ public class EWATestHelper {
 			return rbdList;
 		}
 		
+		public static List<ProductRequestBeanDto> getProductRequestBeanDtoList(){
+			List<ProductRequestBeanDto> ProductRequestBeanDtoList = new ArrayList<>();
+			ProductRequestBeanDtoList.add(getProductRequestBeanDto());
+			return ProductRequestBeanDtoList;
+		}
+		
 		public static ProductRequestBeanDto getProductRequestBeanDto() {
 			ProductRequestBeanDto prbd = new ProductRequestBeanDto();
 			prbd.setId(1);
@@ -154,6 +162,12 @@ public class EWATestHelper {
 		}
 		
 		//-- ProductBatchBeanDto Object and embedded
+		
+		public static Map<Integer, ProductBatchBeanDto> getProductBatchBeanDtoMap(){
+			Map<Integer, ProductBatchBeanDto> productBatchBeanDtoMap = new HashMap<>();
+			productBatchBeanDtoMap.put(1, getProductBatchBeanDto());
+			return productBatchBeanDtoMap;
+		}
 		
 		public static StorageContainerBeanDto getStorageContainerBeanDto(boolean available) {
 			StorageContainerBeanDto scbd = new StorageContainerBeanDto();
@@ -177,6 +191,12 @@ public class EWATestHelper {
 			return storageContainerIdList;
 		}
 		
+		public static List<ProductBatchBeanDto> getProductBatchBeanDtoList(){
+			List<ProductBatchBeanDto> productBatchbeanDtoList = new ArrayList<>();
+			productBatchbeanDtoList.add(getProductBatchBeanDto());
+			return productBatchbeanDtoList;
+		}
+		
 		public static ProductBatchBeanDto getProductBatchBeanDto() {
 			ProductBatchBeanDto pbbd = new ProductBatchBeanDto();
 			pbbd.setDonorId(1);
@@ -190,6 +210,25 @@ public class EWATestHelper {
 			pbbd.setToBeUsedBy(LocalDate.now().plusDays(1));
 			pbbd.setStorageContainerId(getStorageContainerIdList());
 			return pbbd;
+		}
+		
+		//-------- VIEW OBJECTS
+		public static OfferViewDto getOfferViewDto() {
+			OfferViewDto ovd = new OfferViewDto();
+			ovd.setId(1);
+			ovd.setOfferEndingDate(LocalDate.now().plusDays(1));
+			ovd.setProductBatchBeanDtoList(getProductBatchBeanDtoList());
+			return ovd;
+		}
+		
+		
+		public static RedistributionViewDto getRedistributionViewDto() {
+			RedistributionViewDto rvd = new RedistributionViewDto();
+			rvd.setId(1);
+			rvd.setOfferViewDto(getOfferViewDto());
+			rvd.setOrganisationBeanDto(getOrganisationBeanDto(true));
+			rvd.setProductRequestBeanDtoList(getProductRequestBeanDtoList());
+			return rvd;
 		}
 
 }
