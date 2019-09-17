@@ -19,6 +19,7 @@ import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 import com.biocycle.entWebApp.dto.RedistributionBeanDto;
+import com.biocycle.entWebApp.dto.StaffBeanDto;
 import com.biocycle.entWebApp.dto.StorageContainerBeanDto;
 import com.biocycle.entWebApp.dto.view.OfferViewDto;
 import com.biocycle.entWebApp.dto.view.RedistributionViewDto;
@@ -211,6 +212,18 @@ public class EWATestHelper {
 			pbbd.setToBeUsedBy(LocalDate.now().plusDays(1));
 			pbbd.setStorageContainerId(getStorageContainerIdList());
 			return pbbd;
+		}
+		
+		//-- StaffBeanDto Object
+		public static StaffBeanDto getStafBeanDto() {
+			StaffBeanDto staffBeanDto = new StaffBeanDto();
+			staffBeanDto.setUserName("TestUserName");
+			staffBeanDto.setPassword("test");
+			staffBeanDto.setRole("HR");
+			staffBeanDto.setAccess("26");
+			staffBeanDto.setName("Test");
+			staffBeanDto.setSurname("TestSurname");
+			return staffBeanDto;
 		}
 		
 		//-------- VIEW OBJECTS
