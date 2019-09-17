@@ -2,15 +2,18 @@ package com.biocycle.entWebApp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.biocycle.entWebApp.bean.organisation.CollectionSpotAddress;
 import com.biocycle.entWebApp.bean.productBatch.UnitOfMeasure;
 import com.biocycle.entWebApp.dto.AddressDto;
 import com.biocycle.entWebApp.dto.CollectionSpotAddressDto;
 import com.biocycle.entWebApp.dto.ContainerDto;
+import com.biocycle.entWebApp.dto.GiveAwayBeanDto;
 import com.biocycle.entWebApp.dto.OfferBeanDto;
 import com.biocycle.entWebApp.dto.OrganisationBeanDto;
 import com.biocycle.entWebApp.dto.ProductBatchBeanDto;
@@ -65,6 +68,32 @@ public class EWATestHelper {
 		}
 		
 		//-- GiveAwayBeanDto Object and embedded
+		
+		public static CollectionSpotAddress getCollectionSpotAddress() {
+			CollectionSpotAddress csa = new CollectionSpotAddress();
+			csa.setSpotName("Dépôt Paris 08");
+			csa.setStreetNumber("14");
+			csa.setStreetName("rue du test");
+			csa.setCity("TestCity");
+			csa.setPostCode("75011");
+			return csa;
+		}
+		
+		public static GiveAwayBeanDto getGiveAwayBeanDto() {
+			GiveAwayBeanDto gabd = new GiveAwayBeanDto();
+			
+			gabd.setAvailableToBeCollectedFrom(LocalDateTime.now());
+			gabd.setContainerList(getContainerDtoList());
+			gabd.setOrganisationId(1);
+			gabd.setCollectionSpotAddress(getCollectionSpotAddress());
+			return gabd;
+		}
+		
+		public static List<GiveAwayBeanDto> getGiveAwayBeanDtoList(){
+			List<GiveAwayBeanDto> giveAwayBeanDtoList = new ArrayList<>();
+			giveAwayBeanDtoList.add(getGiveAwayBeanDto());
+			return giveAwayBeanDtoList;
+		}
 		
 		public static ContainerDto getContainerDto() {
 			ContainerDto cd = new ContainerDto();
