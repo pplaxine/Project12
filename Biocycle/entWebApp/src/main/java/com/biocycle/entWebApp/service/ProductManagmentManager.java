@@ -167,7 +167,7 @@ public class ProductManagmentManager {
 			//update productBatch 
 			productBatchBeanDto.setIsAvailable(false);
 			productBatchBeanDto.setIsAwaitingForCollection(false);
-			productBatchBeanDto.setStorageContainerId(null);		//ici
+			productBatchBeanDto.setStorageContainerId(null);		
 			productBatchCRUDMSProxy.updateProductBatch(productBatchBeanDto);
 			
 		} catch (ResponseStatusException rse) {
