@@ -129,6 +129,7 @@ public class EWATestHelper {
 			rbd.setId(1);
 			rbd.setIsCompleted(false);
 			rbd.setOfferId(1);
+			rbd.setProductRequestId(getStorageContainerIdList());
 			rbd.setOrganisationId(2);
 			return rbd;
 		}

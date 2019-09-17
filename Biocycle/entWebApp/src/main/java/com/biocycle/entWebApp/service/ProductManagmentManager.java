@@ -209,6 +209,7 @@ public class ProductManagmentManager {
 		return "redistribution";
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String redistributionSolo(int redistributionId, Model model, RedirectAttributes red, HttpSession session) {
 		
 		List<ProductBatchBeanDto> productBatchBeanDtoForOfferList;
@@ -305,6 +306,7 @@ public class ProductManagmentManager {
 		return "redirect:/pme/redistribution/"+redistributionId;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String addOfferToRedistribution(RedistributionViewDto redistributionViewDto, Model model, RedirectAttributes red, HttpSession session) {
 		Map<Integer, ProductBatchBeanDto> productBatchBeanDtoMap = null;
 		//retrieve elements from sessions
