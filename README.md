@@ -1,4 +1,4 @@
-# Project12 - Biocycle : Microservice architectured information system 
+# Project12 - Microservice architectured information system 
 
 This is a microservice architectured information system tailored for Biocycle organisation needs. For more information please see documentation provided. 
  
@@ -19,7 +19,8 @@ This is a microservice architectured information system tailored for Biocycle or
         1) configure the datasource properties
         2) configure the schema properties (for table creation from .sql file).
 
-    All CRUD microservices are using a profile system to run either "H2" database for internal testing or "Postgresql" database for other microservice integration tests. Each profile has a dedicated .properties file containing the configurations for the corresponding database. Those files are located as follow : 
+    All CRUD microservices are using a profile system to run either "H2" database for internal testing or "Postgresql" database for other microservice integration tests. 
+    Each profile has a dedicated .properties file containing the configurations for the corresponding database. Those files are located as follow : 
         - Testing profile : MicroServiceCRUD/src/test/resources/bootstrap.properties (h2 in-memory database already configured).
         - App running profile : MicroServiceCRUD/src/main/resources/bootstrap.properties (contains datasource and schema properties to be configured).
 
