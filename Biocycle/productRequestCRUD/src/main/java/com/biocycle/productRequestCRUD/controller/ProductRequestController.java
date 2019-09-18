@@ -28,15 +28,29 @@ import com.biocycle.productRequestCRUD.exception.ProductRequestNotFoundException
 import com.biocycle.productRequestCRUD.helper.ProductRequestHelper;
 import com.biocycle.productRequestCRUD.model.ProductRequest;
 
+/**
+ * The Class ProductRequestController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class ProductRequestController {
 	
+	/** The product request dao. */
 	@Autowired
 	ProductRequestDao productRequestDao;
 	
+	/** The product request dto mapper. */
 	@Autowired
 	ProductRequestDtoMapper productRequestDtoMapper;
 	
+	/**
+	 * Find product request by id.
+	 *
+	 * @param id the id
+	 * @return the product request dto
+	 */
 	//---- GET 
 	@GetMapping(value = "/productrequests/{id}")
 	public ProductRequestDto findProductRequestById(@PathVariable int id){
@@ -50,12 +64,22 @@ public class ProductRequestController {
 	}
 	
 	
+	/**
+	 * Delete product request.
+	 *
+	 * @param id the id
+	 */
 	//---- DELETE 
 	@DeleteMapping(value = "/productrequests/{id}")
 	public void deleteProductRequest(@PathVariable int id) {
 		productRequestDao.deleteById(id);
 	}
 	
+	/**
+	 * Delete product request list.
+	 *
+	 * @param productRequestIdList the product request id list
+	 */
 	@DeleteMapping(value = "/productrequests/list")
 	public void deleteProductRequestList(@RequestParam("productRequestIdList") Integer[]productRequestIdList ) {
 		for (Integer productRequestId : productRequestIdList) {
@@ -64,6 +88,12 @@ public class ProductRequestController {
 	}
 
 	
+	/**
+	 * Adds the product request.
+	 *
+	 * @param productRequestDto the product request dto
+	 * @return the response entity
+	 */
 	//---- POST
 	@PostMapping(value = "/productrequests")
 	public ResponseEntity<Void> addProductRequest(@RequestBody ProductRequestDto productRequestDto){
@@ -84,6 +114,12 @@ public class ProductRequestController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * Adds the product request list.
+	 *
+	 * @param productRequestDtoList the product request dto list
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/productrequests/list")
 	@Transactional
 	public ResponseEntity<List<ProductRequestDto>> addProductRequestList(@RequestBody List<ProductRequestDto> productRequestDtoList){
@@ -106,6 +142,11 @@ public class ProductRequestController {
 		return ResponseEntity.ok(prdList);
 	}
 	
+	/**
+	 * Update product request.
+	 *
+	 * @param productRequestDto the product request dto
+	 */
 	//---- PUT
 	@PutMapping(value = "/productrequests")
 	public void updateProductRequest(@RequestBody ProductRequestDto productRequestDto) {

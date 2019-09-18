@@ -29,23 +29,44 @@ import com.biocycle.customerWebApp.proxy.ProductDispatchServiceProxy;
 import com.biocycle.customerWebApp.proxy.ProductRequestCRUDMSProxy;
 import com.biocycle.customerWebApp.proxy.RedistributionCRUDMSProxy;
 
+/**
+ * The Class RedistributionManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class RedistributionManager {
 	
+	/** The product dispatch service proxy. */
 	@Autowired
 	private ProductDispatchServiceProxy productDispatchServiceProxy;
+	
+	/** The product request CRUDMS proxy. */
 	@Autowired
 	private ProductRequestCRUDMSProxy productRequestCRUDMSProxy;
+	
+	/** The redistribution CRUDMS proxy. */
 	@Autowired
 	private RedistributionCRUDMSProxy redistributionCRUDMSProxy;
+	
+	/** The offer CRUDMS proxy. */
 	@Autowired
 	private OfferCRUDMSProxy offerCRUDMSProxy;
+	
+	/** The product batch CRUDMS proxy. */
 	@Autowired
 	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
 	
 	
 	//---- HOME PAGE PRODUCT SOON TO EXPIRED  ---------------------------------------------------------------------
 	
+	/**
+	 * Product soon to be expired.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	public String productSoonToBeExpired(Model model){
 		
 		try {
@@ -64,6 +85,15 @@ public class RedistributionManager {
 	
 	//---- REDISTRIBUTION CREATION ---------------------------------------------------------------------
 	
+	/**
+	 * Adds the product request.
+	 *
+	 * @param productRequestBeanDto the product request bean dto
+	 * @param model the model
+	 * @param red the red
+	 * @param session the session
+	 * @return the string
+	 */
 	//-- ProductRequest
 	@SuppressWarnings("unchecked")
 	public String addProductRequest(ProductRequestBeanDto productRequestBeanDto, Model model,RedirectAttributes red, HttpSession session) {
@@ -91,6 +121,14 @@ public class RedistributionManager {
 		return "productRequestForm";
 	}
 	
+	/**
+	 * Removes the product request.
+	 *
+	 * @param ref the ref
+	 * @param model the model
+	 * @param session the session
+	 * @return the string
+	 */
 	@SuppressWarnings("unchecked")
 	public String removeProductRequest(String ref, Model model, HttpSession session) {
 		Map<String, ProductRequestBeanDto> productRequestBeanDtoMap = (Map<String, ProductRequestBeanDto>)session.getAttribute("productRequestBeanDtoMap");
@@ -99,6 +137,15 @@ public class RedistributionManager {
 		return "redirect:/user2/redistributions/productrequests/form";
 	}
 	
+	/**
+	 * Adds the redistribution.
+	 *
+	 * @param productRequestBeanDto the product request bean dto
+	 * @param model the model
+	 * @param red the red
+	 * @param session the session
+	 * @return the string
+	 */
 	//-- Redistribution
 	@SuppressWarnings("unchecked")
 	public String addRedistribution(ProductRequestBeanDto productRequestBeanDto, Model model, RedirectAttributes red, HttpSession session) {
@@ -141,6 +188,14 @@ public class RedistributionManager {
 		return "redirect:/user2/redistributions/productrequests/form";
 	}
 	
+	/**
+	 * Offers.
+	 *
+	 * @param model the model
+	 * @param session the session
+	 * @param principal the principal
+	 * @return the string
+	 */
 	//---- OFFERS MANAGMENT	---------------------------------------------------------------------
 	public String offers(Model model, HttpSession session, Principal principal) {
 		//retrieve organisation id 
@@ -170,6 +225,14 @@ public class RedistributionManager {
 		return "receiverPersoSpace";
 	}
 	
+	/**
+	 * Update offer status.
+	 *
+	 * @param offerId the offer id
+	 * @param isAccepted the is accepted
+	 * @param red the red
+	 * @return the string
+	 */
 	public String updateOfferStatus(int offerId, Boolean isAccepted,RedirectAttributes red) { //update make list of productbatchlistid empty 
 		try {
 			//update offer
@@ -206,6 +269,13 @@ public class RedistributionManager {
 	
 	//UTILITY METHODS ----------------------------------------------------------------------
 	
+	/**
+	 * Redistribution bean dto list to redistribution view dto list.
+	 *
+	 * @param redistributionBeanDtoList the redistribution bean dto list
+	 * @return the list
+	 * @throws ResponseStatusException the response status exception
+	 */
 	private List<RedistributionViewDto> redistributionBeanDtoListToRedistributionViewDtoList(List<RedistributionBeanDto> redistributionBeanDtoList) throws ResponseStatusException {
 		List<RedistributionViewDto> redistributionViewDtoList = new ArrayList<>();
 		
@@ -262,6 +332,13 @@ public class RedistributionManager {
 	}
 	
 	
+	/**
+	 * Offer bean dto to offer view dto.
+	 *
+	 * @param offerBeanDto the offer bean dto
+	 * @return the offer view dto
+	 * @throws ResponseStatusException the response status exception
+	 */
 	private OfferViewDto offerBeanDtoToOfferViewDto(OfferBeanDto offerBeanDto) throws ResponseStatusException {
 		if(offerBeanDto == null) {
 			return null;
@@ -299,6 +376,13 @@ public class RedistributionManager {
 	
 	//--- fetching methods 
 	
+	/**
+	 * Gets the all product requests by id list.
+	 *
+	 * @param productRequestIdList the product request id list
+	 * @return the all product requests by id list
+	 * @throws ResponseStatusException the response status exception
+	 */
 	private List<ProductRequestBeanDto> getAllProductRequestsByIdList(List<Integer> productRequestIdList) throws ResponseStatusException {
 		List<ProductRequestBeanDto> productRequestBeanDtoList = new ArrayList<>();
 
@@ -313,6 +397,13 @@ public class RedistributionManager {
 		return productRequestBeanDtoList;
 	}
 	
+	/**
+	 * Gets the offer bean dto by id.
+	 *
+	 * @param offerId the offer id
+	 * @return the offer bean dto by id
+	 * @throws ResponseStatusException the response status exception
+	 */
 	private OfferBeanDto getOfferBeanDtoById(int offerId) throws ResponseStatusException {
 		
 		try {
@@ -326,6 +417,13 @@ public class RedistributionManager {
 		}
 	}
 	
+	/**
+	 * Gets the list product batch by product batch id list.
+	 *
+	 * @param productBatchId the product batch id
+	 * @return the list product batch by product batch id list
+	 * @throws ResponseStatusException the response status exception
+	 */
 	private List<ProductBatchBeanDto> getListProductBatchByProductBatchIdList(List<Integer> productBatchId) throws ResponseStatusException {
 		List<ProductBatchBeanDto> productBatchBeanDtoList = new ArrayList<>();
 		

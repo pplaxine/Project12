@@ -23,13 +23,26 @@ import com.biocycle.customerWebApp.dto.view.ContainerViewDto;
 import com.biocycle.customerWebApp.dto.view.GiveAwayViewDto;
 import com.biocycle.customerWebApp.proxy.GiveAwayCRUDMSProxy;
 
+/**
+ * The Class GiveAwayManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class GiveAwayManager {
 
 
+	/** The give away CRUDMS proxy. */
 	@Autowired
 	private GiveAwayCRUDMSProxy giveAwayCRUDMSProxy;
 	
+	/**
+	 * Adds the container to map in session.
+	 *
+	 * @param containerViewDto the container view dto
+	 * @param session the session
+	 */
 	//---- GIVE AWAY CREATION 
 	@SuppressWarnings("unchecked")
 	public void addContainerToMapInSession(ContainerViewDto containerViewDto, HttpSession session){
@@ -51,6 +64,15 @@ public class GiveAwayManager {
 		}
 	}
 	
+	/**
+	 * Creates the give away.
+	 *
+	 * @param giveAwayViewDto the give away view dto
+	 * @param model the model
+	 * @param red the red
+	 * @param session the session
+	 * @return the string
+	 */
 	@SuppressWarnings("unchecked")
 	public String createGiveAway(GiveAwayViewDto giveAwayViewDto, Model model, RedirectAttributes red, HttpSession session) {
 		
@@ -106,6 +128,14 @@ public class GiveAwayManager {
 		return "redirect:/user/giveaway";
 	}
 	
+	/**
+	 * Removes the container.
+	 *
+	 * @param ref the ref
+	 * @param model the model
+	 * @param session the session
+	 * @return the string
+	 */
 	@SuppressWarnings("unchecked")
 	public String removeContainer(String ref, Model model, HttpSession session) {
 		Map<String, ContainerViewDto> containerViewDtoMap = (Map<String, ContainerViewDto>)session.getAttribute("containerViewDtoMap");
@@ -116,6 +146,13 @@ public class GiveAwayManager {
 	
 	//---- GIVE AWAY MANAGMENT 
 	
+	/**
+	 * Give away.
+	 *
+	 * @param model the model
+	 * @param session the session
+	 * @return the string
+	 */
 	public String giveAway(Model model, HttpSession session) {
 		OrganisationBeanDto organisationBeanDto = (OrganisationBeanDto)session.getAttribute("organisation");
 		
@@ -142,6 +179,12 @@ public class GiveAwayManager {
 	
 	
 	
+	/**
+	 * View dto map to dto list.
+	 *
+	 * @param containerViewDtoMap the container view dto map
+	 * @return the list
+	 */
 	//UTILITY METHODS
 	protected List<ContainerDto> ViewDtoMapToDtoList(Map<String, ContainerViewDto> containerViewDtoMap) {
 		List<ContainerDto> containerDtoList = new ArrayList<>();
@@ -152,6 +195,12 @@ public class GiveAwayManager {
 		return containerDtoList;
 	}
 	
+	/**
+	 * Container view dto to container dto.
+	 *
+	 * @param containerViewDto the container view dto
+	 * @return the container dto
+	 */
 	protected ContainerDto containerViewDtoToContainerDto(ContainerViewDto containerViewDto) {
 		ContainerDto containerDto = new ContainerDto();
 		containerDto.setDescription(containerViewDto.getDescription());
@@ -159,6 +208,12 @@ public class GiveAwayManager {
 		return containerDto;
 	}
 	
+	/**
+	 * All container refused checker.
+	 *
+	 * @param giveAwayBeanDtoListIn the give away bean dto list in
+	 * @return the list
+	 */
 	protected List<GiveAwayBeanDto> allContainerRefusedChecker(List<GiveAwayBeanDto> giveAwayBeanDtoListIn) {
 		List<GiveAwayBeanDto> giveAwayBeanDtout = new ArrayList<>();  
 		giveAwayBeanDtoListIn.forEach(e -> {

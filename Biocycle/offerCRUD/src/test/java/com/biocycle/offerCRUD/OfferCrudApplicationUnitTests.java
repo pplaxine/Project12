@@ -33,15 +33,21 @@ public class OfferCrudApplicationUnitTests {
 
 	@Autowired
 	MockMvc mockMvc;
+	
 	@MockBean
 	OfferDao offerDao;
+	
 	@MockBean
 	OfferDtoMapper offerDtoMapper;
 	
 	private ObjectWriter objectWriter;
+	
 	private Offer offerStub;
+	
 	private OfferDto offerDtoStub;
+	
 	private List<Offer> offerList;
+
 
 	@Before
 	public void executeBeforeEach() {

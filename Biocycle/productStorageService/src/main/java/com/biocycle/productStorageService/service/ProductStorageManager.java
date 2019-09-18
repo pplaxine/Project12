@@ -16,12 +16,25 @@ import com.biocycle.productStorageService.bean.StorageContainerBean;
 import com.biocycle.productStorageService.exception.OutOfStorageContainerException;
 import com.biocycle.productStorageService.proxy.StorageContainerCRUDMSProxy;
 
+/**
+ * The Class ProductStorageManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class ProductStorageManager {
 	
+	/** The storage container CRUDMS proxy. */
 	@Autowired
 	StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
 	
+	/**
+	 * Gets the optimized storage container space.
+	 *
+	 * @param numberOfContainer the number of container
+	 * @return the optimized storage container space
+	 */
 	public ResponseEntity<List<Integer>> getOptimizedStorageContainerSpace(int numberOfContainer){
 		
 		//get all empty storageContainer
@@ -53,6 +66,13 @@ public class ProductStorageManager {
 	
 	//UTILITY METHHOD
 	
+	/**
+	 * Creates the set of store container bean list.
+	 *
+	 * @param totalRows the total rows
+	 * @param totalLevs the total levs
+	 * @return the map
+	 */
 	//create set of List<storageContainerBean> organize by row and level
 	protected Map<Integer, Map<Integer, List<StorageContainerBean>>> createSetOfStoreContainerBeanList(int totalRows, int totalLevs){
 		Map<Integer, Map<Integer, List<StorageContainerBean>>> rowMap = new HashMap<>();
@@ -68,6 +88,13 @@ public class ProductStorageManager {
 		return rowMap;
 	}
 	
+	/**
+	 * Store container bean dispatcher.
+	 *
+	 * @param scbList the scb list
+	 * @param setOfOrganizedscbList the set of organizedscb list
+	 * @return the map
+	 */
 	//Dispatch empty StorageContainerBean amonsgt those lists
 	protected Map<Integer, Map<Integer, List<StorageContainerBean>>> StoreContainerBeanDispatcher(Optional<List<StorageContainerBean>> scbList, Map<Integer, Map<Integer, List<StorageContainerBean>>> setOfOrganizedscbList){
 		for (StorageContainerBean  scb : scbList.get()) {
@@ -76,6 +103,13 @@ public class ProductStorageManager {
 		return setOfOrganizedscbList;
 	}
 	
+	/**
+	 * Find optimal container suit.
+	 *
+	 * @param organizedSetOfStorageContainerBeanList the organized set of storage container bean list
+	 * @param numberOfContainer the number of container
+	 * @return the list
+	 */
 	//find the best suit of n empty StorageContainerBean
 	protected List<StorageContainerBean> findOptimalContainerSuit(Map<Integer, Map<Integer, List<StorageContainerBean>>> organizedSetOfStorageContainerBeanList, int numberOfContainer){
 		
@@ -115,6 +149,13 @@ public class ProductStorageManager {
 		return allPossibleSpace.isEmpty()? null: allPossibleSpace.get(1);
 	}
 	
+	/**
+	 * Find random container suit.
+	 *
+	 * @param emptyContainerList the empty container list
+	 * @param numberOfContainer the number of container
+	 * @return the list
+	 */
 	//return a random set of container space 
 	protected List<StorageContainerBean> findRandomContainerSuit(Optional<List<StorageContainerBean>> emptyContainerList, int numberOfContainer ){
 		
@@ -129,6 +170,12 @@ public class ProductStorageManager {
 		return randomSpace;
 	}
 	
+	/**
+	 * To id list.
+	 *
+	 * @param storageContainerBeanList the storage container bean list
+	 * @return the list
+	 */
 	//convert storageContainerBean list in idList 
 	protected List<Integer> toIdList(List<StorageContainerBean> storageContainerBeanList){
 		List<Integer> storageContainerBeanIdList = new ArrayList<>();

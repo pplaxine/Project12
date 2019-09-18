@@ -12,18 +12,49 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Instantiates a new offer dto.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @NoArgsConstructor
+
+/**
+ * Instantiates a new offer dto.
+ *
+ * @param id the id
+ * @param productBatchIdList the product batch id list
+ * @param availableForCollection the available for collection
+ * @param offerEndingDate the offer ending date
+ * @param isAccepted the is accepted
+ */
 @AllArgsConstructor
 @Getter
 @Setter
+
+/**
+ * To string.
+ *
+ * @return the java.lang. string
+ */
 @ToString(of = {"id","productBatchIdList","availableForCollection","offerEndingDate","isAccepted"})
 public class OfferDto {
 	
+	/** The id. */
 	private int id;
+	
+	/** The product batch id list. */
 	private List<Integer> productBatchIdList;
+	
+	/** The available for collection. */
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate availableForCollection;
+	
+	/** The offer ending date. */
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate offerEndingDate;
+	
+	/** The is accepted. */
 	private Boolean isAccepted;
 }

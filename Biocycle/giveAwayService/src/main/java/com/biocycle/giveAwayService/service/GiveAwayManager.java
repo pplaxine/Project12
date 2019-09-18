@@ -11,12 +11,24 @@ import com.biocycle.giveAwayService.dto.GiveAwayBeanDto;
 import com.biocycle.giveAwayService.dto.proxy.GiveAwayCRUDMSProxy;
 import com.biocycle.giveAwayService.exception.GiveAwayNotFoundException;
 
+/**
+ * The Class GiveAwayManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class GiveAwayManager {
 	
+	/** The give away CRUDMS proxy. */
 	@Autowired
 	private GiveAwayCRUDMSProxy giveAwayCRUDMSProxy;
 	
+	/**
+	 * Gets all active give away.
+	 *
+	 * @return all active give away
+	 */
 	public ResponseEntity<List<GiveAwayBeanDto>> getAllActiveGiveAway(){
 		
 		ResponseEntity<List<GiveAwayBeanDto>> resp = giveAwayCRUDMSProxy.getAllActiveGiveAway();

@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -25,6 +26,7 @@ public class OfferCrudApplicationIntegrationTests {
 	@Autowired
 	MockMvc mockMvc;
 	
+
 	//---- GET
 	@Test
 	public void iT01findOfferById() throws Exception {
@@ -35,6 +37,7 @@ public class OfferCrudApplicationIntegrationTests {
 				).andExpect(status().isOk());
 	}
 	
+
 	//---- POST 
 	@Test
 	public void iT02addOffer() throws Exception {
@@ -47,6 +50,7 @@ public class OfferCrudApplicationIntegrationTests {
 				).andExpect(status().is2xxSuccessful());
 	}
 	
+
 	//---- PUT 
 	@Test
 	public void iT03updateGiveAway() throws Exception {
@@ -59,6 +63,7 @@ public class OfferCrudApplicationIntegrationTests {
 				).andExpect(status().is2xxSuccessful());
 	}
 	
+
 	//---- DELETE 
 	@Test
 	public void iT04deleteOffer() throws Exception {

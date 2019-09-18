@@ -18,21 +18,42 @@ import com.biocycle.InventoryService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.InventoryService.proxy.ProductStorageMSProxy;
 import com.biocycle.InventoryService.proxy.StorageContainerCRUDMSProxy;
 
+/**
+ * The Class ProductBatchManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class ProductBatchManager {
 	
+	/** The product storage MS proxy. */
 	@Autowired
 	private ProductStorageMSProxy productStorageMSProxy;
+	
+	/** The product batch CRUDMS proxy. */
 	@Autowired
 	private ProductBatchCRUDMSProxy productBatchCRUDMSProxy;
+	
+	/** The storage container CRUDMS proxy. */
 	@Autowired
 	private StorageContainerCRUDMSProxy storageContainerCRUDMSProxy;
 	
+	/** The product batch dto mapper. */
 	@Autowired
 	private ProductBatchDtoMapper productBatchDtoMapper;
+	
+	/** The product batch bean mapper. */
 	@Autowired
 	private ProductBatchBeanMapper productBatchBeanMapper;
 	
+	/**
+	 * Creates the product batch.
+	 *
+	 * @param productBatchDto the product batch dto
+	 * @param numberOfContainer the number of container
+	 * @return the response entity
+	 */
 	public ResponseEntity<Void> createProductBatch(ProductBatchDto productBatchDto, int numberOfContainer) {
 		
 		//Dto to model

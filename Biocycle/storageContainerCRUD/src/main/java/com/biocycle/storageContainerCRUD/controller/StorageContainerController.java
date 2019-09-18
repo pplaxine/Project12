@@ -25,16 +25,31 @@ import com.biocycle.storageContainerCRUD.exception.StorageContainerNotFoundExcep
 import com.biocycle.storageContainerCRUD.helper.StorageContainerHelper;
 import com.biocycle.storageContainerCRUD.model.StorageContainer;
 
+/**
+ * The Class StorageContainerController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class StorageContainerController {
 	
+	/** The storage container dao. */
 	@Autowired
 	private StorageContainerDao storageContainerDao; 
+	
+	/** The storage container dto mapper. */
 	@Autowired
 	private StorageContainerDtoMapper storageContainerDtoMapper; 
 	
 	//---- GET 
 	
+	/**
+	 * Find storage container by id.
+	 *
+	 * @param id the id
+	 * @return the storage container dto
+	 */
 	@GetMapping(value = "/storagecontainers/{id}" )
 	public StorageContainerDto findStorageContainerById(@PathVariable int id){
 		Optional<StorageContainer> storageContainer = storageContainerDao.findById(id);
@@ -46,6 +61,11 @@ public class StorageContainerController {
 		return storageContainerDtoMapper.storageContainerToStorageContainerDto(storageContainer.get());
 	}
 	
+	/**
+	 * Find all empty storage container.
+	 *
+	 * @return the list
+	 */
 	@GetMapping(value = "/storagecontainers/empty")
 	public List<StorageContainerDto> findAllEmptyStorageContainer(){
 		Optional<List<StorageContainer>> emptyStorageContainerList = storageContainerDao.findAllEmptyStorageContainer();
@@ -59,6 +79,12 @@ public class StorageContainerController {
 		return emptyStorageContainerDtoList;
 	}
 	
+	/**
+	 * Find storage container from id list.
+	 *
+	 * @param storageContainerIdtab the storage container idtab
+	 * @return the optional
+	 */
 	@GetMapping(value = "/storagecontainers/listId")
 	@ResponseBody
 	public Optional<List<StorageContainerDto>> findStorageContainerFromIdList(@RequestParam("containerIdList") Integer[]storageContainerIdtab){
@@ -82,6 +108,11 @@ public class StorageContainerController {
 	
 	//---- DELETE 
 	
+	/**
+	 * Delete storage container.
+	 *
+	 * @param id the id
+	 */
 	@DeleteMapping(value = "/storagecontainers/{id}")
 	public void deleteStorageContainer(@PathVariable int id) {
 		storageContainerDao.deleteById(id);
@@ -89,6 +120,12 @@ public class StorageContainerController {
 	
 	//---- POST 
 	
+	/**
+	 * Adds the storage container.
+	 *
+	 * @param storageContainerDto the storage container dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/storagecontainers")
 	public ResponseEntity<Void> addStorageContainer(@RequestBody StorageContainerDto storageContainerDto){
 		
@@ -111,6 +148,12 @@ public class StorageContainerController {
 	
 	//---- PUT 
 	
+	/**
+	 * Update storage container.
+	 *
+	 * @param storageContainerDto the storage container dto
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/storagecontainers")
 	public ResponseEntity<Void> updateStorageContainer(@RequestBody StorageContainerDto storageContainerDto) {
 		StorageContainer storageContainer = storageContainerDtoMapper.storageContainerDtoToStorageContainer(storageContainerDto);
@@ -121,6 +164,12 @@ public class StorageContainerController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	/**
+	 * Update storage container.
+	 *
+	 * @param storageContainerDtoList the storage container dto list
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/storagecontainers/updatestatus")
 	public ResponseEntity<Void> updateStorageContainer(@RequestBody List<StorageContainerDto> storageContainerDtoList ) {
 		

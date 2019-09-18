@@ -13,16 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.customerWebApp.dto.GiveAwayBeanDto;
 
+/**
+ * The Interface GiveAwayCRUDMSProxy.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @FeignClient(name = "zuul-server", contextId = "giveawaycrud")
 @RibbonClient(name = "giveAwayCRUD")
 public interface GiveAwayCRUDMSProxy {
 	
+	/**
+	 * Adds the give away.
+	 *
+	 * @param giveAwayBeanDto the give away bean dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/giveawaycrud/giveaways")
 	ResponseEntity<Void> addGiveAway(@RequestBody GiveAwayBeanDto giveAwayBeanDto);
 	
+	/**
+	 * Find all give away by organisation id.
+	 *
+	 * @param organisationId the organisation id
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/giveawaycrud/giveaways/all/{organisationId}")
 	ResponseEntity<List<GiveAwayBeanDto>> findAllGiveAwayByOrganisationId(@PathVariable("organisationId") int organisationId);
 	
+	/**
+	 * Delete give away.
+	 *
+	 * @param giveAwayId the give away id
+	 */
 	@DeleteMapping(value = "/giveawaycrud/giveaways/{giveAwayId}")
 	public void deleteGiveAway(@PathVariable("giveAwayId") int giveAwayId);
 }

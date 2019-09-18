@@ -26,15 +26,30 @@ import com.biocycle.giveAwayCRUD.exception.GiveAwayNotFoundException;
 import com.biocycle.giveAwayCRUD.model.GiveAway;
 import com.biocycle.giveAwayCRUD.model.helper.GiveAwayHelper;
 
+
+/**
+ * The Class GiveAwayController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class GiveAwayController {
 	
+	/** The give away dao. */
 	@Autowired
 	private GiveAwayDao giveAwayDao;
 	
+	/** The give away dto mapper. */
 	@Autowired
 	private GiveAwayDtoMapper giveAwayDtoMapper;
 	
+	/**
+	 * Find active give away by date.
+	 *
+	 * @param date the date
+	 * @return the response entity
+	 */
 	//---- GET 
 	@GetMapping(value = "/giveaways/date/{date}")
 	public ResponseEntity<List<GiveAwayDto>> findActiveGiveAwayByDate(@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date date){
@@ -49,6 +64,11 @@ public class GiveAwayController {
 		return ResponseEntity.ok(activeGiveAwayDtoList);
 	}
 	
+	/**
+	 * Find active give away.
+	 *
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/giveaways/active")
 	public ResponseEntity<List<GiveAwayDto>> findActiveGiveAway(){
 		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findAllActiveGiveAway();
@@ -62,6 +82,12 @@ public class GiveAwayController {
 		return ResponseEntity.ok(activeGiveAwayDtoList);
 	}
 	
+	/**
+	 * Find all give away by organisation id.
+	 *
+	 * @param organisationId the organisation id
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/giveaways/all/{organisationId}")
 	public ResponseEntity<List<GiveAwayDto>> findAllGiveAwayByOrganisationId(@PathVariable int organisationId){
 		Optional<List<GiveAway>> activeGiveAwayList = giveAwayDao.findAllGiveAwayByOrganisationId(organisationId);
@@ -75,6 +101,12 @@ public class GiveAwayController {
 		return ResponseEntity.ok(activeGiveAwayDtoList);
 	}
 	
+	/**
+	 * Find give away.
+	 *
+	 * @param id the id
+	 * @return the give away dto
+	 */
 	@GetMapping(value = "/giveaways/{id}")
 	public GiveAwayDto findGiveAway(@PathVariable int id){
 		Optional<GiveAway> giveAway = giveAwayDao.findById(id);
@@ -85,12 +117,23 @@ public class GiveAwayController {
 		return giveAwayDtoMapper.giveAwayToGiveAwayDto(giveAway.get());
 	}
 	
+	/**
+	 * Delete give away.
+	 *
+	 * @param id the id
+	 */
 	//---- DELETE
 	@DeleteMapping(value = "/giveaways/{id}")
 	public void deleteGiveAway(@PathVariable int id) {
 		giveAwayDao.deleteById(id);
 	}
 	
+	/**
+	 * Adds the give away.
+	 *
+	 * @param giveAwayDto the give away dto
+	 * @return the response entity
+	 */
 	//---- POST 
 	@PostMapping(value = "/giveaways")
 	public ResponseEntity<Void> addGiveAway(@RequestBody GiveAwayDto giveAwayDto){
@@ -116,6 +159,11 @@ public class GiveAwayController {
 		}	
 	}
 	
+	/**
+	 * Update give away.
+	 *
+	 * @param giveAwayDto the give away dto
+	 */
 	//---- PUT
 	@PutMapping(value = "/giveaways")
 	public void updateGiveAway(@RequestBody GiveAwayDto giveAwayDto) {

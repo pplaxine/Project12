@@ -24,18 +24,29 @@ import com.biocycle.organisationCRUD.exception.OrganisationNotFoundException;
 import com.biocycle.organisationCRUD.helper.OrganisationHelper;
 import com.biocycle.organisationCRUD.model.Organisation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class OrganisationController.
+ */
 @RestController
 public class OrganisationController {
 	
 	//@Autowired
 	//private PasswordEncoder bcPasswordEncodeur;
 	
+	/** The organisation dao. */
 	@Autowired
 	private OrganisationDao organisationDao;
 	
+	/** The organisation dto mapper. */
 	@Autowired
 	private OrganisationDtoMapper organisationDtoMapper;
 	
+	/**
+	 * Find all organisation.
+	 *
+	 * @return the response entity
+	 */
 	//---- GET 
 	@GetMapping(value = "/organisations")
 	public ResponseEntity<List<OrganisationDto>> findAllOrganisation(){
@@ -49,6 +60,12 @@ public class OrganisationController {
 		return ResponseEntity.ok(organisationDtoList);
 	}
 	
+	/**
+	 * Find organisation by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@GetMapping(value="/organisations/{id}")
 	public ResponseEntity<OrganisationDto> findOrganisationById(@PathVariable int id){
 		
@@ -63,6 +80,12 @@ public class OrganisationController {
 		return ResponseEntity.ok(organisationDto);
 	}
 	
+	/**
+	 * Find organisation by email.
+	 *
+	 * @param email the email
+	 * @return the response entity
+	 */
 	@GetMapping(value="/organisations/email/{email}")
 	public ResponseEntity<OrganisationDto> findOrganisationByEmail(@PathVariable String email){
 		
@@ -77,6 +100,12 @@ public class OrganisationController {
 		return ResponseEntity.ok(organisationDto);
 	}
 	
+	/**
+	 * Find all organisation by is validated.
+	 *
+	 * @param isValidated the is validated
+	 * @return the response entity
+	 */
 	@GetMapping(value="/organisations/validated/{isValidated}")
 	public ResponseEntity<List<OrganisationDto>> findAllOrganisationByIsValidated(@PathVariable boolean isValidated){
 		
@@ -96,6 +125,11 @@ public class OrganisationController {
 	
 	//---- DELETE 
 	
+	/**
+	 * Delete organisation.
+	 *
+	 * @param id the id
+	 */
 	@DeleteMapping(value = "/organisations/{id}")
 	public void deleteOrganisation(@PathVariable int id) {
 		organisationDao.deleteById(id);
@@ -103,6 +137,12 @@ public class OrganisationController {
 	
 	//---- POST
 	
+	/**
+	 * Adds the organisation.
+	 *
+	 * @param organisationDto the organisation dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/organisations")
 	public ResponseEntity<Void> addOrganisation(@RequestBody OrganisationDto organisationDto){
 		
@@ -129,6 +169,12 @@ public class OrganisationController {
 
 	//---- PUT
 	
+	/**
+	 * Update organisation.
+	 *
+	 * @param organisationDto the organisation dto
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/organisations")
 	public ResponseEntity<Void> updateOrganisation(@RequestBody OrganisationDto organisationDto) {
 		Organisation organisation = organisationDtoMapper.organisationDtoToOrganisation(organisationDto);

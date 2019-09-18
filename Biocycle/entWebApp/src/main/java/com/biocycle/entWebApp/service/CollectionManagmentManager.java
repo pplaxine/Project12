@@ -18,14 +18,29 @@ import com.biocycle.entWebApp.helper.EntWebAppHelper;
 import com.biocycle.entWebApp.proxy.GiveAwayCRUDMSProxy;
 import com.biocycle.entWebApp.proxy.OrganisationCRUDMSProxy;
 
+/**
+ * The Class CollectionManagmentManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class CollectionManagmentManager {
 	
+	/** The give away CRUDMS proxy. */
 	@Autowired
 	GiveAwayCRUDMSProxy giveAwayCRUDMSProxy;
+	
+	/** The organisation CRUDMS proxy. */
 	@Autowired
 	OrganisationCRUDMSProxy organisationCRUDMSProxy;
 	
+	/**
+	 * Donation offer list.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	public String donationOfferList(Model model) {
 		
 		List<GiveAwayViewDto> giveAwayViewDtoList = new ArrayList<>();
@@ -53,6 +68,15 @@ public class CollectionManagmentManager {
 		return "donationOfferList.html";
 	}
 	
+	/**
+	 * Update donation.
+	 *
+	 * @param giveAwayId the give away id
+	 * @param containerId the container id
+	 * @param status the status
+	 * @param red the red
+	 * @return the string
+	 */
 	public String updateDonation(int giveAwayId, int containerId, Boolean status, RedirectAttributes red) {
 		
 		try {

@@ -15,15 +15,30 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+/**
+ * The Class MailServiceManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class MailServiceManager {
 	
+	/** The java mail sender. */
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
+	/** The env. */
 	@Autowired
 	Environment env;
 	
+	/**
+	 * Creates the and send email for partnership validation.
+	 *
+	 * @param organisationName the organisation name
+	 * @param emailAddress the email address
+	 * @return the response entity
+	 */
 	public ResponseEntity<Void> createAndSendEmailForPartnershipValidation(String organisationName, String emailAddress){
 		
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -41,6 +56,12 @@ public class MailServiceManager {
 		return ResponseEntity.ok().build();
 	}
 	
+	/**
+	 * Compose email.
+	 *
+	 * @param organisationName the organisation name
+	 * @return the string
+	 */
 	//UTILITY METHOD 
 	protected String composeEmail(String organisationName) {
 		StringBuilder sb = new StringBuilder();

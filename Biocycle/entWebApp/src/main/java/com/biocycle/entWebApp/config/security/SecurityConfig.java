@@ -14,13 +14,25 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * The Class SecurityConfig.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	/** The user details service. */
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	/**
+	 * Auth provider.
+	 *
+	 * @return the authentication provider
+	 */
 	@Bean
 	public AuthenticationProvider authProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -33,6 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 
+	/**
+	 * Configure.
+	 *
+	 * @param http the http
+	 * @throws Exception the exception
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		 http
@@ -58,7 +76,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         
 	}
 	
-	  @Bean
+	  /**
+  	 * Password encoder.
+  	 *
+  	 * @return the password encoder
+  	 */
+  	@Bean
 	    public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }

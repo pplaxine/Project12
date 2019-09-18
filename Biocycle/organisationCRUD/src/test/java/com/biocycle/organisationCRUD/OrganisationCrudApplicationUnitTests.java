@@ -28,20 +28,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+
 @RunWith(SpringRunner.class)
 @WebMvcTest
 public class OrganisationCrudApplicationUnitTests {
 
 	@Autowired
 	MockMvc mockMvc;
+	
 	@MockBean
 	OrganisationDao organisationDao;
+	
 	@MockBean
 	OrganisationDtoMapper organisationDtoMapper;
 	
 	private ObjectWriter objectWriter;
+	
 	private Organisation organisationStub;
+	
 	private OrganisationDto organisationDtoStub;
+	
 	private List<Organisation> organisationList;
 
 	@Before
@@ -335,8 +341,4 @@ public class OrganisationCrudApplicationUnitTests {
 		int expectedStatusCode = 200;
 		assertEquals("Unexpected status : ", expectedStatusCode, mvcResult.getResponse().getStatus());
 	}
-	
-	
-	
-
 }

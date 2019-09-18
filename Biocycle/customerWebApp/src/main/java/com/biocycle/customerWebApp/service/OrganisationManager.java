@@ -18,17 +18,33 @@ import com.biocycle.customerWebApp.dto.view.PasswordCreationViewDto;
 import com.biocycle.customerWebApp.proxy.CustomerManagmentServiceProxy;
 import com.biocycle.customerWebApp.proxy.OrganisationCRUDMSProxy;
 
+/**
+ * The Class OrganisationManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class OrganisationManager {
 	
+	/** The organisation CRUDMS proxy. */
 	@Autowired
 	private OrganisationCRUDMSProxy organisationCRUDMSProxy;
+	
+	/** The customer managment service proxy. */
 	@Autowired
 	private CustomerManagmentServiceProxy customerManagmentServiceProxy;
 	
+	/** The b crypt password encoder. */
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
 	
+	/**
+	 * Adds the user info to session.
+	 *
+	 * @param session the session
+	 * @param principal the principal
+	 */
 	public void addUserInfoToSession(HttpSession session, Principal principal) {
 		
 		if(session.getAttribute("organisation") == null) {
@@ -46,6 +62,14 @@ public class OrganisationManager {
 		}
 	}
 	
+	/**
+	 * Save request.
+	 *
+	 * @param organisationBeanDto the organisation bean dto
+	 * @param model the model
+	 * @param red the red
+	 * @return the string
+	 */
 	public String  saveRequest(OrganisationBeanDto organisationBeanDto, Model model, RedirectAttributes red) {
 		
 		try {
@@ -71,6 +95,14 @@ public class OrganisationManager {
 	}
 	
 	
+	/**
+	 * Save password.
+	 *
+	 * @param passwordCreationViewDto the password creation view dto
+	 * @param model the model
+	 * @param red the red
+	 * @return the string
+	 */
 	public String savePassword(PasswordCreationViewDto passwordCreationViewDto, Model model, RedirectAttributes red) {
 		//Password different
 		if(!passwordCreationViewDto.getPassword().equals(passwordCreationViewDto.getConfPassword())) {

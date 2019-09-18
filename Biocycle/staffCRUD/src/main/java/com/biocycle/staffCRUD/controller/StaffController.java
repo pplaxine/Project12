@@ -22,15 +22,28 @@ import com.biocycle.staffCRUD.exception.StaffNotFoundException;
 import com.biocycle.staffCRUD.helper.StaffCRUDHelper;
 import com.biocycle.staffCRUD.model.Staff;
 
+/**
+ * The Class StaffController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class StaffController {
 	
+	/** The staff dao. */
 	@Autowired
 	private StaffDao staffDao;
 	
+	/** The staff dto mapper. */
 	@Autowired
 	private StaffDtoMapper staffDtoMapper;
 	
+	/**
+	 * Find all staff.
+	 *
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/staff")
 	public ResponseEntity<List<StaffDto>> findAllStaff(){
 		List<Staff> staffList = staffDao.findAll();
@@ -43,6 +56,12 @@ public class StaffController {
 		return ResponseEntity.ok(staffDtoList);
 	}
 	
+	/**
+	 * Find staff by id.
+	 *
+	 * @param id the id
+	 * @return the staff dto
+	 */
 	@GetMapping(value = "/staff/{id}")
 	public StaffDto findStaffById(@PathVariable int id){
 		
@@ -55,6 +74,12 @@ public class StaffController {
 		return staffDtoMapper.staffToStaffDto(staff.get());
 	}
 	
+	/**
+	 * Find staff by user name.
+	 *
+	 * @param userName the user name
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/staff/username/{userName}")
 	public ResponseEntity<StaffDto> findStaffByUserName(@PathVariable String userName){
 		
@@ -69,11 +94,22 @@ public class StaffController {
 		return ResponseEntity.ok(staffDto);
 	}
 	
+	/**
+	 * Delete staff.
+	 *
+	 * @param id the id
+	 */
 	@DeleteMapping(value = "/staff/{id}")
 	public void deleteStaff(@PathVariable int id) {
 		staffDao.deleteById(id);
 	}
 	
+	/**
+	 * Adds the staff.
+	 *
+	 * @param staffDto the staff dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/staff")
 	public ResponseEntity<Void> addStaff(@RequestBody StaffDto staffDto){
 		
@@ -94,6 +130,11 @@ public class StaffController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * Update staff.
+	 *
+	 * @param staffDto the staff dto
+	 */
 	@PutMapping(value = "/staff")
 	public void updateStaff(@RequestBody StaffDto staffDto) {
 		Staff staff = staffDtoMapper.staffDtoToStaff(staffDto);

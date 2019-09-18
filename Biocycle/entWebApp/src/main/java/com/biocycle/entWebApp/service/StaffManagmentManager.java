@@ -11,12 +11,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.biocycle.entWebApp.dto.StaffBeanDto;
 import com.biocycle.entWebApp.proxy.StaffCRUDMSProxy;
 
+/**
+ * The Class StaffManagmentManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class StaffManagmentManager {
 	
+	/** The staff CRUDMS proxy. */
 	@Autowired
 	StaffCRUDMSProxy staffCRUDMSProxy;
 	
+	/**
+	 * Staff list.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	public String staffList(Model model) {
 		
 		try {
@@ -35,10 +48,25 @@ public class StaffManagmentManager {
 		return "staffList";
 	}
 	
+	/**
+	 * Staff form.
+	 *
+	 * @param staffDtoBean the staff dto bean
+	 * @param model the model
+	 * @return the string
+	 */
 	public String staffForm(StaffBeanDto staffDtoBean, Model model) {
 		return"staffForm";
 	}
 	
+	/**
+	 * Creates the staff.
+	 *
+	 * @param staffBeanDto the staff bean dto
+	 * @param model the model
+	 * @param red the red
+	 * @return the string
+	 */
 	public String createStaff(StaffBeanDto staffBeanDto, Model model, RedirectAttributes red) {
 		try {
 			staffCRUDMSProxy.addStaff(staffBeanDto);

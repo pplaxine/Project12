@@ -18,16 +18,33 @@ import com.biocycle.entWebApp.helper.EntWebAppHelper;
 import com.biocycle.entWebApp.proxy.MailServiceProxy;
 import com.biocycle.entWebApp.proxy.OrganisationCRUDMSProxy;
 
+/**
+ * The Class CustomerManagmentManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class CustomerManagmentManager {
 	
+	/** The organisation CRUDMS proxy. */
 	@Autowired
 	private OrganisationCRUDMSProxy organisationCRUDMSProxy;
+	
+	/** The organisation bean dto mapper. */
 	@Autowired
 	private OrganisationBeanDtoMapper organisationBeanDtoMapper;
+	
+	/** The mail service proxy. */
 	@Autowired
 	private MailServiceProxy mailServiceProxy;
 	
+	/**
+	 * Partnership requests.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	public String partnershipRequests(Model model) {
 		
 		try {
@@ -48,6 +65,13 @@ public class CustomerManagmentManager {
 		return "partnershipRequests";
 	}
 	
+	/**
+	 * Validate partnership.
+	 *
+	 * @param organisationId the organisation id
+	 * @param red the red
+	 * @return the string
+	 */
 	public String validatePartnership(int organisationId, RedirectAttributes red) {
 		
 		try {
@@ -75,6 +99,11 @@ public class CustomerManagmentManager {
 		return "redirect:/cme/partnerships/requests";
 	}
 	
+	/**
+	 * Gets the all donor.
+	 *
+	 * @return the all donor
+	 */
 	public List<OrganisationBeanDto> getAllDonor() {
 		try {
 			List<OrganisationBeanDto> organisationBeanDtoList = organisationCRUDMSProxy.findAllOrganisationByIsValidated(true).getBody();

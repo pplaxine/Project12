@@ -12,12 +12,26 @@ import org.springframework.web.server.ResponseStatusException;
 import com.biocycle.customerWebApp.dto.OrganisationBeanDto;
 import com.biocycle.customerWebApp.proxy.OrganisationCRUDMSProxy;
 
+/**
+ * The Class CustomUserDetailsService.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
+	/** The organisation CRUDMS proxy. */
 	@Autowired
 	private OrganisationCRUDMSProxy organisationCRUDMSProxy;
 	
+	/**
+	 * Load user by username.
+	 *
+	 * @param email the email
+	 * @return the user details
+	 * @throws UsernameNotFoundException the username not found exception
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		

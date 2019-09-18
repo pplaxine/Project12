@@ -20,15 +20,29 @@ import com.biocycle.offerCRUD.dto.mapper.OfferDtoMapper;
 import com.biocycle.offerCRUD.exception.OfferNotFoundException;
 import com.biocycle.offerCRUD.model.Offer;
 
+/**
+ * The Class OfferController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class OfferController {
 	
+	/** The offer dao. */
 	@Autowired
 	private OfferDao offerDao;
 	
+	/** The offer dto mapper. */
 	@Autowired
 	private OfferDtoMapper offerDtoMapper;
 	
+	/**
+	 * Find offer by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/offers/{id}")
 	public ResponseEntity<OfferDto> findOfferById(@PathVariable int id){
 		Optional<Offer> offer = offerDao.findById(id);
@@ -42,11 +56,22 @@ public class OfferController {
 		return ResponseEntity.ok(offerDto);
 	}
 	
+	/**
+	 * Delete offer.
+	 *
+	 * @param id the id
+	 */
 	@DeleteMapping(value = "/offers/{id}")
 	public void deleteOffer(@PathVariable int id) {
 		offerDao.deleteById(id);
 	}
 	
+	/**
+	 * Adds the offer.
+	 *
+	 * @param offerDto the offer dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/offers")
 	public ResponseEntity<Void> addOffer(@RequestBody OfferDto offerDto){
 		
@@ -67,6 +92,12 @@ public class OfferController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * Update offer.
+	 *
+	 * @param offerDto the offer dto
+	 * @return the response entity
+	 */
 	@PutMapping(value = "/offers")
 	public ResponseEntity<Void> updateOffer(@RequestBody OfferDto offerDto) {
 		Offer offer = offerDtoMapper.offerDtoToOffer(offerDto);

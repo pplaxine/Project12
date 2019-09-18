@@ -8,25 +8,43 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.biocycle.entWebApp.dto.StaffBeanDto;
 
+/**
+ * The Interface StaffCRUDMSProxy.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @FeignClient(name = "zuul-server", contextId = "staffcrud")
 @RibbonClient(name = "staffCRUD")
 public interface StaffCRUDMSProxy {
 
+	/**
+	 * Find all staff.
+	 *
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/staffcrud/staff")
 	ResponseEntity<List<StaffBeanDto>> findAllStaff();
 	
+	/**
+	 * Find staff by user name.
+	 *
+	 * @param userName the user name
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/staffcrud/staff/username/{userName}")
 	ResponseEntity<StaffBeanDto> findStaffByUserName(@PathVariable("userName") String userName);
 	
+	/**
+	 * Adds the staff.
+	 *
+	 * @param staffDto the staff dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/staffcrud/staff")
 	ResponseEntity<Void> addStaff(@RequestBody StaffBeanDto staffDto);
-	
-	
-	
-	
 }

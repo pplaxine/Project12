@@ -7,10 +7,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.biocycle.entWebApp.dto.ProductRequestBeanDto;
 
+/**
+ * The Interface ProductRequestCRUDMSProxy.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @FeignClient(name = "zuul-server", contextId = "productrequestcrud")
 @RibbonClient(name = "productRequestCRUD")
 public interface ProductRequestCRUDMSProxy {
 	
+	/**
+	 * Find product request by id.
+	 *
+	 * @param id the id
+	 * @return the product request bean dto
+	 */
 	@GetMapping(value = "/productrequestcrud/productrequests/{id}")
 	ProductRequestBeanDto findProductRequestById(@PathVariable int id);
 

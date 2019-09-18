@@ -12,12 +12,26 @@ import org.springframework.web.server.ResponseStatusException;
 import com.biocycle.entWebApp.dto.StaffBeanDto;
 import com.biocycle.entWebApp.proxy.StaffCRUDMSProxy;
 
+/**
+ * The Class CustomUserDetailsService.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
+	/** The staff CRUDMS proxy. */
 	@Autowired
 	private StaffCRUDMSProxy staffCRUDMSProxy;
 	
+	/**
+	 * Load user by username.
+	 *
+	 * @param userName the user name
+	 * @return the user details
+	 * @throws UsernameNotFoundException the username not found exception
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		

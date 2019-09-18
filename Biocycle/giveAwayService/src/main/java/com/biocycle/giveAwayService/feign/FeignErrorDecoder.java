@@ -7,9 +7,22 @@ import org.springframework.web.server.ResponseStatusException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 
+/**
+ * The Class FeignErrorDecoder.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Component
 public class FeignErrorDecoder implements ErrorDecoder{
 
+	/**
+	 * Decode.
+	 *
+	 * @param methodKey the method key
+	 * @param response the response
+	 * @return the exception
+	 */
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		

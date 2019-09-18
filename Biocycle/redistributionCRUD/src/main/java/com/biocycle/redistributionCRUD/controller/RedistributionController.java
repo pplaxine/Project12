@@ -22,15 +22,29 @@ import com.biocycle.redistributionCRUD.exception.RedistributionNotFoundException
 import com.biocycle.redistributionCRUD.helper.RedistributionHelper;
 import com.biocycle.redistributionCRUD.model.Redistribution;
 
+/**
+ * The Class RedistributionController.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @RestController
 public class RedistributionController {
 
+	/** The redistribution dao. */
 	@Autowired
 	private RedistributionDao redistributionDao; 
 	
+	/** The redistribution dto mapper. */
 	@Autowired
 	private RedistributionDtoMapper redistributionDtoMapper;
 	
+	/**
+	 * Find redistribution by id.
+	 *
+	 * @param id the id
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/redistributions/{id}")
 	public ResponseEntity<RedistributionDto> findRedistributionById(@PathVariable int id){
 		
@@ -45,6 +59,12 @@ public class RedistributionController {
 		return ResponseEntity.ok(redistributionDto);
 	}
 	
+	/**
+	 * Find redistribution by organisation id.
+	 *
+	 * @param organisationId the organisation id
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/redistributions/organisations/{organisationId}")
 	public ResponseEntity<List<RedistributionDto>> findRedistributionByOrganisationId(@PathVariable int organisationId){
 		
@@ -57,6 +77,11 @@ public class RedistributionController {
 		return ResponseEntity.ok(redistributionDtoList);
 	}
 	
+	/**
+	 * Find all active redistributions.
+	 *
+	 * @return the response entity
+	 */
 	@GetMapping(value = "/redistributions/active")
 	public ResponseEntity<List<RedistributionDto>> findAllActiveRedistributions(){
 		Optional<List<Redistribution>> redistributionList = redistributionDao.findAllActiveRedistribution();
@@ -69,11 +94,22 @@ public class RedistributionController {
 	}
 	
 	
+	/**
+	 * Delete redistribution.
+	 *
+	 * @param id the id
+	 */
 	@DeleteMapping(value = "/redistributions/{id}")
 	public void deleteRedistribution (@PathVariable int id) {
 		redistributionDao.deleteById(id);
 	}
 	
+	/**
+	 * Adds the redistribution.
+	 *
+	 * @param redistributionDto the redistribution dto
+	 * @return the response entity
+	 */
 	@PostMapping(value = "/redistributions")
 	public ResponseEntity<Void> addRedistribution(@RequestBody RedistributionDto redistributionDto){
 		
@@ -94,6 +130,11 @@ public class RedistributionController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	 * Update redistribution.
+	 *
+	 * @param redistributionDto the redistribution dto
+	 */
 	@PutMapping(value = "/redistributions")
 	public void updateRedistribution(@RequestBody RedistributionDto redistributionDto) {
 		Redistribution redistribution = redistributionDtoMapper.redistributionDtoToRedistribution(redistributionDto);

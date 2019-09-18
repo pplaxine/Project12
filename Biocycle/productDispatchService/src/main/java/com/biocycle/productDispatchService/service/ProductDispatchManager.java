@@ -23,22 +23,46 @@ import com.biocycle.productDispatchService.proxy.ProductBatchCRUDMSProxy;
 import com.biocycle.productDispatchService.proxy.ProductRequestCRUDMSProxy;
 import com.biocycle.productDispatchService.proxy.RedistributionCRUDMSProxy;
 
+/**
+ * The Class ProductDispatchManager.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @Service
 public class ProductDispatchManager {
 	
+	/** The redistribution CRUDMS proxy. */
 	@Autowired
 	private RedistributionCRUDMSProxy redistributionCRUDMSProxy;
+	
+	/** The product request CRUDMS proxy. */
 	@Autowired
 	private ProductRequestCRUDMSProxy productRequestCRUDMSProxy;
+	
+	/** The offer CRUDMS proxy. */
 	@Autowired
 	private OfferCRUDMSProxy offerCRUDMSProxy;
+	
+	/** The Product batch CRUDMS proxy. */
 	@Autowired
 	private ProductBatchCRUDMSProxy ProductBatchCRUDMSProxy;
+	
+	/** The redistribution bean dto mapper. */
 	@Autowired
 	private RedistributionBeanDtoMapper redistributionBeanDtoMapper;
+	
+	/** The product request bean dto mapper. */
 	@Autowired
 	private ProductRequestBeanDtoMapper productRequestBeanDtoMapper;
 	
+	/**
+	 * Creates the redistribution for request.
+	 *
+	 * @param organisationId the organisation id
+	 * @param productRequestBeanDtoList the product request bean dto list
+	 * @return the response entity
+	 */
 	public ResponseEntity<Void> createRedistributionForRequest(int organisationId, List<ProductRequestBeanDto> productRequestBeanDtoList) {
 		
 		//Persistence of productRequests 
@@ -61,6 +85,13 @@ public class ProductDispatchManager {
 		}
 	}
 	
+	/**
+	 * Creates the redistribution for offer.
+	 *
+	 * @param organisationId the organisation id
+	 * @param offerBeanDto the offer bean dto
+	 * @return the response entity
+	 */
 	public ResponseEntity<Void> createRedistributionForOffer(int organisationId, OfferBeanDto offerBeanDto){
 		
 		//persist offerBean
@@ -83,6 +114,13 @@ public class ProductDispatchManager {
 		}
 	}
 	
+	/**
+	 * Adds the offer to redistribution.
+	 *
+	 * @param redistributionId the redistribution id
+	 * @param offerBeanDto the offer bean dto
+	 * @return the response entity
+	 */
 	public ResponseEntity<Void> addOfferToRedistribution(int redistributionId, OfferBeanDto offerBeanDto){
 		
 		Integer offerId = null; 
@@ -111,6 +149,13 @@ public class ProductDispatchManager {
 		return ResponseEntity.ok().build();
 	}
 	
+	/**
+	 * Persist product request bean.
+	 *
+	 * @param productRequestBeanDtoList the product request bean dto list
+	 * @return the list
+	 * @throws ResponseStatusException the response status exception
+	 */
 	//UTILITY METHOD 
 	protected List<Integer> persistProductRequestBean(List<ProductRequestBeanDto> productRequestBeanDtoList) throws ResponseStatusException {
 		ResponseEntity<List<ProductRequestBeanDto>> productRequestBeanDtoPersistedListResp  = productRequestCRUDMSProxy.addProductRequestList(productRequestBeanDtoList);
@@ -120,12 +165,26 @@ public class ProductDispatchManager {
 		return productRequestIdList;
 	}
 	
+	/**
+	 * Persist offer bean.
+	 *
+	 * @param offerBeanDto the offer bean dto
+	 * @return the integer
+	 * @throws ResponseStatusException the response status exception
+	 */
 	protected Integer persistOfferBean(OfferBeanDto offerBeanDto) throws ResponseStatusException {
 		ResponseEntity<Void> resp = offerCRUDMSProxy.addOffer(offerBeanDto);
 		String[] path = resp.getHeaders().getLocation().getRawPath().split("/");
 		return Integer.parseInt(path[path.length-1]);
 	}
 	
+	/**
+	 * Persist redistribution.
+	 *
+	 * @param redistributionBean the redistribution bean
+	 * @return the response entity
+	 * @throws ResponseStatusException the response status exception
+	 */
 	protected ResponseEntity<Void> persistRedistribution(RedistributionBean redistributionBean) throws ResponseStatusException {
 		RedistributionBeanDto redistributionBeanDto = redistributionBeanDtoMapper.redistributionBeanToRedistributionBeanDto(redistributionBean);
 		ResponseEntity<Void> resp = redistributionCRUDMSProxy.addRedistribution(redistributionBeanDto);
@@ -135,6 +194,13 @@ public class ProductDispatchManager {
 		return resp;
 	}
 	
+	/**
+	 * Update product batch stat.
+	 *
+	 * @param productBatchDtoList the product batch dto list
+	 * @param status the status
+	 * @throws ResponseStatusException the response status exception
+	 */
 	protected void updateProductBatchStat(List<Integer> productBatchDtoList, Boolean status) throws ResponseStatusException {
 		for (Integer pbd : productBatchDtoList) {
 			ProductBatchCRUDMSProxy.updateProductBatchIsAwaitingToBeCollectedStatus(pbd, status); 

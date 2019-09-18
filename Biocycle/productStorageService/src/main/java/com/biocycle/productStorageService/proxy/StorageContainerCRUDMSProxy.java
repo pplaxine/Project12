@@ -9,10 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.biocycle.productStorageService.bean.StorageContainerBean;
 
+/**
+ * The Interface StorageContainerCRUDMSProxy.
+ * 
+ * @author Philippe plaxine
+ * @version 1.0
+ */
 @FeignClient(name = "storageContainerCRUD")
 @RibbonClient(name = "storageContainerCRUD")
 public interface StorageContainerCRUDMSProxy {
 	
+	/**
+	 * Find empty storage container.
+	 *
+	 * @return the optional
+	 */
 	@GetMapping(value = "/storagecontainers/empty")
 	Optional<List<StorageContainerBean>> findEmptyStorageContainer();
 }
